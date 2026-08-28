@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>BAIM OBFUSCATOR</title>
+<title>B4im OBFUSCATOR</title>
 
 <style>
 *{box-sizing:border-box}
@@ -51,6 +51,82 @@ body{
     50%{transform:translate(35px,-25px) scale(1.08)}
 }
 
+/* ========== LAYAR AKTIVASI ========== */
+.activation{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:30px;
+    background:#050607;
+    transition:opacity .8s ease, transform .8s ease;
+}
+.activation.hidden{
+    opacity:0;
+    pointer-events:none;
+    transform:scale(1.05);
+}
+.activation .brand-b4im{
+    font-size:clamp(60px,15vw,120px);
+    font-weight:950;
+    letter-spacing:-8px;
+    line-height:1;
+    user-select:none;
+    background:linear-gradient(135deg,#8b5cf6,#00ff88);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:pulseBrand 3s ease-in-out infinite;
+}
+@keyframes pulseBrand{
+    0%,100%{filter:drop-shadow(0 0 10px rgba(139,92,246,.4))}
+    50%{filter:drop-shadow(0 0 30px rgba(0,255,136,.6))}
+}
+.activation .subtitle{
+    font-size:14px;
+    color:#aaa;
+    letter-spacing:4px;
+    text-transform:uppercase;
+}
+.activation .btn-activate{
+    padding:18px 50px;
+    border:2px solid #8b5cf6;
+    border-radius:40px;
+    background:transparent;
+    color:#fff;
+    font-size:18px;
+    font-weight:800;
+    letter-spacing:2px;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    transition:.3s;
+}
+.activation .btn-activate:hover{
+    background:#8b5cf6;
+    box-shadow:0 0 40px rgba(139,92,246,.7);
+    transform:translateY(-3px);
+}
+.activation .btn-activate:active{
+    transform:scale(.96);
+}
+.activation .btn-activate:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(115deg,transparent 20%,rgba(255,255,255,.2) 50%,transparent 80%);
+    transform:translateX(-120%);
+    animation:shine 4s infinite;
+}
+@keyframes shine{
+    0%,45%{transform:translateX(-120%)}
+    70%,100%{transform:translateX(120%)}
+}
+
+/* ========== CARD UTAMA ========== */
 .card{
     position:relative;
     z-index:2;
@@ -62,6 +138,10 @@ body{
     color:#202027;
     box-shadow:0 30px 100px rgba(0,0,0,.65);
     animation:cardIn .7s cubic-bezier(.2,.8,.2,1);
+    display:none;
+}
+.card.active{
+    display:block;
 }
 @keyframes cardIn{
     from{opacity:0;transform:translateY(30px) scale(.96)}
@@ -294,8 +374,15 @@ details[open] summary:before{transform:rotate(90deg)}
     <div class="orb b"></div>
 </div>
 
-<main class="card" id="card">
+<!-- LAYAR AKTIVASI -->
+<div class="activation" id="activation">
+    <div class="brand-b4im">B4im</div>
+    <div class="subtitle">Obfuscator System</div>
+    <button class="btn-activate" id="btnActivate">Aktifkan Sistem</button>
+</div>
 
+<!-- MENU UTAMA -->
+<main class="card" id="card">
     <div class="brand">
         <span>BAIM OBFUSCATOR</span>
     </div>
@@ -352,7 +439,6 @@ details[open] summary:before{transform:rotate(90deg)}
                 <span>Tambah layer runtime</span>
             </label>
 
-            <!-- Opsi tambahan gacor -->
             <label class="option">
                 <input id="numObf" type="checkbox" checked>
                 <span>Enkripsi angka</span>
@@ -373,7 +459,6 @@ details[open] summary:before{transform:rotate(90deg)}
     <div class="footer">
         BAIM OBFUSCATOR
     </div>
-
 </main>
 
 <script>
@@ -382,6 +467,22 @@ details[open] summary:before{transform:rotate(90deg)}
 const $ = id => document.getElementById(id);
 
 let selectedFile = null;
+
+/* ========== LAYAR AKTIVASI ========== */
+$("btnActivate").addEventListener("click", function(){
+
+    const activation = $("activation");
+    const card = $("card");
+
+    // Tambahkan animasi keluar
+    activation.classList.add("hidden");
+
+    // Setelah transisi selesai, sembunyikan dan tampilkan card
+    setTimeout(function(){
+        activation.style.display = "none";
+        card.classList.add("active");
+    }, 800);
+});
 
 /* =========================================================
    RANDOM IDENTIFIER
@@ -442,7 +543,6 @@ function showFile(){
 
 /* =========================================================
    LUA LEXER
-   Menjaga string / long string / identifier
 ========================================================= */
 
 function lexLua(source){
@@ -462,8 +562,6 @@ function lexLua(source){
 
         const c = source[i];
 
-        /* whitespace */
-
         if(/\s/.test(c)){
 
             let j = i + 1;
@@ -481,14 +579,10 @@ function lexLua(source){
             continue;
         }
 
-        /* comments */
-
         if(
             c === "-" &&
             source[i + 1] === "-"
         ){
-
-            /* long comment */
 
             if(
                 source[i + 2] === "[" &&
@@ -534,8 +628,6 @@ function lexLua(source){
             continue;
         }
 
-        /* quoted strings */
-
         if(c === "'" || c === '"'){
 
             const quote = c;
@@ -568,8 +660,6 @@ function lexLua(source){
             continue;
         }
 
-        /* Lua long strings */
-
         if(
             c === "[" &&
             source[i + 1] === "["
@@ -596,8 +686,6 @@ function lexLua(source){
             }
         }
 
-        /* identifier */
-
         if(
             /[A-Za-z_]/.test(c)
         ){
@@ -622,8 +710,6 @@ function lexLua(source){
             continue;
         }
 
-        /* number */
-
         if(/[0-9]/.test(c)){
 
             let j = i + 1;
@@ -645,8 +731,6 @@ function lexLua(source){
             i = j;
             continue;
         }
-
-        /* operator / punctuation */
 
         let op =
             source.slice(i,i + 3);
@@ -697,9 +781,7 @@ function lexLua(source){
 }
 
 /* =========================================================
-   LUA STRING ENCODER (ditingkatkan)
-   Menggunakan variabel lokal _d = string.char
-   dan memecah string menjadi potongan acak.
+   LUA STRING ENCODER (LEVEL MAX)
 ========================================================= */
 
 function decodeLuaString(raw){
@@ -769,10 +851,6 @@ function obfuscateLuaString(raw){
         );
     }
 
-    /*
-     * Pecah menjadi kelompok acak 1-4 karakter
-     * lalu gabung dengan .. agar lebih berantakan.
-     */
     const pieces = [];
 
     let i = 0;
@@ -781,7 +859,7 @@ function obfuscateLuaString(raw){
 
         const chunkSize =
             1 + Math.floor(
-                Math.random() * 4
+                Math.random() * 3
             );
 
         const chunk =
@@ -811,8 +889,7 @@ function obfuscateLuaString(raw){
 }
 
 /* =========================================================
-   LUA NUMBER OBFUSCATION
-   Mengubah angka sederhana menjadi ekspresi acak.
+   LUA NUMBER OBFUSCATION (LEVEL MAX)
 ========================================================= */
 
 function obfuscateLuaNumber(numStr){
@@ -830,19 +907,36 @@ function obfuscateLuaNumber(numStr){
         return numStr;
     }
 
-    const options = [
-        `(${num*2}/2)`,
-        `(${num+1}-1)`,
-        `(${num-1}+1)`,
-        `(${num*3}/3)`
-    ];
+    const options = [];
 
-    // Untuk angka bulat, tambahkan variasi lebih banyak
     if(Number.isInteger(num)){
 
+        const a = Math.floor(num/2);
+        const b = num - a;
+        const c = Math.ceil(num/3);
+        const d = num % 3;
+
         options.push(
-            `(${Math.floor(num/2)}*2+${num%2})`,
-            `(${Math.ceil(num/2)}*2-${(2 - num%2)%2})`
+            `(${a}+${b})`,
+            `(${a*2}+${b})`,
+            `(${c*3}+${d})`,
+            `(${c*3}-${3-d})`
+        );
+
+        if(num > 2 && num < 100){
+            options.push(
+                `(${num+10}-10)`,
+                `(${num-7}+7)`,
+                `(${num*5}/5)`
+            );
+        }
+
+    } else {
+
+        options.push(
+            `(${num*2}/2)`,
+            `(${num+1}-1)`,
+            `(${num-1}+1)`
         );
     }
 
@@ -858,81 +952,24 @@ function obfuscateLuaNumber(numStr){
 ========================================================= */
 
 const LUA_RESERVED = new Set([
-    "and",
-    "break",
-    "do",
-    "else",
-    "elseif",
-    "end",
-    "false",
-    "for",
-    "function",
-    "goto",
-    "if",
-    "in",
-    "local",
-    "nil",
-    "not",
-    "or",
-    "repeat",
-    "return",
-    "then",
-    "true",
-    "until",
-    "while"
+    "and","break","do","else","elseif","end","false","for","function","goto",
+    "if","in","local","nil","not","or","repeat","return","then","true","until","while"
 ]);
 
 const LUA_GLOBALS = new Set([
-    "_G",
-    "_ENV",
-    "self",
-
-    "assert",
-    "collectgarbage",
-    "dofile",
-    "error",
-    "getmetatable",
-    "ipairs",
-    "load",
-    "loadfile",
-    "next",
-    "pairs",
-    "pcall",
-    "print",
-    "rawequal",
-    "rawget",
-    "rawlen",
-    "rawset",
-    "require",
-    "select",
-    "setmetatable",
-    "tonumber",
-    "tostring",
-    "type",
-    "xpcall",
-
-    "coroutine",
-    "debug",
-    "io",
-    "math",
-    "os",
-    "package",
-    "string",
-    "table",
-    "utf8"
+    "_G","_ENV","self","assert","collectgarbage","dofile","error","getmetatable",
+    "ipairs","load","loadfile","next","pairs","pcall","print","rawequal","rawget",
+    "rawlen","rawset","require","select","setmetatable","tonumber","tostring","type",
+    "xpcall","coroutine","debug","io","math","os","package","string","table","utf8"
 ]);
 
 /* =========================================================
    LUA LOCAL RENAMER
-   Token based, bukan replace seluruh source.
 ========================================================= */
 
 function obfuscateLuaLocals(tokens){
 
-    const scopes = [
-        new Map()
-    ];
-
+    const scopes = [new Map()];
     const used = new Set();
 
     function newName(){
@@ -940,8 +977,7 @@ function obfuscateLuaLocals(tokens){
         let name;
 
         do{
-            name =
-                randomIdentifier();
+            name = randomIdentifier();
         }while(used.has(name));
 
         used.add(name);
@@ -951,15 +987,8 @@ function obfuscateLuaLocals(tokens){
 
     function find(name){
 
-        for(
-            let i = scopes.length - 1;
-            i >= 0;
-            i--
-        ){
-
-            if(
-                scopes[i].has(name)
-            ){
+        for(let i = scopes.length - 1; i >= 0; i--){
+            if(scopes[i].has(name)){
                 return scopes[i].get(name);
             }
         }
@@ -969,101 +998,48 @@ function obfuscateLuaLocals(tokens){
 
     function declare(name){
 
-        if(
-            LUA_RESERVED.has(name) ||
-            LUA_GLOBALS.has(name)
-        ){
+        if(LUA_RESERVED.has(name) || LUA_GLOBALS.has(name)){
             return name;
         }
 
-        if(
-            scopes[scopes.length - 1]
-                .has(name)
-        ){
-            return scopes[
-                scopes.length - 1
-            ].get(name);
+        if(scopes[scopes.length - 1].has(name)){
+            return scopes[scopes.length - 1].get(name);
         }
 
         const n = newName();
-
-        scopes[
-            scopes.length - 1
-        ].set(name,n);
-
+        scopes[scopes.length - 1].set(name, n);
         return n;
     }
-
-    /*
-     * Cari deklarasi local.
-     */
 
     for(let i = 0; i < tokens.length; i++){
 
         const token = tokens[i];
 
-        if(
-            token.type === "identifier" &&
-            token.value === "local"
-        ){
+        if(token.type === "identifier" && token.value === "local"){
 
             let j = i + 1;
 
-            /*
-             * local function foo(...)
-             */
-
-            if(
-                tokens[j] &&
-                tokens[j].type === "identifier" &&
-                tokens[j].value === "function"
-            ){
+            if(tokens[j] && tokens[j].type === "identifier" && tokens[j].value === "function"){
 
                 j++;
-
-                if(
-                    tokens[j] &&
-                    tokens[j].type === "identifier"
-                ){
-
-                    /*
-                     * Nama function local
-                     * ikut dibuat lokal.
-                     */
-
-                    const old =
-                        tokens[j].value;
-
-                    tokens[j].value =
-                        declare(old);
+                if(tokens[j] && tokens[j].type === "identifier"){
+                    tokens[j].value = declare(tokens[j].value);
                 }
-
                 continue;
             }
-
-            /*
-             * local a,b,c
-             */
 
             while(j < tokens.length){
 
                 const t = tokens[j];
 
-                if(
-                    t.type === "identifier"
-                ){
+                if(t.type === "identifier"){
 
-                    t.value =
-                        declare(t.value);
-
+                    t.value = declare(t.value);
                     j++;
                     continue;
                 }
 
-                if(
-                    t.value === ","
-                ){
-
+                if(t.value === ","){
                     j++;
                     continue;
                 }
@@ -1073,71 +1049,34 @@ function obfuscateLuaLocals(tokens){
         }
     }
 
-    /*
-     * Parameter function.
-     */
-
     for(let i = 0; i < tokens.length; i++){
 
-        if(
-            tokens[i].type === "identifier" &&
-            tokens[i].value === "function"
-        ){
+        if(tokens[i].type === "identifier" && tokens[i].value === "function"){
 
             let j = i + 1;
 
-            while(
-                j < tokens.length &&
-                tokens[j].value !== "("
-            ){
+            while(j < tokens.length && tokens[j].value !== "("){
                 j++;
             }
 
-            if(
-                j >= tokens.length
-            ){
-                continue;
-            }
+            if(j >= tokens.length) continue;
 
             let depth = 1;
             j++;
 
             scopes.push(new Map());
 
-            while(
-                j < tokens.length &&
-                depth > 0
-            ){
+            while(j < tokens.length && depth > 0){
 
-                if(
-                    tokens[j].value === "("
-                ){
-                    depth++;
-                }
+                if(tokens[j].value === "(") depth++;
+                if(tokens[j].value === ")") depth--;
 
-                if(
-                    tokens[j].value === ")"
-                ){
-                    depth--;
-                }
+                if(depth === 1 && tokens[j].type === "identifier"){
 
-                if(
-                    depth === 1 &&
-                    tokens[j].type === "identifier"
-                ){
+                    const previous = tokens[j - 1];
 
-                    const previous =
-                        tokens[j - 1];
-
-                    if(
-                        !previous ||
-                        previous.value !== "."
-                    ){
-
-                        tokens[j].value =
-                            declare(
-                                tokens[j].value
-                            );
+                    if(!previous || previous.value !== "."){
+                        tokens[j].value = declare(tokens[j].value);
                     }
                 }
 
@@ -1148,54 +1087,21 @@ function obfuscateLuaLocals(tokens){
         }
     }
 
-    /*
-     * Ganti identifier yang memang sudah
-     * tercatat sebagai local.
-     *
-     * String/comment tidak disentuh.
-     */
-
     for(let i = 0; i < tokens.length; i++){
 
         const t = tokens[i];
 
-        if(
-            t.type !== "identifier"
-        ){
-            continue;
-        }
+        if(t.type !== "identifier") continue;
 
-        if(
-            LUA_RESERVED.has(t.value) ||
-            LUA_GLOBALS.has(t.value)
-        ){
-            continue;
-        }
+        if(LUA_RESERVED.has(t.value) || LUA_GLOBALS.has(t.value)) continue;
 
-        const previous =
-            tokens[i - 1];
+        const previous = tokens[i - 1];
 
-        /*
-         * Jangan mengubah:
-         * object.key
-         * object:key
-         */
+        if(previous && (previous.value === "." || previous.value === ":")) continue;
 
-        if(
-            previous &&
-            (
-                previous.value === "." ||
-                previous.value === ":"
-            )
-        ){
-            continue;
-        }
+        const mapped = find(t.value);
 
-        const mapped =
-            find(t.value);
-
-        if(mapped)
-            t.value = mapped;
+        if(mapped) t.value = mapped;
     }
 
     return tokens;
@@ -1207,9 +1113,7 @@ function obfuscateLuaLocals(tokens){
 
 function tokensToLua(tokens){
 
-    return tokens
-        .map(t => t.value)
-        .join("");
+    return tokens.map(t => t.value).join("");
 }
 
 /* =========================================================
@@ -1218,43 +1122,22 @@ function tokensToLua(tokens){
 
 function minifyLua(source){
 
-    const tokens =
-        lexLua(source);
+    const tokens = lexLua(source);
 
     let result = "";
 
-    for(
-        let i = 0;
-        i < tokens.length;
-        i++
-    ){
+    for(let i = 0; i < tokens.length; i++){
 
         const t = tokens[i];
 
         if(t.type === "space"){
 
-            const previous =
-                tokens[i - 1];
+            const previous = tokens[i - 1];
+            const next = tokens[i + 1];
 
-            const next =
-                tokens[i + 1];
-
-            if(
-                previous &&
-                next &&
-                (
-                    (
-                        (
-                            previous.type === "identifier" ||
-                            previous.type === "number"
-                        ) &&
-                        (
-                            next.type === "identifier" ||
-                            next.type === "number"
-                        )
-                    )
-                )
-            ){
+            if(previous && next &&
+                ((previous.type === "identifier" || previous.type === "number") &&
+                 (next.type === "identifier" || next.type === "number"))){
 
                 result += " ";
             }
@@ -1269,176 +1152,96 @@ function minifyLua(source){
 }
 
 /* =========================================================
-   LUA JUNK INJECTION
+   LUA HEAVY JUNK INJECTION (LEVEL MAX)
 ========================================================= */
 
-function injectLuaJunk(source){
+function heavyJunkInjection(source){
 
-    const junkStatements = [
-        `do local _=nil end;`,
-        `local _=0;`,
-        `do local _=math.random(1) end;`,
-        `do local _=string.rep("",0) end;`,
-        `local _=#"";`,
-        `do local _=tonumber("0") end;`
+    const junkPool = [
+        `do local _=math.random(1,100) end;`,
+        `do local _=string.rep("a",0) end;`,
+        `do local _={} _[1]=nil end;`,
+        `do local _=tonumber("0") end;`,
+        `do local _=#"" end;`,
+        `do local _=type(nil) end;`,
+        `do local _=pairs({}) end;`,
+        `do local _=ipairs({}) end;`,
+        `do local _=next({}) end;`,
+        `do local _=select(1,"x") end;`,
+        `do local _=math.floor(0.5) end;`,
+        `do local _=math.ceil(0.5) end;`,
+        `do local _=math.abs(-1) end;`,
+        `do local _=string.len("") end;`,
+        `do local _=table.concat({}) end;`
     ];
 
-    // Tambahkan 2-3 junk di awal
-    let result = "";
-    const count = 2 + Math.floor(Math.random()*2);
+    let junk = "";
+    const count = 8 + Math.floor(Math.random() * 15);
+
     for(let i=0; i<count; i++){
-        result += junkStatements[
-            Math.floor(Math.random()*junkStatements.length)
-        ];
+        junk += junkPool[Math.floor(Math.random() * junkPool.length)];
+        if(Math.random() < 0.3) junk += " ";
     }
 
-    result += source;
-
-    // Tambahkan 1-2 junk di akhir
-    const countEnd = 1 + Math.floor(Math.random()*2);
-    for(let i=0; i<countEnd; i++){
-        result += junkStatements[
-            Math.floor(Math.random()*junkStatements.length)
-        ];
-    }
-
-    return result;
+    return junk + source + junk;
 }
 
 /* =========================================================
-   LUA FULL PROCESSOR (ditingkatkan)
+   LUA FULL PROCESSOR (LEVEL MAX)
 ========================================================= */
 
 function processLua(source){
 
-    let tokens =
-        lexLua(source);
-
-    /*
-     * Hapus comments
-     */
+    let tokens = lexLua(source);
 
     if($("comments").checked){
-
-        tokens =
-            tokens.filter(
-                t => t.type !== "comment"
-            );
+        tokens = tokens.filter(t => t.type !== "comment");
     }
-
-    /*
-     * Obfuscate strings
-     */
 
     if($("strings").checked){
 
-        // Tambahkan deklarasi _d di awal nanti
-        for(
-            let i = 0;
-            i < tokens.length;
-            i++
-        ){
-
-            if(
-                tokens[i].type === "string"
-            ){
-
-                tokens[i].value =
-                    obfuscateLuaString(
-                        tokens[i].value
-                    );
-
-                tokens[i].type =
-                    "generated";
+        for(let i = 0; i < tokens.length; i++){
+            if(tokens[i].type === "string"){
+                tokens[i].value = obfuscateLuaString(tokens[i].value);
+                tokens[i].type = "generated";
             }
         }
     }
-
-    /*
-     * Rename locals
-     */
 
     if($("names").checked){
-
-        tokens =
-            obfuscateLuaLocals(
-                tokens
-            );
+        tokens = obfuscateLuaLocals(tokens);
     }
 
-    /*
-     * Enkripsi angka
-     */
-
     if($("numObf").checked){
-
-        for(
-            let i = 0;
-            i < tokens.length;
-            i++
-        ){
-
-            if(
-                tokens[i].type === "number"
-            ){
-
-                tokens[i].value =
-                    obfuscateLuaNumber(
-                        tokens[i].value
-                    );
-
-                tokens[i].type =
-                    "generated";
+        for(let i = 0; i < tokens.length; i++){
+            if(tokens[i].type === "number"){
+                tokens[i].value = obfuscateLuaNumber(tokens[i].value);
+                tokens[i].type = "generated";
             }
         }
     }
 
-    let result =
-        tokensToLua(tokens);
+    let result = tokensToLua(tokens);
 
-    // Jika strings diobfuscate, tambahkan deklarasi _d di awal
     if($("strings").checked && result.includes("_d(")){
         result = "local _d=string.char;" + result;
     }
 
     if($("minify").checked){
-
-        result =
-            minifyLua(result);
+        result = minifyLua(result);
     }
-
-    /*
-     * Runtime layer (variabel dummy)
-     */
 
     if($("junk").checked){
-
-        const dummy =
-            randomIdentifier();
-
-        result =
-            "local " +
-            dummy +
-            "=nil;" +
-            result;
+        const dummy = randomIdentifier();
+        result = "local " + dummy + "=nil;" + result;
     }
-
-    /*
-     * Suntik kode sampah
-     */
 
     if($("junkObf").checked){
-
-        result =
-            injectLuaJunk(result);
+        result = heavyJunkInjection(result);
     }
 
-    /* ==== UPDATE: paksa satu baris ==== */
+    /* Paksa satu baris */
     result = result.replace(/\r?\n/g, " ");
-
-    /*
-     * Hanya branding.
-     */
 
     return (
         "-- BAIM OBFUSCATOR\n" +
@@ -1460,50 +1263,27 @@ function removePawnComments(source){
 
         const c = source[i];
 
-        if(
-            c === '"' &&
-            source[i - 1] !== "\\"
-        ){
+        if(c === '"' && source[i - 1] !== "\\"){
 
-            inString =
-                !inString;
-
+            inString = !inString;
             result += c;
             i++;
             continue;
         }
 
-        if(
-            !inString &&
-            c === "/" &&
-            source[i + 1] === "/"
-        ){
+        if(!inString && c === "/" && source[i + 1] === "/"){
 
-            while(
-                i < source.length &&
-                source[i] !== "\n"
-            ){
+            while(i < source.length && source[i] !== "\n"){
                 i++;
             }
-
             result += "\n";
             continue;
         }
 
-        if(
-            !inString &&
-            c === "/" &&
-            source[i + 1] === "*"
-        ){
+        if(!inString && c === "/" && source[i + 1] === "*"){
 
-            const end =
-                source.indexOf(
-                    "*/",
-                    i + 2
-                );
-
-            if(end === -1)
-                break;
+            const end = source.indexOf("*/", i + 2);
+            if(end === -1) break;
 
             i = end + 2;
             result += "\n";
@@ -1529,7 +1309,6 @@ function encodePawnStrings(source){
     while(i < source.length){
 
         if(source[i] !== '"'){
-
             result += source[i];
             i++;
             continue;
@@ -1539,17 +1318,12 @@ function encodePawnStrings(source){
 
         while(j < source.length){
 
-            if(
-                source[j] === "\\" &&
-                j + 1 < source.length
-            ){
-
+            if(source[j] === "\\" && j + 1 < source.length){
                 j += 2;
                 continue;
             }
 
             if(source[j] === '"'){
-
                 j++;
                 break;
             }
@@ -1557,36 +1331,17 @@ function encodePawnStrings(source){
             j++;
         }
 
-        const raw =
-            source.slice(i + 1,j - 1);
-
-        /*
-         * Pawn compatibility lebih baik
-         * dijaga dengan escape numerik.
-         */
+        const raw = source.slice(i + 1, j - 1);
 
         let encoded = "";
 
-        for(
-            let k = 0;
-            k < raw.length;
-            k++
-        ){
+        for(let k = 0; k < raw.length; k++){
 
-            const code =
-                raw.charCodeAt(k);
-
-            encoded +=
-                "\\x" +
-                code
-                    .toString(16)
-                    .padStart(2,"0");
+            const code = raw.charCodeAt(k);
+            encoded += "\\x" + code.toString(16).padStart(2, "0");
         }
 
-        result +=
-            '"' +
-            encoded +
-            '"';
+        result += '"' + encoded + '"';
 
         i = j;
     }
@@ -1601,51 +1356,31 @@ function encodePawnStrings(source){
 function minifyPawn(source){
 
     return source
-        .replace(/\r\n/g,"\n")
-        .replace(/[ \t]+/g," ")
-        .replace(/\n[ \t]+/g,"\n")
-        .replace(/\n{2,}/g,"\n")
+        .replace(/\r\n/g, "\n")
+        .replace(/[ \t]+/g, " ")
+        .replace(/\n[ \t]+/g, "\n")
+        .replace(/\n{2,}/g, "\n")
         .trim();
 }
 
 /* =========================================================
-   PAWN
+   PAWN PROCESSOR
 ========================================================= */
 
 function processPawn(source){
 
     if($("comments").checked){
-
-        source =
-            removePawnComments(
-                source
-            );
+        source = removePawnComments(source);
     }
 
     if($("strings").checked){
-
-        source =
-            encodePawnStrings(
-                source
-            );
+        source = encodePawnStrings(source);
     }
-
-    /*
-     * Identifier Pawn sengaja tidak
-     * diacak secara agresif karena
-     * native/forward/public callback
-     * bisa bergantung pada nama.
-     */
 
     if($("minify").checked){
-
-        source =
-            minifyPawn(
-                source
-            );
+        source = minifyPawn(source);
     }
 
-    /* ==== UPDATE: paksa satu baris ==== */
     source = source.replace(/\r?\n/g, " ");
 
     return (
@@ -1655,61 +1390,32 @@ function processPawn(source){
 }
 
 /* =========================================================
-   HTML
+   HTML PROCESSOR
 ========================================================= */
 
 function removeHTMLComments(source){
 
-    return source.replace(
-        /<!--[\s\S]*?-->/g,
-        ""
-    );
+    return source.replace(/<!--[\s\S]*?-->/g, "");
 }
 
 function minifyHTML(source){
 
-    source =
-        source.replace(
-            />\s+</g,
-            "><"
-        );
-
-    source =
-        source.replace(
-            /\s{2,}/g,
-            " "
-        );
-
+    source = source.replace(/>\s+</g, "><");
+    source = source.replace(/\s{2,}/g, " ");
     return source.trim();
 }
 
 function processHTML(source){
 
     if($("comments").checked){
-
-        source =
-            removeHTMLComments(
-                source
-            );
+        source = removeHTMLComments(source);
     }
 
     if($("minify").checked){
-
-        source =
-            minifyHTML(
-                source
-            );
+        source = minifyHTML(source);
     }
 
-    /* ==== UPDATE: paksa satu baris ==== */
     source = source.replace(/\r?\n/g, " ");
-
-    /*
-     * Jangan mengubah isi <script>,
-     * CSS, attribute, atau text HTML
-     * secara agresif karena bisa
-     * menyebabkan halaman rusak.
-     */
 
     return (
         "<!-- BAIM OBFUSCATOR -->\n" +
@@ -1721,34 +1427,17 @@ function processHTML(source){
    PROCESS
 ========================================================= */
 
-function processSource(
-    source,
-    filename
-){
+function processSource(source, filename){
 
-    const ext =
-        filename
-            .toLowerCase()
-            .split(".")
-            .pop();
+    const ext = filename.toLowerCase().split(".").pop();
 
-    if(ext === "lua")
-        return processLua(source);
+    if(ext === "lua") return processLua(source);
 
-    if(
-        ext === "pwn" ||
-        ext === "inc" ||
-        ext === "txt"
-    ){
-
+    if(ext === "pwn" || ext === "inc" || ext === "txt"){
         return processPawn(source);
     }
 
-    if(
-        ext === "html" ||
-        ext === "htm"
-    ){
-
+    if(ext === "html" || ext === "htm"){
         return processHTML(source);
     }
 
@@ -1761,238 +1450,126 @@ function processSource(
 
 function outputName(filename){
 
-    const dot =
-        filename.lastIndexOf(".");
+    const dot = filename.lastIndexOf(".");
 
     if(dot === -1){
-
-        return (
-            filename +
-            "_BAIM_OBF"
-        );
+        return filename + "_BAIM_OBF";
     }
 
-    return (
-        filename.slice(0,dot) +
-        "_BAIM_OBF" +
-        filename.slice(dot)
-    );
+    return filename.slice(0, dot) + "_BAIM_OBF" + filename.slice(dot);
 }
 
 /* =========================================================
    DOWNLOAD
 ========================================================= */
 
-function downloadFile(
-    content,
-    filename,
-    mime
-){
+function downloadFile(content, filename, mime){
 
-    const blob =
-        new Blob(
-            [content],
-            {type:mime}
-        );
+    const blob = new Blob([content], {type: mime});
+    const url = URL.createObjectURL(blob);
 
-    const url =
-        URL.createObjectURL(blob);
-
-    const link =
-        document.createElement("a");
-
+    const link = document.createElement("a");
     link.href = url;
     link.download = filename;
 
     document.body.appendChild(link);
-
     link.click();
-
     link.remove();
 
-    setTimeout(
-        () => URL.revokeObjectURL(url),
-        1500
-    );
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
 }
 
 /* =========================================================
    START
 ========================================================= */
 
-$("start").addEventListener(
-    "click",
-    async function(){
+$("start").addEventListener("click", async function(){
 
-        if(!selectedFile){
-
-            $("picker").click();
-            return;
-        }
-
-        const button = this;
-
-        button.classList.add(
-            "loading"
-        );
-
-        $("status").textContent =
-            "BAIM OBFUSCATOR";
-
-        try{
-
-            const source =
-                await selectedFile.text();
-
-            if(!source.trim()){
-
-                throw new Error(
-                    "EMPTY_FILE"
-                );
-            }
-
-            /*
-             * Supaya animasi loading
-             * sempat tampil.
-             */
-
-            await new Promise(
-                resolve =>
-                    setTimeout(
-                        resolve,
-                        300
-                    )
-            );
-
-            const result =
-                processSource(
-                    source,
-                    selectedFile.name
-                );
-
-            const ext =
-                selectedFile.name
-                    .toLowerCase()
-                    .split(".")
-                    .pop();
-
-            let mime =
-                "text/plain";
-
-            if(
-                ext === "html" ||
-                ext === "htm"
-            ){
-
-                mime =
-                    "text/html";
-            }
-
-            downloadFile(
-                result,
-                outputName(
-                    selectedFile.name
-                ),
-                mime
-            );
-
-            $("card")
-                .classList
-                .remove(
-                    "success"
-                );
-
-            void $("card").offsetWidth;
-
-            $("card")
-                .classList
-                .add(
-                    "success"
-                );
-
-            $("status").textContent =
-                "BAIM OBFUSCATOR";
-
-        }catch(error){
-
-            console.error(error);
-
-            $("status").textContent =
-                "BAIM OBFUSCATOR";
-        }
-
-        button.classList.remove(
-            "loading"
-        );
+    if(!selectedFile){
+        $("picker").click();
+        return;
     }
-);
+
+    const button = this;
+    button.classList.add("loading");
+    $("status").textContent = "BAIM OBFUSCATOR";
+
+    try{
+
+        const source = await selectedFile.text();
+
+        if(!source.trim()){
+            throw new Error("EMPTY_FILE");
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 300));
+
+        const result = processSource(source, selectedFile.name);
+
+        const ext = selectedFile.name.toLowerCase().split(".").pop();
+
+        let mime = "text/plain";
+
+        if(ext === "html" || ext === "htm"){
+            mime = "text/html";
+        }
+
+        downloadFile(result, outputName(selectedFile.name), mime);
+
+        $("card").classList.remove("success");
+        void $("card").offsetWidth;
+        $("card").classList.add("success");
+
+        $("status").textContent = "BAIM OBFUSCATOR";
+
+    }catch(error){
+
+        console.error(error);
+        $("status").textContent = "BAIM OBFUSCATOR";
+    }
+
+    button.classList.remove("loading");
+});
 
 /* =========================================================
    DRAG DROP
 ========================================================= */
 
-const drop =
-    $("drop");
+const drop = $("drop");
 
-[
-    "dragenter",
-    "dragover"
-].forEach(
-    eventName => {
+["dragenter", "dragover"].forEach(eventName => {
 
-        drop.addEventListener(
-            eventName,
-            event => {
+    drop.addEventListener(eventName, event => {
 
-                event.preventDefault();
-                event.stopPropagation();
+        event.preventDefault();
+        event.stopPropagation();
 
-                drop.style.transform =
-                    "translateY(-4px) scale(1.01)";
-            }
-        );
+        drop.style.transform = "translateY(-4px) scale(1.01)";
+    });
+});
+
+["dragleave", "drop"].forEach(eventName => {
+
+    drop.addEventListener(eventName, event => {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        drop.style.transform = "";
+    });
+});
+
+drop.addEventListener("drop", event => {
+
+    const files = event.dataTransfer.files;
+
+    if(!files || !files.length){
+        return;
     }
-);
 
-[
-    "dragleave",
-    "drop"
-].forEach(
-    eventName => {
-
-        drop.addEventListener(
-            eventName,
-            event => {
-
-                event.preventDefault();
-                event.stopPropagation();
-
-                drop.style.transform = "";
-            }
-        );
-    }
-);
-
-drop.addEventListener(
-    "drop",
-    event => {
-
-        const files =
-            event.dataTransfer.files;
-
-        if(
-            !files ||
-            !files.length
-        ){
-            return;
-        }
-
-        selectedFile =
-            files[0];
-
-        showFile();
-    }
-);
+    selectedFile = files[0];
+    showFile();
+});
 </script>
 
 </body>
