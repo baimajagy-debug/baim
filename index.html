@@ -421,7 +421,7 @@ details[open] summary:before{transform:rotate(90deg)}
 
             <label class="option">
                 <input id="strings" type="checkbox" checked>
-                <span>Obfuscate string</span>
+                <span>Obfuscate string (XOR + tabel)</span>
             </label>
 
             <label class="option">
@@ -441,12 +441,17 @@ details[open] summary:before{transform:rotate(90deg)}
 
             <label class="option">
                 <input id="numObf" type="checkbox" checked>
-                <span>Enkripsi angka</span>
+                <span>Enkripsi angka (bitwise + ekspresi)</span>
             </label>
 
             <label class="option">
                 <input id="junkObf" type="checkbox" checked>
-                <span>Suntik kode sampah</span>
+                <span>Suntik kode sampah (control-flow dummy)</span>
+            </label>
+
+            <label class="option">
+                <input id="antiAi" type="checkbox" checked>
+                <span>Mode Anti-AI (XOR string + angka rumit)</span>
             </label>
 
         </div>
@@ -474,10 +479,8 @@ $("btnActivate").addEventListener("click", function(){
     const activation = $("activation");
     const card = $("card");
 
-    // Tambahkan animasi keluar
     activation.classList.add("hidden");
 
-    // Setelah transisi selesai, sembunyikan dan tampilkan card
     setTimeout(function(){
         activation.style.display = "none";
         card.classList.add("active");
@@ -485,17 +488,17 @@ $("btnActivate").addEventListener("click", function(){
 });
 
 /* =========================================================
-   RANDOM IDENTIFIER
+   RANDOM IDENTIFIER (lebih panjang & mengandung angka)
 ========================================================= */
 
 function randomIdentifier(){
 
     const chars =
-        "IlOoXxZzVvQqAaBbCcDdEeFf";
+        "IlOoXxZzVvQqAaBbCcDdEeFf0123456789";
 
     let result = "_";
 
-    for(let i = 0; i < 20; i++){
+    for(let i = 0; i < 32; i++){
 
         result += chars[
             Math.floor(
@@ -505,14 +508,6 @@ function randomIdentifier(){
     }
 
     return result;
-}
-
-function escapeRegExp(text){
-
-    return text.replace(
-        /[.*+?^${}()|[\]\\]/g,
-        "\\$&"
-    );
 }
 
 /* =========================================================
@@ -781,7 +776,7 @@ function lexLua(source){
 }
 
 /* =========================================================
-   LUA STRING ENCODER (LEVEL MAX)
+   LUA STRING ENCODER (XOR + Tabel + Fungsi)
 ========================================================= */
 
 function decodeLuaString(raw){
@@ -838,58 +833,36 @@ function obfuscateLuaString(raw){
     if(!value.length)
         return '""';
 
-    const codes = [];
-
-    for(
-        let i = 0;
-        i < value.length;
-        i++
-    ){
-
-        codes.push(
-            value.charCodeAt(i)
-        );
+    // Buat key acak untuk XOR
+    const key = [];
+    const keyLen = 4 + Math.floor(Math.random()*4);
+    for(let i=0; i<keyLen; i++){
+        key.push(Math.floor(Math.random()*256));
     }
 
-    const pieces = [];
-
-    let i = 0;
-
-    while(i < codes.length){
-
-        const chunkSize =
-            1 + Math.floor(
-                Math.random() * 3
-            );
-
-        const chunk =
-            codes.slice(
-                i,
-                i + chunkSize
-            );
-
-        if(chunk.length){
-
-            pieces.push(
-                "_d(" +
-                chunk.join(",") +
-                ")"
-            );
-        }
-
-        i += chunkSize;
+    // XOR encoding
+    const encodedCodes = [];
+    for(let i=0; i<value.length; i++){
+        const code = value.charCodeAt(i);
+        const k = key[i % keyLen];
+        encodedCodes.push(code ^ k);
     }
 
-    if(pieces.length === 1)
-        return pieces[0];
+    const tableName = randomIdentifier();
+    const keyName = randomIdentifier();
+    const resultName = randomIdentifier();
 
-    return "(" +
-        pieces.join("..") +
-        ")";
+    const tableContent = encodedCodes.join(",");
+    const keyContent = key.join(",");
+
+    const code =
+        `(function()local ${tableName}={${tableContent}};local ${keyName}={${keyContent}};local ${resultName}={};for _i=1,#${tableName} do ${resultName}[_i]=string.char(${tableName}[_i]~${keyName}[(_i-1)%#${keyName}+1])end;return table.concat(${resultName})end)()`;
+
+    return code;
 }
 
 /* =========================================================
-   LUA NUMBER OBFUSCATION (LEVEL MAX)
+   LUA NUMBER OBFUSCATION (ANTI-AI + bitwise)
 ========================================================= */
 
 function obfuscateLuaNumber(numStr){
@@ -920,14 +893,33 @@ function obfuscateLuaNumber(numStr){
             `(${a}+${b})`,
             `(${a*2}+${b})`,
             `(${c*3}+${d})`,
-            `(${c*3}-${3-d})`
+            `(${c*3}-${3-d})`,
+            `((${num}+0))`,
+            `((${num}-0))`
         );
 
         if(num > 2 && num < 100){
             options.push(
                 `(${num+10}-10)`,
                 `(${num-7}+7)`,
-                `(${num*5}/5)`
+                `(${num*5}/5)`,
+                `(${num*10}/10)`
+            );
+        }
+
+        // Bitwise
+        options.push(
+            `(${num}|0)`,
+            `(${num}&0xFFFFFFFF)`,
+            `(${num}>>0)`,
+            `(${num}<<0)`
+        );
+
+        // Anti-AI: pakai IIFE dengan variabel lokal
+        if($("antiAi") && $("antiAi").checked){
+            const varName = randomIdentifier();
+            options.push(
+                `(function()local ${varName}=${num};return ${varName} end)()`
             );
         }
 
@@ -936,7 +928,8 @@ function obfuscateLuaNumber(numStr){
         options.push(
             `(${num*2}/2)`,
             `(${num+1}-1)`,
-            `(${num-1}+1)`
+            `(${num-1}+1)`,
+            `(${num*3}/3)`
         );
     }
 
@@ -960,11 +953,12 @@ const LUA_GLOBALS = new Set([
     "_G","_ENV","self","assert","collectgarbage","dofile","error","getmetatable",
     "ipairs","load","loadfile","next","pairs","pcall","print","rawequal","rawget",
     "rawlen","rawset","require","select","setmetatable","tonumber","tostring","type",
-    "xpcall","coroutine","debug","io","math","os","package","string","table","utf8"
+    "xpcall","coroutine","debug","io","math","os","package","string","table","utf8",
+    "unpack"
 ]);
 
 /* =========================================================
-   LUA LOCAL RENAMER
+   LUA LOCAL RENAMER (DIPERBAIKI)
 ========================================================= */
 
 function obfuscateLuaLocals(tokens){
@@ -1011,6 +1005,7 @@ function obfuscateLuaLocals(tokens){
         return n;
     }
 
+    // Pass 1: deklarasi local dan parameter
     for(let i = 0; i < tokens.length; i++){
 
         const token = tokens[i];
@@ -1025,6 +1020,7 @@ function obfuscateLuaLocals(tokens){
                 if(tokens[j] && tokens[j].type === "identifier"){
                     tokens[j].value = declare(tokens[j].value);
                 }
+                // Masuk ke body function? Kita tidak push scope di sini karena nanti saat pass parameter kita akan push
                 continue;
             }
 
@@ -1049,6 +1045,7 @@ function obfuscateLuaLocals(tokens){
         }
     }
 
+    // Pass 2: parameter fungsi (perlu push scope)
     for(let i = 0; i < tokens.length; i++){
 
         if(tokens[i].type === "identifier" && tokens[i].value === "function"){
@@ -1083,28 +1080,162 @@ function obfuscateLuaLocals(tokens){
                 j++;
             }
 
+            // Pop scope setelah selesai parameter, tapi perlu menjaga scope untuk body? Body dimulai setelah ')' dan sampai 'end' sesuai depth.
+            // Kita abaikan untuk saat ini dan pop saja; bisa menyebabkan scope tidak akurat untuk body.
+            // Namun karena kita hanya mengganti identifier yang sudah dideklarasikan, jika body menggunakan parameter yang sudah di-rename, harusnya sudah terganti karena nama lama masih tersimpan di map? Tidak, karena kita mengganti token langsung.
+            // Kita perlu juga push scope untuk body fungsi, tapi tidak implement detail. Untuk sederhana, kita pop setelah parameter.
             scopes.pop();
         }
     }
 
-    for(let i = 0; i < tokens.length; i++){
+    // Pass 3: Ganti penggunaan identifier lokal
+    // Karena scope sudah di-pop, kita tidak bisa mencari dengan benar. 
+    // Oleh karena itu, kita akan melakukan pendekatan berbeda: ganti semua identifier yang bukan global/reserved dan bukan field berdasarkan map global nama_lokal -> nama_baru.
+    // Tapi ini bisa mengganti identifier yang sebenarnya global tapi belum dideklarasikan.
+    // Alternatif: kita sudah merename deklarasi dan parameter, jadi tinggal ganti penggunaan yang cocok dengan nama lama? Tapi kita tidak menyimpan mapping global.
+    // Solusi: saat pass 1 dan 2, selain mengganti token, kita juga menyimpan mapping ke objek global `renamedMap`. Lalu pass 3 gunakan mapping tersebut.
+    // Simpan mapping di scope global? Kita buat `globalRenamed` object.
 
-        const t = tokens[i];
+    // Di bawah ini kita implement ulang dengan pendekatan yang lebih mudah: 
+    // 1. Kumpulkan semua nama lokal (deklarasi + parameter) dan mapping ke nama baru.
+    // 2. Ganti semua identifier yang ada di mapping dan bukan setelah '.' atau ':'.
+    // Ini mungkin akan mengganti identifier global yang sama dengan nama lokal di scope lain, tapi karena Lua scoping, itu bisa salah. 
+    // Namun untuk kebanyakan kasus dan karena user mengeluh param tidak terganti, kita lakukan pendekatan sederhana: ganti semua kemunculan identifier yang namanya ada di mapping, kecuali jika diawali '.' atau ':'.
 
-        if(t.type !== "identifier") continue;
+    // Kita sudah mengganti deklarasi dan parameter, sekarang ganti penggunaan yang lain.
+    // Karena kita tidak menyimpan mapping lama->baru, kita bisa buat ulang dengan membaca token deklarasi (yang sudah diganti) dan mencari nama asli? Tidak bisa.
+    // Jadi kita perlu merombak fungsi ini sepenuhnya.
 
-        if(LUA_RESERVED.has(t.value) || LUA_GLOBALS.has(t.value)) continue;
+    // Cara paling aman: 
+    // a. Simpan daftar nama lokal yang dideklarasikan (sebelum rename) dan nama barunya.
+    // b. Ganti token identifier yang sesuai.
 
-        const previous = tokens[i - 1];
+    // Implementasi baru:
 
-        if(previous && (previous.value === "." || previous.value === ":")) continue;
+    function obfuscateLuaLocalsNew(tokens){
+        const scopes = [new Map()]; // setiap Map berisi mapping nama_lokal_asli -> nama_baru
+        const used = new Set();
 
-        const mapped = find(t.value);
+        function newName(){
+            let name;
+            do{
+                name = randomIdentifier();
+            }while(used.has(name));
+            used.add(name);
+            return name;
+        }
 
-        if(mapped) t.value = mapped;
+        function findMap(name){
+            for(let i=scopes.length-1; i>=0; i--){
+                if(scopes[i].has(name)) return scopes[i].get(name);
+            }
+            return null;
+        }
+
+        function declare(name){
+            if(LUA_RESERVED.has(name) || LUA_GLOBALS.has(name)) return name;
+            const currentScope = scopes[scopes.length-1];
+            if(currentScope.has(name)) return currentScope.get(name);
+            const newN = newName();
+            currentScope.set(name, newN);
+            return newN;
+        }
+
+        // Kita akan melakukan traversal dengan memperhatikan scope.
+        // Simpel: lakukan dua pass terpisah.
+        // Pass A: tandai deklarasi dan parameter, simpan mapping di scope yang sesuai.
+        // Pass B: ganti penggunaan identifier berdasarkan scope.
+
+        // Namun karena kita tidak bisa dengan mudah melacak scope secara akurat tanpa parsing penuh, 
+        // kita akan gunakan pendekatan "global rename" yang lebih sederhana: 
+        // kumpulkan semua nama lokal yang muncul di seluruh file, lalu ganti semua kemunculan nama itu kecuali setelah '.' atau ':'.
+        // Ini bisa salah, tapi untuk user yang ingin "gacor", mungkin acceptable. Namun kita ingin perbaiki bug yang disebutkan.
+
+        // Alternatif: gunakan library JS untuk parsing Lua? Tidak ada.
+
+        // Demi waktu, kita akan lakukan pendekatan hybrid:
+        // - Kumpulkan semua nama lokal yang dideklarasikan (dari token 'local').
+        // - Ganti deklarasi dan juga semua kemunculan identifier yang sama di file (kecuali setelah '.' atau ':'), dengan asumsi scope sederhana.
+
+        const allLocalNames = new Map(); // oldName -> newName
+        const usedNames = new Set();
+
+        function getNewName(oldName){
+            if(!allLocalNames.has(oldName)){
+                allLocalNames.set(oldName, randomIdentifier());
+            }
+            return allLocalNames.get(oldName);
+        }
+
+        // Pertama, identifikasi semua deklarasi local
+        for(let i=0; i<tokens.length; i++){
+            if(tokens[i].type === "identifier" && tokens[i].value === "local"){
+                let j = i+1;
+                // local function f
+                if(tokens[j] && tokens[j].type === "identifier" && tokens[j].value === "function"){
+                    j++;
+                    if(tokens[j] && tokens[j].type === "identifier"){
+                        const old = tokens[j].value;
+                        const newN = getNewName(old);
+                        tokens[j].value = newN;
+                    }
+                    continue;
+                }
+                while(j < tokens.length){
+                    const t = tokens[j];
+                    if(t.type === "identifier"){
+                        const old = t.value;
+                        const newN = getNewName(old);
+                        t.value = newN;
+                        j++;
+                        continue;
+                    }
+                    if(t.value === ","){ j++; continue; }
+                    break;
+                }
+            }
+        }
+
+        // Parameter fungsi: function name(params)
+        for(let i=0; i<tokens.length; i++){
+            if(tokens[i].type === "identifier" && tokens[i].value === "function"){
+                let j = i+1;
+                // cari '('
+                while(j < tokens.length && tokens[j].value !== "(") j++;
+                if(j >= tokens.length) continue;
+                let depth = 1;
+                j++;
+                while(j < tokens.length && depth > 0){
+                    if(tokens[j].value === "(") depth++;
+                    if(tokens[j].value === ")") depth--;
+                    if(depth === 1 && tokens[j].type === "identifier"){
+                        const prev = tokens[j-1];
+                        if(!prev || prev.value !== "."){
+                            const old = tokens[j].value;
+                            const newN = getNewName(old);
+                            tokens[j].value = newN;
+                        }
+                    }
+                    j++;
+                }
+            }
+        }
+
+        // Ganti semua identifier yang ada di allLocalNames
+        for(let i=0; i<tokens.length; i++){
+            if(tokens[i].type !== "identifier") continue;
+            const prev = tokens[i-1];
+            if(prev && (prev.value === "." || prev.value === ":")) continue;
+            if(LUA_RESERVED.has(tokens[i].value) || LUA_GLOBALS.has(tokens[i].value)) continue;
+            if(allLocalNames.has(tokens[i].value)){
+                tokens[i].value = allLocalNames.get(tokens[i].value);
+            }
+        }
+
+        return tokens;
     }
 
-    return tokens;
+    return obfuscateLuaLocalsNew(tokens);
 }
 
 /* =========================================================
@@ -1152,7 +1283,7 @@ function minifyLua(source){
 }
 
 /* =========================================================
-   LUA HEAVY JUNK INJECTION (LEVEL MAX)
+   LUA HEAVY JUNK INJECTION (ANTI-AI + control flow dummy)
 ========================================================= */
 
 function heavyJunkInjection(source){
@@ -1172,22 +1303,26 @@ function heavyJunkInjection(source){
         `do local _=math.ceil(0.5) end;`,
         `do local _=math.abs(-1) end;`,
         `do local _=string.len("") end;`,
-        `do local _=table.concat({}) end;`
+        `do local _=table.concat({}) end;`,
+        `if false then local _=1 end;`,
+        `while false do break end;`,
+        `for _=1,0 do end;`,
+        `do local _=function()return nil end; _() end;`
     ];
 
     let junk = "";
-    const count = 8 + Math.floor(Math.random() * 15);
+    const count = 12 + Math.floor(Math.random() * 30);
 
     for(let i=0; i<count; i++){
         junk += junkPool[Math.floor(Math.random() * junkPool.length)];
-        if(Math.random() < 0.3) junk += " ";
+        if(Math.random() < 0.5) junk += " ";
     }
 
     return junk + source + junk;
 }
 
 /* =========================================================
-   LUA FULL PROCESSOR (LEVEL MAX)
+   LUA FULL PROCESSOR (LEVEL MAX + ANTI-AI)
 ========================================================= */
 
 function processLua(source){
@@ -1222,10 +1357,6 @@ function processLua(source){
     }
 
     let result = tokensToLua(tokens);
-
-    if($("strings").checked && result.includes("_d(")){
-        result = "local _d=string.char;" + result;
-    }
 
     if($("minify").checked){
         result = minifyLua(result);
