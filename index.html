@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>B4im OBFUSCATOR</title>
+<title>BAIM OBFUSCATOR</title>
 
 <style>
 *{box-sizing:border-box}
@@ -16,7 +16,7 @@ body{
     padding:16px;
     overflow-x:hidden;
     background:#050607;
-    color:#fff;
+    color:#fff
 }
 .bg{position:fixed;inset:0;overflow:hidden;pointer-events:none}
 .grid{
@@ -24,344 +24,287 @@ body{
     inset:-120px;
     opacity:.13;
     background-image:
-        linear-gradient(#fff 1px,transparent 1px),
-        linear-gradient(90deg,#fff 1px,transparent 1px);
+      linear-gradient(#fff 1px,transparent 1px),
+      linear-gradient(90deg,#fff 1px,transparent 1px);
     background-size:44px 44px;
     transform:perspective(500px) rotateX(60deg) scale(1.8);
     transform-origin:center bottom;
-    animation:gridMove 9s linear infinite;
+    animation:gridMove 9s linear infinite
 }
 @keyframes gridMove{
-    from{background-position:0 0,0 0}
-    to{background-position:0 44px,44px 0}
+ from{background-position:0 0,0 0}
+ to{background-position:0 44px,44px 0}
 }
 .orb{
-    position:absolute;
-    width:350px;
-    height:350px;
-    border-radius:50%;
-    filter:blur(95px);
-    opacity:.13;
-    animation:float 8s ease-in-out infinite;
+ position:absolute;
+ width:350px;
+ height:350px;
+ border-radius:50%;
+ filter:blur(95px);
+ opacity:.13;
+ animation:float 8s ease-in-out infinite
 }
 .orb.a{left:-150px;top:-130px;background:#8b5cf6}
 .orb.b{right:-150px;bottom:-130px;background:#00ff88;animation-delay:-4s}
 @keyframes float{
-    0%,100%{transform:translate(0,0) scale(1)}
-    50%{transform:translate(35px,-25px) scale(1.08)}
+ 0%,100%{transform:translate(0,0) scale(1)}
+ 50%{transform:translate(35px,-25px) scale(1.08)}
 }
 
-/* ========== LAYAR AKTIVASI ========== */
 .activation{
-    position:fixed;
-    inset:0;
-    z-index:9999;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:30px;
-    background:#050607;
-    transition:opacity .8s ease, transform .8s ease;
+ position:fixed;
+ inset:0;
+ z-index:9999;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ gap:28px;
+ background:#050607;
+ transition:opacity .8s ease,transform .8s ease
 }
 .activation.hidden{
-    opacity:0;
-    pointer-events:none;
-    transform:scale(1.05);
+ opacity:0;
+ pointer-events:none;
+ transform:scale(1.05)
 }
-.activation .brand-b4im{
-    font-size:clamp(60px,15vw,120px);
-    font-weight:950;
-    letter-spacing:-8px;
-    line-height:1;
-    user-select:none;
-    background:linear-gradient(135deg,#8b5cf6,#00ff88);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-    animation:pulseBrand 3s ease-in-out infinite;
+.brand-b4im{
+ font-size:clamp(60px,15vw,120px);
+ font-weight:950;
+ letter-spacing:-8px;
+ line-height:1;
+ background:linear-gradient(135deg,#8b5cf6,#00ff88);
+ -webkit-background-clip:text;
+ background-clip:text;
+ color:transparent;
+ animation:pulseBrand 3s ease-in-out infinite
 }
 @keyframes pulseBrand{
-    0%,100%{filter:drop-shadow(0 0 10px rgba(139,92,246,.4))}
-    50%{filter:drop-shadow(0 0 30px rgba(0,255,136,.6))}
+ 0%,100%{filter:drop-shadow(0 0 10px rgba(139,92,246,.4))}
+ 50%{filter:drop-shadow(0 0 30px rgba(0,255,136,.6))}
 }
-.activation .subtitle{
-    font-size:14px;
-    color:#aaa;
-    letter-spacing:4px;
-    text-transform:uppercase;
+.subtitle{
+ font-size:13px;
+ color:#aaa;
+ letter-spacing:4px;
+ text-transform:uppercase
 }
-.activation .btn-activate{
-    padding:18px 50px;
-    border:2px solid #8b5cf6;
-    border-radius:40px;
-    background:transparent;
-    color:#fff;
-    font-size:18px;
-    font-weight:800;
-    letter-spacing:2px;
-    cursor:pointer;
-    position:relative;
-    overflow:hidden;
-    transition:.3s;
+.btn-activate{
+ padding:18px 50px;
+ border:2px solid #8b5cf6;
+ border-radius:40px;
+ background:transparent;
+ color:#fff;
+ font-size:18px;
+ font-weight:800;
+ letter-spacing:2px;
+ cursor:pointer;
+ transition:.3s
 }
-.activation .btn-activate:hover{
-    background:#8b5cf6;
-    box-shadow:0 0 40px rgba(139,92,246,.7);
-    transform:translateY(-3px);
-}
-.activation .btn-activate:active{
-    transform:scale(.96);
-}
-.activation .btn-activate:after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:linear-gradient(115deg,transparent 20%,rgba(255,255,255,.2) 50%,transparent 80%);
-    transform:translateX(-120%);
-    animation:shine 4s infinite;
-}
-@keyframes shine{
-    0%,45%{transform:translateX(-120%)}
-    70%,100%{transform:translateX(120%)}
+.btn-activate:hover{
+ background:#8b5cf6;
+ box-shadow:0 0 40px rgba(139,92,246,.7);
+ transform:translateY(-3px)
 }
 
-/* ========== CARD UTAMA ========== */
 .card{
-    position:relative;
-    z-index:2;
-    width:min(660px,100%);
-    padding:30px;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:32px;
-    background:rgba(247,247,250,.97);
-    color:#202027;
-    box-shadow:0 30px 100px rgba(0,0,0,.65);
-    animation:cardIn .7s cubic-bezier(.2,.8,.2,1);
-    display:none;
+ position:relative;
+ z-index:2;
+ width:min(700px,100%);
+ padding:30px;
+ border:1px solid rgba(255,255,255,.12);
+ border-radius:32px;
+ background:rgba(247,247,250,.97);
+ color:#202027;
+ box-shadow:0 30px 100px rgba(0,0,0,.65);
+ display:none
 }
 .card.active{
-    display:block;
+ display:block;
+ animation:cardIn .7s cubic-bezier(.2,.8,.2,1)
 }
 @keyframes cardIn{
-    from{opacity:0;transform:translateY(30px) scale(.96)}
-    to{opacity:1;transform:none}
+ from{opacity:0;transform:translateY(30px) scale(.96)}
+ to{opacity:1;transform:none}
 }
-
 .brand{
-    text-align:center;
-    font-size:clamp(29px,8vw,46px);
-    font-weight:950;
-    letter-spacing:-2.5px;
-    line-height:1;
-    user-select:none;
+ text-align:center;
+ font-size:clamp(29px,8vw,46px);
+ font-weight:950;
+ letter-spacing:-2.5px;
+ line-height:1
 }
 .brand span{
-    display:inline-block;
-    animation:glitch 4s infinite;
+ display:inline-block;
+ animation:glitch 4s infinite
 }
 @keyframes glitch{
-    0%,92%,100%{transform:none;text-shadow:none}
-    93%{transform:translate(-3px,1px);text-shadow:3px 0 #8b5cf6}
-    94%{transform:translate(3px,-1px);text-shadow:-3px 0 #00d084}
-    95%{transform:none}
+ 0%,92%,100%{transform:none;text-shadow:none}
+ 93%{transform:translate(-3px,1px);text-shadow:3px 0 #8b5cf6}
+ 94%{transform:translate(3px,-1px);text-shadow:-3px 0 #00d084}
+ 95%{transform:none}
+}
+.badge{
+ margin:13px auto 0;
+ width:max-content;
+ max-width:100%;
+ padding:7px 13px;
+ border-radius:999px;
+ background:#18171e;
+ color:#fff;
+ font-size:10px;
+ font-weight:800;
+ letter-spacing:2px
 }
 .line{
-    height:1px;
-    margin:26px 4px 24px;
-    background:linear-gradient(90deg,transparent,#aaa,transparent);
+ height:1px;
+ margin:25px 4px 24px;
+ background:linear-gradient(90deg,transparent,#aaa,transparent)
 }
 
 .drop{
-    position:relative;
-    min-height:160px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    border-radius:25px;
-    background:#18171e;
-    color:#fff;
-    cursor:pointer;
-    overflow:hidden;
-    border:1px solid transparent;
-    transition:.25s ease;
+ position:relative;
+ min-height:160px;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ border-radius:25px;
+ background:#18171e;
+ color:#fff;
+ cursor:pointer;
+ overflow:hidden;
+ border:1px solid transparent;
+ transition:.25s ease
 }
 .drop:hover{
-    transform:translateY(-4px);
-    box-shadow:0 16px 36px rgba(0,0,0,.22);
-    border-color:#ffffff18;
-}
-.drop:active{transform:scale(.985)}
-.drop:before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:linear-gradient(
-        115deg,
-        transparent 25%,
-        rgba(255,255,255,.08) 50%,
-        transparent 75%
-    );
-    transform:translateX(-120%);
-    animation:shine 3s infinite;
-}
-@keyframes shine{
-    0%,45%{transform:translateX(-120%)}
-    70%,100%{transform:translateX(120%)}
-}
-.drop:after{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-80%;
-    width:50%;
-    height:2px;
-    background:#fff4;
-    animation:scan 3s infinite;
-}
-@keyframes scan{
-    0%,55%{left:-80%}
-    80%,100%{left:130%}
+ transform:translateY(-4px);
+ box-shadow:0 16px 36px rgba(0,0,0,.22);
+ border-color:#ffffff18
 }
 .icon{
-    width:52px;
-    height:52px;
-    margin-bottom:10px;
-    border-radius:16px;
-    display:grid;
-    place-items:center;
-    background:#292731;
-    font-size:25px;
-    position:relative;
-    z-index:2;
-}
-.drop b,.drop small{
-    position:relative;
-    z-index:2;
+ width:52px;
+ height:52px;
+ margin-bottom:10px;
+ border-radius:16px;
+ display:grid;
+ place-items:center;
+ background:#292731;
+ font-size:25px
 }
 .drop b{font-size:20px}
 .drop small{margin-top:7px;color:#999}
 input[type=file]{display:none}
 
 .file{
-    min-height:22px;
-    margin:13px 8px 18px;
-    text-align:center;
-    font-size:13px;
-    color:#777;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+ min-height:22px;
+ margin:13px 8px 18px;
+ text-align:center;
+ font-size:13px;
+ color:#777;
+ white-space:nowrap;
+ overflow:hidden;
+ text-overflow:ellipsis
 }
 
 .start{
-    width:100%;
-    padding:18px;
-    border:0;
-    border-radius:27px;
-    background:#292731;
-    color:#fff;
-    font-size:18px;
-    font-weight:800;
-    cursor:pointer;
-    position:relative;
-    overflow:hidden;
-    transition:.2s;
+ width:100%;
+ padding:18px;
+ border:0;
+ border-radius:27px;
+ background:#292731;
+ color:#fff;
+ font-size:18px;
+ font-weight:800;
+ cursor:pointer;
+ transition:.2s
 }
 .start:hover{
-    background:#1e1d25;
-    transform:translateY(-2px);
-    box-shadow:0 12px 28px rgba(0,0,0,.22);
+ background:#1e1d25;
+ transform:translateY(-2px);
+ box-shadow:0 12px 28px rgba(0,0,0,.22)
 }
-.start:active{transform:scale(.98)}
 .start.loading{
-    pointer-events:none;
-    opacity:.7;
-}
-.start.loading:after{
-    content:"";
-    position:absolute;
-    left:-45%;
-    top:0;
-    width:40%;
-    height:100%;
-    background:#fff2;
-    animation:loading 1s infinite;
-}
-@keyframes loading{
-    from{transform:translateX(0)}
-    to{transform:translateX(370%)}
+ pointer-events:none;
+ opacity:.7
 }
 
 details{
-    margin-top:17px;
-    border:1px solid #dedee3;
-    border-radius:21px;
-    overflow:hidden;
-    background:#fff;
+ margin-top:17px;
+ border:1px solid #dedee3;
+ border-radius:21px;
+ overflow:hidden;
+ background:#fff
 }
 summary{
-    padding:17px 19px;
-    cursor:pointer;
-    font-weight:800;
-    list-style:none;
-    user-select:none;
+ padding:17px 19px;
+ cursor:pointer;
+ font-weight:800;
+ list-style:none
 }
 summary::-webkit-details-marker{display:none}
 summary:before{
-    content:"›";
-    display:inline-block;
-    margin-right:9px;
-    transition:.2s;
+ content:"›";
+ display:inline-block;
+ margin-right:9px;
+ transition:.2s
 }
 details[open] summary:before{transform:rotate(90deg)}
+
 .options{
-    padding:5px 19px 17px;
-    border-top:1px solid #eee;
+ padding:5px 19px 17px;
+ border-top:1px solid #eee
 }
 .option{
-    display:flex;
-    align-items:center;
-    gap:11px;
-    padding:9px 0;
-    color:#555;
-    font-size:14px;
-    cursor:pointer;
+ display:flex;
+ align-items:center;
+ gap:11px;
+ padding:9px 0;
+ color:#555;
+ font-size:14px;
+ cursor:pointer
 }
 .option input{
-    width:18px;
-    height:18px;
-    margin:0;
-    accent-color:#292731;
+ width:18px;
+ height:18px;
+ margin:0;
+ accent-color:#292731
 }
+
+.level{
+ margin-top:15px;
+ padding:14px 16px;
+ border-radius:18px;
+ background:#f0f0f4;
+ font-size:11px;
+ color:#666;
+ line-height:1.6
+}
+.level b{color:#202027}
+
 .status{
-    min-height:18px;
-    margin-top:17px;
-    text-align:center;
-    color:#999;
-    font-size:11px;
-    letter-spacing:1px;
+ min-height:18px;
+ margin-top:17px;
+ text-align:center;
+ color:#999;
+ font-size:11px;
+ letter-spacing:1px
 }
 .footer{
-    margin-top:9px;
-    text-align:center;
-    font-size:9px;
-    color:#aaa;
-    letter-spacing:3px;
-}
-.success{animation:success .45s ease}
-@keyframes success{
-    50%{transform:scale(1.025)}
+ margin-top:9px;
+ text-align:center;
+ font-size:9px;
+ color:#aaa;
+ letter-spacing:3px
 }
 
 @media(max-width:520px){
-    body{padding:12px}
-    .card{
-        padding:21px;
-        border-radius:27px;
-    }
-    .drop{min-height:145px}
+ body{padding:12px}
+ .card{
+  padding:21px;
+  border-radius:27px
+ }
+ .drop{min-height:145px}
 }
 </style>
 </head>
@@ -369,171 +312,176 @@ details[open] summary:before{transform:rotate(90deg)}
 <body>
 
 <div class="bg">
-    <div class="grid"></div>
-    <div class="orb a"></div>
-    <div class="orb b"></div>
+ <div class="grid"></div>
+ <div class="orb a"></div>
+ <div class="orb b"></div>
 </div>
 
-<!-- LAYAR AKTIVASI -->
 <div class="activation" id="activation">
-    <div class="brand-b4im">B4im</div>
-    <div class="subtitle">Obfuscator System</div>
-    <button class="btn-activate" id="btnActivate">Aktifkan Sistem</button>
+ <div class="brand-b4im">B4im</div>
+ <div class="subtitle">VM Obfuscator System</div>
+ <button class="btn-activate" id="btnActivate">
+  Aktifkan Sistem
+ </button>
 </div>
 
-<!-- MENU UTAMA -->
 <main class="card" id="card">
-    <div class="brand">
-        <span>BAIM OBFUSCATOR</span>
-    </div>
 
-    <div class="line"></div>
+ <div class="brand">
+  <span>BAIM OBFUSCATOR</span>
+ </div>
 
-    <label class="drop" id="drop" for="picker">
-        <div class="icon">↑</div>
-        <b>Pilih file</b>
-        <small>Lua / Pawn / HTML</small>
-    </label>
+ <div class="badge">VM STYLE • ENGINE</div>
 
-    <input
-        id="picker"
-        type="file"
-        accept=".lua,.pwn,.inc,.html,.htm,.txt"
-    >
+ <div class="line"></div>
 
-    <div class="file" id="fileName">—</div>
+ <label class="drop" id="drop" for="picker">
+  <div class="icon">↑</div>
+  <b>Pilih file Lua</b>
+  <small>.lua / .txt</small>
+ </label>
 
-    <button
-        class="start"
-        id="start"
-        type="button"
-    >Start</button>
+ <input id="picker" type="file" accept=".lua,.txt">
 
-    <details>
-        <summary>Pengaturan obfuscation</summary>
+ <div class="file" id="fileName">—</div>
 
-        <div class="options">
+ <button class="start" id="start">
+  Start VM Obfuscation
+ </button>
 
-            <label class="option">
-                <input id="comments" type="checkbox" checked>
-                <span>Hapus komentar</span>
-            </label>
+ <details open>
+  <summary>VM Protection Engine</summary>
 
-            <label class="option">
-                <input id="strings" type="checkbox" checked>
-                <span>Obfuscate string (XOR + tabel)</span>
-            </label>
+  <div class="options">
 
-            <label class="option">
-                <input id="names" type="checkbox" checked>
-                <span>Acak local identifier</span>
-            </label>
+   <label class="option">
+    <input id="comments" type="checkbox" checked>
+    <span>Hapus komentar</span>
+   </label>
 
-            <label class="option">
-                <input id="minify" type="checkbox" checked>
-                <span>Minify source</span>
-            </label>
+   <label class="option">
+    <input id="strings" type="checkbox" checked>
+    <span>Encode string</span>
+   </label>
 
-            <label class="option">
-                <input id="junk" type="checkbox" checked>
-                <span>Tambah layer runtime</span>
-            </label>
+   <label class="option">
+    <input id="names" type="checkbox" checked>
+    <span>Random local identifier</span>
+   </label>
 
-            <label class="option">
-                <input id="numObf" type="checkbox" checked>
-                <span>Enkripsi angka (bitwise + ekspresi)</span>
-            </label>
+   <label class="option">
+    <input id="numbers" type="checkbox" checked>
+    <span>Encode numeric constant</span>
+   </label>
 
-            <label class="option">
-                <input id="junkObf" type="checkbox" checked>
-                <span>Suntik kode sampah (control-flow dummy)</span>
-            </label>
+   <label class="option">
+    <input id="vm" type="checkbox" checked>
+    <span>VM-style instruction layer</span>
+   </label>
 
-            <label class="option">
-                <input id="antiAi" type="checkbox" checked>
-                <span>Mode Anti-AI (XOR string + angka rumit)</span>
-            </label>
+   <label class="option">
+    <input id="junk" type="checkbox" checked>
+    <span>Junk instruction</span>
+   </label>
 
-        </div>
-    </details>
+   <label class="option">
+    <input id="shuffle" type="checkbox" checked>
+    <span>Shuffle instruction order</span>
+   </label>
 
-    <div class="status" id="status">
-        BAIM OBFUSCATOR
-    </div>
+   <label class="option">
+    <input id="minify" type="checkbox" checked>
+    <span>Minify source</span>
+   </label>
 
-    <div class="footer">
-        BAIM OBFUSCATOR
-    </div>
+  </div>
+ </details>
+
+ <div class="level">
+  <b>ENGINE:</b> VM-style prototype<br>
+  <b>MODE:</b> Local browser processing<br>
+  <b>OUTPUT:</b> Lua source
+ </div>
+
+ <div class="status" id="status">
+  BAIM OBFUSCATOR READY
+ </div>
+
+ <div class="footer">
+  BAIM OBFUSCATOR • VM MAX
+ </div>
+
 </main>
 
 <script>
 "use strict";
 
+/* =========================================================
+   UTIL
+========================================================= */
+
 const $ = id => document.getElementById(id);
 
 let selectedFile = null;
 
-/* ========== LAYAR AKTIVASI ========== */
-$("btnActivate").addEventListener("click", function(){
-
-    const activation = $("activation");
-    const card = $("card");
-
-    activation.classList.add("hidden");
-
-    setTimeout(function(){
-        activation.style.display = "none";
-        card.classList.add("active");
-    }, 800);
-});
-
-/* =========================================================
-   RANDOM IDENTIFIER (lebih panjang & mengandung angka)
-========================================================= */
+function randomInt(min,max){
+ return Math.floor(Math.random()*(max-min+1))+min;
+}
 
 function randomIdentifier(){
-
-    const chars =
-        "IlOoXxZzVvQqAaBbCcDdEeFf0123456789";
-
-    let result = "_";
-
-    for(let i = 0; i < 32; i++){
-
-        result += chars[
-            Math.floor(
-                Math.random() * chars.length
-            )
-        ];
-    }
-
-    return result;
+ const chars="IlOoXxZzVvQqAaBbCcDdEeFf";
+ let s="_";
+ for(let i=0;i<randomInt(12,24);i++){
+  s+=chars[randomInt(0,chars.length-1)];
+ }
+ return s;
 }
+
+function hex(n){
+ return n.toString(16).padStart(2,"0");
+}
+
+function shuffleArray(arr){
+ for(let i=arr.length-1;i>0;i--){
+  const j=randomInt(0,i);
+  [arr[i],arr[j]]=[arr[j],arr[i]];
+ }
+ return arr;
+}
+
+/* =========================================================
+   ACTIVATION
+========================================================= */
+
+$("btnActivate").onclick=function(){
+
+ const activation=$("activation");
+ const card=$("card");
+
+ activation.classList.add("hidden");
+
+ setTimeout(()=>{
+  activation.style.display="none";
+  card.classList.add("active");
+ },800);
+};
 
 /* =========================================================
    FILE
 ========================================================= */
 
-$("picker").addEventListener(
-    "change",
-    function(){
+$("picker").addEventListener("change",function(){
 
-        selectedFile =
-            this.files &&
-            this.files.length
-                ? this.files[0]
-                : null;
+ selectedFile=this.files&&this.files.length
+  ?this.files[0]
+  :null;
 
-        showFile();
-    }
-);
+ showFile();
+});
 
 function showFile(){
-
-    $("fileName").textContent =
-        selectedFile
-            ? selectedFile.name
-            : "—";
+ $("fileName").textContent=
+  selectedFile?selectedFile.name:"—";
 }
 
 /* =========================================================
@@ -542,1037 +490,827 @@ function showFile(){
 
 function lexLua(source){
 
-    const tokens = [];
+ const tokens=[];
+ let i=0;
 
-    let i = 0;
+ function add(type,value){
+  tokens.push({type,value});
+ }
 
-    function push(type,value){
-        tokens.push({
-            type:type,
-            value:value
-        });
+ while(i<source.length){
+
+  const c=source[i];
+
+  /* whitespace */
+
+  if(/\s/.test(c)){
+
+   let j=i+1;
+
+   while(j<source.length&&/\s/.test(source[j]))j++;
+
+   add("space",source.slice(i,j));
+   i=j;
+   continue;
+  }
+
+  /* comments */
+
+  if(c==="-"&&source[i+1]==="-"){
+
+   if(
+    source[i+2]==="["&&
+    source[i+3]==="["
+   ){
+
+    const end=source.indexOf("]]",i+4);
+
+    if(end!==-1){
+
+     add(
+      "comment",
+      source.slice(i,end+2)
+     );
+
+     i=end+2;
+     continue;
+    }
+   }
+
+   let j=source.indexOf("\n",i+2);
+
+   if(j===-1)j=source.length;
+
+   add("comment",source.slice(i,j));
+
+   i=j;
+   continue;
+  }
+
+  /* quoted strings */
+
+  if(c==="'"||c==='"'){
+
+   const quote=c;
+   let j=i+1;
+
+   while(j<source.length){
+
+    if(source[j]==="\\"){
+     j+=2;
+     continue;
     }
 
-    while(i < source.length){
-
-        const c = source[i];
-
-        if(/\s/.test(c)){
-
-            let j = i + 1;
-
-            while(
-                j < source.length &&
-                /\s/.test(source[j])
-            ){
-                j++;
-            }
-
-            push("space",source.slice(i,j));
-
-            i = j;
-            continue;
-        }
-
-        if(
-            c === "-" &&
-            source[i + 1] === "-"
-        ){
-
-            if(
-                source[i + 2] === "[" &&
-                source[i + 3] === "["
-            ){
-
-                const end =
-                    source.indexOf(
-                        "]]",
-                        i + 4
-                    );
-
-                if(end !== -1){
-
-                    push(
-                        "comment",
-                        source.slice(
-                            i,
-                            end + 2
-                        )
-                    );
-
-                    i = end + 2;
-                    continue;
-                }
-            }
-
-            let j =
-                source.indexOf(
-                    "\n",
-                    i + 2
-                );
-
-            if(j === -1)
-                j = source.length;
-
-            push(
-                "comment",
-                source.slice(i,j)
-            );
-
-            i = j;
-            continue;
-        }
-
-        if(c === "'" || c === '"'){
-
-            const quote = c;
-
-            let j = i + 1;
-
-            while(j < source.length){
-
-                if(source[j] === "\\"){
-
-                    j += 2;
-                    continue;
-                }
-
-                if(source[j] === quote){
-
-                    j++;
-                    break;
-                }
-
-                j++;
-            }
-
-            push(
-                "string",
-                source.slice(i,j)
-            );
-
-            i = j;
-            continue;
-        }
-
-        if(
-            c === "[" &&
-            source[i + 1] === "["
-        ){
-
-            const end =
-                source.indexOf(
-                    "]]",
-                    i + 2
-                );
-
-            if(end !== -1){
-
-                push(
-                    "string",
-                    source.slice(
-                        i,
-                        end + 2
-                    )
-                );
-
-                i = end + 2;
-                continue;
-            }
-        }
-
-        if(
-            /[A-Za-z_]/.test(c)
-        ){
-
-            let j = i + 1;
-
-            while(
-                j < source.length &&
-                /[A-Za-z0-9_]/.test(
-                    source[j]
-                )
-            ){
-                j++;
-            }
-
-            push(
-                "identifier",
-                source.slice(i,j)
-            );
-
-            i = j;
-            continue;
-        }
-
-        if(/[0-9]/.test(c)){
-
-            let j = i + 1;
-
-            while(
-                j < source.length &&
-                /[A-Za-z0-9_.]/.test(
-                    source[j]
-                )
-            ){
-                j++;
-            }
-
-            push(
-                "number",
-                source.slice(i,j)
-            );
-
-            i = j;
-            continue;
-        }
-
-        let op =
-            source.slice(i,i + 3);
-
-        if(
-            op === "..." ||
-            op === ">>=" ||
-            op === "<<="
-        ){
-
-            push("symbol",op);
-            i += 3;
-            continue;
-        }
-
-        op =
-            source.slice(i,i + 2);
-
-        if(
-            [
-                "==",
-                "~=",
-                "<=",
-                ">=",
-                "..",
-                "//",
-                "<<",
-                ">>",
-                "+=",
-                "-=",
-                "*=",
-                "/=",
-                "%="
-            ].includes(op)
-        ){
-
-            push("symbol",op);
-            i += 2;
-            continue;
-        }
-
-        push("symbol",c);
-
-        i++;
+    if(source[j]===quote){
+     j++;
+     break;
     }
 
-    return tokens;
+    j++;
+   }
+
+   add("string",source.slice(i,j));
+
+   i=j;
+   continue;
+  }
+
+  /* long string */
+
+  if(c==="["&&source[i+1]==="["){
+
+   const end=source.indexOf("]]",i+2);
+
+   if(end!==-1){
+
+    add(
+     "string",
+     source.slice(i,end+2)
+    );
+
+    i=end+2;
+    continue;
+   }
+  }
+
+  /* identifier */
+
+  if(/[A-Za-z_]/.test(c)){
+
+   let j=i+1;
+
+   while(
+    j<source.length&&
+    /[A-Za-z0-9_]/.test(source[j])
+   )j++;
+
+   add(
+    "identifier",
+    source.slice(i,j)
+   );
+
+   i=j;
+   continue;
+  }
+
+  /* number */
+
+  if(/[0-9]/.test(c)){
+
+   let j=i+1;
+
+   while(
+    j<source.length&&
+    /[A-Za-z0-9_.]/.test(source[j])
+   )j++;
+
+   add(
+    "number",
+    source.slice(i,j)
+   );
+
+   i=j;
+   continue;
+  }
+
+  /* operators */
+
+  const op3=source.slice(i,i+3);
+
+  if(
+   ["...","<<=",">>="].includes(op3)
+  ){
+
+   add("symbol",op3);
+   i+=3;
+   continue;
+  }
+
+  const op2=source.slice(i,i+2);
+
+  if(
+   [
+    "==","~=","<=",">=",
+    "..","//","<<",">>",
+    "+=","-=","*=","/=","%=",
+    "::"
+   ].includes(op2)
+  ){
+
+   add("symbol",op2);
+   i+=2;
+   continue;
+  }
+
+  add("symbol",c);
+  i++;
+ }
+
+ return tokens;
 }
 
 /* =========================================================
-   LUA STRING ENCODER (XOR + Tabel + Fungsi)
+   STRING DECODER
 ========================================================= */
 
 function decodeLuaString(raw){
 
-    if(
-        raw.startsWith("[[") &&
-        raw.endsWith("]]")
-    ){
+ if(raw.startsWith("[[")&&raw.endsWith("]]")){
+  return raw.slice(2,-2);
+ }
 
-        return raw.slice(2,-2);
-    }
+ let value=raw.slice(1,-1);
 
-    let value = raw.slice(1,-1);
+ value=value.replace(
+  /\\([\\'"nrtbfv])/g,
+  (_,c)=>{
 
-    value =
-        value.replace(
-            /\\([\\'"nrtbfv])/g,
-            function(_,c){
+   const map={
+    "\\":"\\",
+    "'":"'",
+    '"':'"',
+    n:"\n",
+    r:"\r",
+    t:"\t",
+    b:"\b",
+    f:"\f",
+    v:"\v"
+   };
 
-                const map = {
-                    "\\":"\\",
-                    "'":"'",
-                    '"':'"',
-                    n:"\n",
-                    r:"\r",
-                    t:"\t",
-                    b:"\b",
-                    f:"\f",
-                    v:"\v"
-                };
+   return map[c]??c;
+  }
+ );
 
-                return map[c] ?? c;
-            }
-        );
+ value=value.replace(
+  /\\([0-9]{1,3})/g,
+  (_,n)=>String.fromCharCode(parseInt(n,10))
+ );
 
-    value =
-        value.replace(
-            /\\([0-9]{1,3})/g,
-            function(_,n){
-                return String.fromCharCode(
-                    parseInt(n,10)
-                );
-            }
-        );
-
-    return value;
-}
-
-function obfuscateLuaString(raw){
-
-    const value =
-        decodeLuaString(raw);
-
-    if(!value.length)
-        return '""';
-
-    // Buat key acak untuk XOR
-    const key = [];
-    const keyLen = 4 + Math.floor(Math.random()*4);
-    for(let i=0; i<keyLen; i++){
-        key.push(Math.floor(Math.random()*256));
-    }
-
-    // XOR encoding
-    const encodedCodes = [];
-    for(let i=0; i<value.length; i++){
-        const code = value.charCodeAt(i);
-        const k = key[i % keyLen];
-        encodedCodes.push(code ^ k);
-    }
-
-    const tableName = randomIdentifier();
-    const keyName = randomIdentifier();
-    const resultName = randomIdentifier();
-
-    const tableContent = encodedCodes.join(",");
-    const keyContent = key.join(",");
-
-    const code =
-        `(function()local ${tableName}={${tableContent}};local ${keyName}={${keyContent}};local ${resultName}={};for _i=1,#${tableName} do ${resultName}[_i]=string.char(${tableName}[_i]~${keyName}[(_i-1)%#${keyName}+1])end;return table.concat(${resultName})end)()`;
-
-    return code;
+ return value;
 }
 
 /* =========================================================
-   LUA NUMBER OBFUSCATION (ANTI-AI + bitwise)
+   STRING VM ENCODER
 ========================================================= */
 
-function obfuscateLuaNumber(numStr){
+function encodeStringVM(raw){
 
-    const num = Number(numStr);
+ const value=decodeLuaString(raw);
 
-    if(
-        isNaN(num) ||
-        !isFinite(num) ||
-        numStr.includes(".") ||
-        numStr.length > 4 ||
-        Math.abs(num) < 2 ||
-        Math.abs(num) > 10000
-    ){
-        return numStr;
-    }
+ const arr=[];
 
-    const options = [];
+ for(let i=0;i<value.length;i++){
+  arr.push(value.charCodeAt(i));
+ }
 
-    if(Number.isInteger(num)){
+ if(!arr.length)return '""';
 
-        const a = Math.floor(num/2);
-        const b = num - a;
-        const c = Math.ceil(num/3);
-        const d = num % 3;
+ /*
+   Setiap byte diberi operasi sederhana.
+   Hasil runtime tetap menghasilkan string asli.
+ */
 
-        options.push(
-            `(${a}+${b})`,
-            `(${a*2}+${b})`,
-            `(${c*3}+${d})`,
-            `(${c*3}-${3-d})`,
-            `((${num}+0))`,
-            `((${num}-0))`
-        );
+ const parts=arr.map(code=>{
 
-        if(num > 2 && num < 100){
-            options.push(
-                `(${num+10}-10)`,
-                `(${num-7}+7)`,
-                `(${num*5}/5)`,
-                `(${num*10}/10)`
-            );
-        }
+  const mode=randomInt(0,3);
 
-        // Bitwise
-        options.push(
-            `(${num}|0)`,
-            `(${num}&0xFFFFFFFF)`,
-            `(${num}>>0)`,
-            `(${num}<<0)`
-        );
+  if(mode===0){
+   return `((${code}+0))`;
+  }
 
-        // Anti-AI: pakai IIFE dengan variabel lokal
-        if($("antiAi") && $("antiAi").checked){
-            const varName = randomIdentifier();
-            options.push(
-                `(function()local ${varName}=${num};return ${varName} end)()`
-            );
-        }
+  if(mode===1){
+   const a=randomInt(1,20);
+   return `((${code+a}-${a}))`;
+  }
 
-    } else {
+  if(mode===2){
+   const a=randomInt(2,9);
+   return `((${code*a}/${a}))`;
+  }
 
-        options.push(
-            `(${num*2}/2)`,
-            `(${num+1}-1)`,
-            `(${num-1}+1)`,
-            `(${num*3}/3)`
-        );
-    }
+  const a=randomInt(1,10);
+  const b=code+a;
 
-    return options[
-        Math.floor(
-            Math.random() * options.length
-        )
-    ];
+  return `((${b}-${a}))`;
+ });
+
+ return `_S({${parts.join(",")}})`;
 }
 
 /* =========================================================
-   LUA RESERVED / GLOBAL
+   NUMBER ENCODER
 ========================================================= */
 
-const LUA_RESERVED = new Set([
-    "and","break","do","else","elseif","end","false","for","function","goto",
-    "if","in","local","nil","not","or","repeat","return","then","true","until","while"
+function encodeNumber(raw){
+
+ const n=Number(raw);
+
+ if(
+  !Number.isFinite(n)||
+  raw.includes(".")||
+  raw.includes("e")||
+  raw.includes("E")||
+  Math.abs(n)<2||
+  Math.abs(n)>10000
+ ){
+  return raw;
+ }
+
+ if(!Number.isInteger(n))return raw;
+
+ const type=randomInt(0,4);
+
+ if(type===0){
+
+  const a=randomInt(1,Math.max(1,Math.abs(n)));
+
+  return n>=0
+   ?`(${n+a}-${a})`
+   :`(${n-a}+${a})`;
+ }
+
+ if(type===1){
+
+  const a=randomInt(2,9);
+
+  if(n%a===0){
+   return `(${n*a}/${a})`;
+  }
+
+  return `(${n+10}-10)`;
+ }
+
+ if(type===2){
+
+  const a=Math.floor(n/2);
+  const b=n-a;
+
+  return `(${a}+${b})`;
+ }
+
+ if(type===3){
+
+  const a=randomInt(2,30);
+
+  return `(${n+a}-${a})`;
+ }
+
+ return `(${n})`;
+}
+
+/* =========================================================
+   LUA RESERVED
+========================================================= */
+
+const RESERVED=new Set([
+ "and","break","do","else","elseif","end",
+ "false","for","function","goto","if","in",
+ "local","nil","not","or","repeat","return",
+ "then","true","until","while"
 ]);
 
-const LUA_GLOBALS = new Set([
-    "_G","_ENV","self","assert","collectgarbage","dofile","error","getmetatable",
-    "ipairs","load","loadfile","next","pairs","pcall","print","rawequal","rawget",
-    "rawlen","rawset","require","select","setmetatable","tonumber","tostring","type",
-    "xpcall","coroutine","debug","io","math","os","package","string","table","utf8",
-    "unpack"
+const GLOBALS=new Set([
+ "_G","_ENV","self",
+ "assert","collectgarbage","dofile","error",
+ "getmetatable","ipairs","load","loadfile",
+ "next","pairs","pcall","print","rawequal",
+ "rawget","rawlen","rawset","require",
+ "select","setmetatable","tonumber",
+ "tostring","type","xpcall",
+ "coroutine","debug","io","math","os",
+ "package","string","table","utf8"
 ]);
 
 /* =========================================================
-   LUA LOCAL RENAMER (DIPERBAIKI)
+   SAFE LOCAL RENAMER
 ========================================================= */
 
-function obfuscateLuaLocals(tokens){
+function renameLocals(tokens){
 
-    const scopes = [new Map()];
-    const used = new Set();
+ const map=new Map();
+ const used=new Set();
 
-    function newName(){
+ function make(){
 
-        let name;
+  let n;
 
-        do{
-            name = randomIdentifier();
-        }while(used.has(name));
+  do{
+   n=randomIdentifier();
+  }while(used.has(n));
 
-        used.add(name);
+  used.add(n);
+  return n;
+ }
 
-        return name;
+ function declare(name){
+
+  if(
+   RESERVED.has(name)||
+   GLOBALS.has(name)
+  )return name;
+
+  if(!map.has(name)){
+   map.set(name,make());
+  }
+
+  return map.get(name);
+ }
+
+ /*
+   Hanya rename identifier setelah "local".
+   Ini sengaja lebih konservatif supaya
+   properti/table field tidak ikut rusak.
+ */
+
+ for(let i=0;i<tokens.length;i++){
+
+  const t=tokens[i];
+
+  if(
+   t.type==="identifier"&&
+   t.value==="local"
+  ){
+
+   let j=i+1;
+
+   if(
+    tokens[j]&&
+    tokens[j].type==="identifier"&&
+    tokens[j].value==="function"
+   ){
+
+    j++;
+
+    if(
+     tokens[j]&&
+     tokens[j].type==="identifier"
+    ){
+
+     tokens[j].value=declare(tokens[j].value);
     }
 
-    function find(name){
+    continue;
+   }
 
-        for(let i = scopes.length - 1; i >= 0; i--){
-            if(scopes[i].has(name)){
-                return scopes[i].get(name);
-            }
-        }
+   while(j<tokens.length){
 
-        return null;
+    const x=tokens[j];
+
+    if(
+     x.type==="identifier"
+    ){
+
+     x.value=declare(x.value);
+     j++;
+     continue;
     }
 
-    function declare(name){
-
-        if(LUA_RESERVED.has(name) || LUA_GLOBALS.has(name)){
-            return name;
-        }
-
-        if(scopes[scopes.length - 1].has(name)){
-            return scopes[scopes.length - 1].get(name);
-        }
-
-        const n = newName();
-        scopes[scopes.length - 1].set(name, n);
-        return n;
+    if(x.value===","){
+     j++;
+     continue;
     }
 
-    // Pass 1: deklarasi local dan parameter
-    for(let i = 0; i < tokens.length; i++){
+    break;
+   }
+  }
+ }
 
-        const token = tokens[i];
+ /*
+   Ganti referensi yang cocok.
+ */
 
-        if(token.type === "identifier" && token.value === "local"){
+ for(const t of tokens){
 
-            let j = i + 1;
+  if(t.type!=="identifier")continue;
 
-            if(tokens[j] && tokens[j].type === "identifier" && tokens[j].value === "function"){
+  if(
+   RESERVED.has(t.value)||
+   GLOBALS.has(t.value)
+  )continue;
 
-                j++;
-                if(tokens[j] && tokens[j].type === "identifier"){
-                    tokens[j].value = declare(tokens[j].value);
-                }
-                // Masuk ke body function? Kita tidak push scope di sini karena nanti saat pass parameter kita akan push
-                continue;
-            }
+  const old=t.value;
 
-            while(j < tokens.length){
+  if(map.has(old)){
+   t.value=map.get(old);
+  }
+ }
 
-                const t = tokens[j];
-
-                if(t.type === "identifier"){
-
-                    t.value = declare(t.value);
-                    j++;
-                    continue;
-                }
-
-                if(t.value === ","){
-                    j++;
-                    continue;
-                }
-
-                break;
-            }
-        }
-    }
-
-    // Pass 2: parameter fungsi (perlu push scope)
-    for(let i = 0; i < tokens.length; i++){
-
-        if(tokens[i].type === "identifier" && tokens[i].value === "function"){
-
-            let j = i + 1;
-
-            while(j < tokens.length && tokens[j].value !== "("){
-                j++;
-            }
-
-            if(j >= tokens.length) continue;
-
-            let depth = 1;
-            j++;
-
-            scopes.push(new Map());
-
-            while(j < tokens.length && depth > 0){
-
-                if(tokens[j].value === "(") depth++;
-                if(tokens[j].value === ")") depth--;
-
-                if(depth === 1 && tokens[j].type === "identifier"){
-
-                    const previous = tokens[j - 1];
-
-                    if(!previous || previous.value !== "."){
-                        tokens[j].value = declare(tokens[j].value);
-                    }
-                }
-
-                j++;
-            }
-
-            // Pop scope setelah selesai parameter, tapi perlu menjaga scope untuk body? Body dimulai setelah ')' dan sampai 'end' sesuai depth.
-            // Kita abaikan untuk saat ini dan pop saja; bisa menyebabkan scope tidak akurat untuk body.
-            // Namun karena kita hanya mengganti identifier yang sudah dideklarasikan, jika body menggunakan parameter yang sudah di-rename, harusnya sudah terganti karena nama lama masih tersimpan di map? Tidak, karena kita mengganti token langsung.
-            // Kita perlu juga push scope untuk body fungsi, tapi tidak implement detail. Untuk sederhana, kita pop setelah parameter.
-            scopes.pop();
-        }
-    }
-
-    // Pass 3: Ganti penggunaan identifier lokal
-    // Karena scope sudah di-pop, kita tidak bisa mencari dengan benar. 
-    // Oleh karena itu, kita akan melakukan pendekatan berbeda: ganti semua identifier yang bukan global/reserved dan bukan field berdasarkan map global nama_lokal -> nama_baru.
-    // Tapi ini bisa mengganti identifier yang sebenarnya global tapi belum dideklarasikan.
-    // Alternatif: kita sudah merename deklarasi dan parameter, jadi tinggal ganti penggunaan yang cocok dengan nama lama? Tapi kita tidak menyimpan mapping global.
-    // Solusi: saat pass 1 dan 2, selain mengganti token, kita juga menyimpan mapping ke objek global `renamedMap`. Lalu pass 3 gunakan mapping tersebut.
-    // Simpan mapping di scope global? Kita buat `globalRenamed` object.
-
-    // Di bawah ini kita implement ulang dengan pendekatan yang lebih mudah: 
-    // 1. Kumpulkan semua nama lokal (deklarasi + parameter) dan mapping ke nama baru.
-    // 2. Ganti semua identifier yang ada di mapping dan bukan setelah '.' atau ':'.
-    // Ini mungkin akan mengganti identifier global yang sama dengan nama lokal di scope lain, tapi karena Lua scoping, itu bisa salah. 
-    // Namun untuk kebanyakan kasus dan karena user mengeluh param tidak terganti, kita lakukan pendekatan sederhana: ganti semua kemunculan identifier yang namanya ada di mapping, kecuali jika diawali '.' atau ':'.
-
-    // Kita sudah mengganti deklarasi dan parameter, sekarang ganti penggunaan yang lain.
-    // Karena kita tidak menyimpan mapping lama->baru, kita bisa buat ulang dengan membaca token deklarasi (yang sudah diganti) dan mencari nama asli? Tidak bisa.
-    // Jadi kita perlu merombak fungsi ini sepenuhnya.
-
-    // Cara paling aman: 
-    // a. Simpan daftar nama lokal yang dideklarasikan (sebelum rename) dan nama barunya.
-    // b. Ganti token identifier yang sesuai.
-
-    // Implementasi baru:
-
-    function obfuscateLuaLocalsNew(tokens){
-        const scopes = [new Map()]; // setiap Map berisi mapping nama_lokal_asli -> nama_baru
-        const used = new Set();
-
-        function newName(){
-            let name;
-            do{
-                name = randomIdentifier();
-            }while(used.has(name));
-            used.add(name);
-            return name;
-        }
-
-        function findMap(name){
-            for(let i=scopes.length-1; i>=0; i--){
-                if(scopes[i].has(name)) return scopes[i].get(name);
-            }
-            return null;
-        }
-
-        function declare(name){
-            if(LUA_RESERVED.has(name) || LUA_GLOBALS.has(name)) return name;
-            const currentScope = scopes[scopes.length-1];
-            if(currentScope.has(name)) return currentScope.get(name);
-            const newN = newName();
-            currentScope.set(name, newN);
-            return newN;
-        }
-
-        // Kita akan melakukan traversal dengan memperhatikan scope.
-        // Simpel: lakukan dua pass terpisah.
-        // Pass A: tandai deklarasi dan parameter, simpan mapping di scope yang sesuai.
-        // Pass B: ganti penggunaan identifier berdasarkan scope.
-
-        // Namun karena kita tidak bisa dengan mudah melacak scope secara akurat tanpa parsing penuh, 
-        // kita akan gunakan pendekatan "global rename" yang lebih sederhana: 
-        // kumpulkan semua nama lokal yang muncul di seluruh file, lalu ganti semua kemunculan nama itu kecuali setelah '.' atau ':'.
-        // Ini bisa salah, tapi untuk user yang ingin "gacor", mungkin acceptable. Namun kita ingin perbaiki bug yang disebutkan.
-
-        // Alternatif: gunakan library JS untuk parsing Lua? Tidak ada.
-
-        // Demi waktu, kita akan lakukan pendekatan hybrid:
-        // - Kumpulkan semua nama lokal yang dideklarasikan (dari token 'local').
-        // - Ganti deklarasi dan juga semua kemunculan identifier yang sama di file (kecuali setelah '.' atau ':'), dengan asumsi scope sederhana.
-
-        const allLocalNames = new Map(); // oldName -> newName
-        const usedNames = new Set();
-
-        function getNewName(oldName){
-            if(!allLocalNames.has(oldName)){
-                allLocalNames.set(oldName, randomIdentifier());
-            }
-            return allLocalNames.get(oldName);
-        }
-
-        // Pertama, identifikasi semua deklarasi local
-        for(let i=0; i<tokens.length; i++){
-            if(tokens[i].type === "identifier" && tokens[i].value === "local"){
-                let j = i+1;
-                // local function f
-                if(tokens[j] && tokens[j].type === "identifier" && tokens[j].value === "function"){
-                    j++;
-                    if(tokens[j] && tokens[j].type === "identifier"){
-                        const old = tokens[j].value;
-                        const newN = getNewName(old);
-                        tokens[j].value = newN;
-                    }
-                    continue;
-                }
-                while(j < tokens.length){
-                    const t = tokens[j];
-                    if(t.type === "identifier"){
-                        const old = t.value;
-                        const newN = getNewName(old);
-                        t.value = newN;
-                        j++;
-                        continue;
-                    }
-                    if(t.value === ","){ j++; continue; }
-                    break;
-                }
-            }
-        }
-
-        // Parameter fungsi: function name(params)
-        for(let i=0; i<tokens.length; i++){
-            if(tokens[i].type === "identifier" && tokens[i].value === "function"){
-                let j = i+1;
-                // cari '('
-                while(j < tokens.length && tokens[j].value !== "(") j++;
-                if(j >= tokens.length) continue;
-                let depth = 1;
-                j++;
-                while(j < tokens.length && depth > 0){
-                    if(tokens[j].value === "(") depth++;
-                    if(tokens[j].value === ")") depth--;
-                    if(depth === 1 && tokens[j].type === "identifier"){
-                        const prev = tokens[j-1];
-                        if(!prev || prev.value !== "."){
-                            const old = tokens[j].value;
-                            const newN = getNewName(old);
-                            tokens[j].value = newN;
-                        }
-                    }
-                    j++;
-                }
-            }
-        }
-
-        // Ganti semua identifier yang ada di allLocalNames
-        for(let i=0; i<tokens.length; i++){
-            if(tokens[i].type !== "identifier") continue;
-            const prev = tokens[i-1];
-            if(prev && (prev.value === "." || prev.value === ":")) continue;
-            if(LUA_RESERVED.has(tokens[i].value) || LUA_GLOBALS.has(tokens[i].value)) continue;
-            if(allLocalNames.has(tokens[i].value)){
-                tokens[i].value = allLocalNames.get(tokens[i].value);
-            }
-        }
-
-        return tokens;
-    }
-
-    return obfuscateLuaLocalsNew(tokens);
+ return tokens;
 }
 
 /* =========================================================
-   LUA TOKENS -> SOURCE
+   REMOVE SPACES
 ========================================================= */
 
-function tokensToLua(tokens){
+function minifyLuaTokens(tokens){
 
-    return tokens.map(t => t.value).join("");
+ let out="";
+
+ for(let i=0;i<tokens.length;i++){
+
+  const t=tokens[i];
+
+  if(t.type==="space"){
+
+   const p=tokens[i-1];
+   const n=tokens[i+1];
+
+   if(
+    p&&n&&
+    (
+     (
+      (p.type==="identifier"||p.type==="number")&&
+      (n.type==="identifier"||n.type==="number")
+     )
+    )
+   ){
+    out+=" ";
+   }
+
+   continue;
+  }
+
+  out+=t.value;
+ }
+
+ return out.trim();
 }
 
 /* =========================================================
-   LUA MINIFIER
+   VM OPCODES
 ========================================================= */
 
-function minifyLua(source){
+const OPCODES={
+ NOP:11,
+ STR:23,
+ NUM:37,
+ RAW:41,
+ END:59
+};
 
-    const tokens = lexLua(source);
+function opEncode(n){
 
-    let result = "";
+ const salt=randomInt(11,97);
 
-    for(let i = 0; i < tokens.length; i++){
+ return {
+  a:n^salt,
+  b:salt
+ };
+}
 
-        const t = tokens[i];
+/* =========================================================
+   VM BUILDER
+========================================================= */
 
-        if(t.type === "space"){
+function buildVM(source){
 
-            const previous = tokens[i - 1];
-            const next = tokens[i + 1];
+ /*
+   Kita bungkus source sebagai RAW instruction.
+   Runtime dispatcher menjalankan instruction
+   berdasarkan opcode terenkripsi.
 
-            if(previous && next &&
-                ((previous.type === "identifier" || previous.type === "number") &&
-                 (next.type === "identifier" || next.type === "number"))){
+   Ini adalah VM-style layer, bukan interpreter
+   penuh untuk seluruh bahasa Lua.
+ */
 
-                result += " ";
-            }
+ const vmName=randomIdentifier();
+ const tableName=randomIdentifier();
+ const pcName=randomIdentifier();
+ const instrName=randomIdentifier();
+ const decodeName=randomIdentifier();
+ const execName=randomIdentifier();
+ const strName=randomIdentifier();
 
-            continue;
-        }
+ const salt=randomInt(31,127);
 
-        result += t.value;
+ const rawBytes=[];
+
+ for(let i=0;i<source.length;i++){
+  rawBytes.push(
+   source.charCodeAt(i)^salt
+  );
+ }
+
+ const encodedOpcode=OPCODES.RAW^salt;
+
+ const junk=[];
+
+ const junkCount=randomInt(5,12);
+
+ for(let i=0;i<junkCount;i++){
+
+  const n=opEncode(OPCODES.NOP);
+
+  junk.push(
+   `{${n.a},${n.b},0}`
+  );
+ }
+
+ const instructionList=[
+  ...junk,
+  `{${encodedOpcode},${salt},{${rawBytes.join(",")}}}`,
+  `{${OPCODES.END^salt},${salt},0}`
+ ];
+
+ shuffleArray(instructionList);
+
+ /*
+   END harus dipastikan berada di akhir.
+ */
+
+ const endInstruction=
+  `{${OPCODES.END^salt},${salt},0}`;
+
+ const index=instructionList.indexOf(endInstruction);
+
+ if(index!==-1){
+  instructionList.splice(index,1);
+ }
+
+ instructionList.push(endInstruction);
+
+ return `
+local ${vmName}={}
+
+local ${decodeName}=function(a,b)
+    return a~b
+end
+
+local ${strName}=function(t,s)
+    local r={}
+    for i=1,#t do
+        r[i]=string.char(${decodeName}(t[i],s))
+    end
+    return table.concat(r)
+end
+
+local ${execName}=function()
+    local ${tableName}={
+        ${instructionList.join(",")}
     }
 
-    return result.trim();
+    local ${pcName}=1
+
+    while true do
+
+        local ${instrName}=${tableName}[${pcName}]
+
+        if not ${instrName} then
+            break
+        end
+
+        local op=${instrName}[1]
+        local s=${instrName}[2]
+        local data=${instrName}[3]
+
+        op=${decodeName}(op,s)
+
+        if op==${OPCODES.NOP} then
+
+            local _v=${randomInt(1,999)}
+            _v=_v
+
+        elseif op==${OPCODES.RAW} then
+
+            local __src=${strName}(data,s)
+
+            local __fn,___err=load(__src)
+
+            if __fn then
+                __fn()
+            else
+                error(___err)
+            end
+
+        elseif op==${OPCODES.END} then
+            break
+        end
+
+        ${pcName}=${pcName}+1
+    end
+end
+
+${execName}()
+`;
+
 }
 
 /* =========================================================
-   LUA HEAVY JUNK INJECTION (ANTI-AI + control flow dummy)
+   JUNK GENERATOR
 ========================================================= */
 
-function heavyJunkInjection(source){
+function junkLayer(){
 
-    const junkPool = [
-        `do local _=math.random(1,100) end;`,
-        `do local _=string.rep("a",0) end;`,
-        `do local _={} _[1]=nil end;`,
-        `do local _=tonumber("0") end;`,
-        `do local _=#"" end;`,
-        `do local _=type(nil) end;`,
-        `do local _=pairs({}) end;`,
-        `do local _=ipairs({}) end;`,
-        `do local _=next({}) end;`,
-        `do local _=select(1,"x") end;`,
-        `do local _=math.floor(0.5) end;`,
-        `do local _=math.ceil(0.5) end;`,
-        `do local _=math.abs(-1) end;`,
-        `do local _=string.len("") end;`,
-        `do local _=table.concat({}) end;`,
-        `if false then local _=1 end;`,
-        `while false do break end;`,
-        `for _=1,0 do end;`,
-        `do local _=function()return nil end; _() end;`
-    ];
+ const a=randomIdentifier();
+ const b=randomIdentifier();
+ const c=randomIdentifier();
 
-    let junk = "";
-    const count = 12 + Math.floor(Math.random() * 30);
+ const junk=[
+  `do local ${a}=0 ${a}=${a}+1 end;`,
+  `do local ${b}={};${b}[1]=nil end;`,
+  `do local ${c}=string.len("") end;`,
+  `do local _=math.floor(0.5) end;`,
+  `do local _=math.abs(-1) end;`,
+  `do local _=table.concat({}) end;`,
+  `do local _=select(1,"x") end;`
+ ];
 
-    for(let i=0; i<count; i++){
-        junk += junkPool[Math.floor(Math.random() * junkPool.length)];
-        if(Math.random() < 0.5) junk += " ";
-    }
+ shuffleArray(junk);
 
-    return junk + source + junk;
+ return junk.slice(
+  0,
+  randomInt(3,junk.length)
+ ).join("");
 }
 
 /* =========================================================
-   LUA FULL PROCESSOR (LEVEL MAX + ANTI-AI)
+   MAIN LUA PROCESSOR
 ========================================================= */
 
 function processLua(source){
 
-    let tokens = lexLua(source);
+ let tokens=lexLua(source);
 
-    if($("comments").checked){
-        tokens = tokens.filter(t => t.type !== "comment");
+ if($("comments").checked){
+
+  tokens=tokens.filter(
+   t=>t.type!=="comment"
+  );
+ }
+
+ if($("names").checked){
+  tokens=renameLocals(tokens);
+ }
+
+ if($("strings").checked){
+
+  for(const t of tokens){
+
+   if(t.type==="string"){
+
+    /*
+      Jangan mengubah string kosong menjadi
+      expression yang tidak diperlukan.
+    */
+
+    const decoded=decodeLuaString(t.value);
+
+    if(decoded.length){
+     t.value=encodeStringVM(t.value);
     }
+   }
+  }
+ }
 
-    if($("strings").checked){
+ if($("numbers").checked){
 
-        for(let i = 0; i < tokens.length; i++){
-            if(tokens[i].type === "string"){
-                tokens[i].value = obfuscateLuaString(tokens[i].value);
-                tokens[i].type = "generated";
-            }
-        }
-    }
+  for(const t of tokens){
 
-    if($("names").checked){
-        tokens = obfuscateLuaLocals(tokens);
-    }
+   if(t.type==="number"){
 
-    if($("numObf").checked){
-        for(let i = 0; i < tokens.length; i++){
-            if(tokens[i].type === "number"){
-                tokens[i].value = obfuscateLuaNumber(tokens[i].value);
-                tokens[i].type = "generated";
-            }
-        }
-    }
+    t.value=encodeNumber(t.value);
+   }
+  }
+ }
 
-    let result = tokensToLua(tokens);
+ let result=minifyLuaTokens(tokens);
 
-    if($("minify").checked){
-        result = minifyLua(result);
-    }
+ /*
+   Runtime helper untuk encoded strings.
+ */
 
-    if($("junk").checked){
-        const dummy = randomIdentifier();
-        result = "local " + dummy + "=nil;" + result;
-    }
+ if($("strings").checked){
 
-    if($("junkObf").checked){
-        result = heavyJunkInjection(result);
-    }
+  result=
+   `local _S=function(t)local r={}for i=1,#t do r[i]=string.char(t[i])end return table.concat(r)end;`
+   +result;
+ }
 
-    /* Paksa satu baris */
-    result = result.replace(/\r?\n/g, " ");
+ /*
+   Tambahkan junk sebelum VM.
+ */
 
-    return (
-        "-- BAIM OBFUSCATOR\n" +
-        result
-    );
+ if($("junk").checked){
+  result=junkLayer()+result;
+ }
+
+ /*
+   VM STYLE
+ */
+
+ if($("vm").checked){
+
+  result=buildVM(result);
+ }
+
+ /*
+   Kalau VM tidak aktif,
+   tetap bisa dibuat minified.
+ */
+
+ if($("minify").checked){
+
+  result=result
+   .replace(/\r?\n/g," ")
+   .replace(/\s{2,}/g," ")
+   .trim();
+ }
+
+ /*
+   Header sengaja tetap terbaca.
+ */
+
+ return "-- BAIM OBFUSCATOR\n"+result;
 }
 
 /* =========================================================
-   PAWN COMMENT REMOVER
+   DOWNLOAD
 ========================================================= */
 
-function removePawnComments(source){
+function downloadFile(content,filename){
 
-    let result = "";
-    let i = 0;
-    let inString = false;
+ const blob=new Blob(
+  [content],
+  {type:"text/plain;charset=utf-8"}
+ );
 
-    while(i < source.length){
+ const url=URL.createObjectURL(blob);
 
-        const c = source[i];
+ const link=document.createElement("a");
 
-        if(c === '"' && source[i - 1] !== "\\"){
+ link.href=url;
+ link.download=filename;
 
-            inString = !inString;
-            result += c;
-            i++;
-            continue;
-        }
+ document.body.appendChild(link);
 
-        if(!inString && c === "/" && source[i + 1] === "/"){
+ link.click();
 
-            while(i < source.length && source[i] !== "\n"){
-                i++;
-            }
-            result += "\n";
-            continue;
-        }
+ link.remove();
 
-        if(!inString && c === "/" && source[i + 1] === "*"){
-
-            const end = source.indexOf("*/", i + 2);
-            if(end === -1) break;
-
-            i = end + 2;
-            result += "\n";
-            continue;
-        }
-
-        result += c;
-        i++;
-    }
-
-    return result;
-}
-
-/* =========================================================
-   PAWN STRING ENCODER
-========================================================= */
-
-function encodePawnStrings(source){
-
-    let result = "";
-    let i = 0;
-
-    while(i < source.length){
-
-        if(source[i] !== '"'){
-            result += source[i];
-            i++;
-            continue;
-        }
-
-        let j = i + 1;
-
-        while(j < source.length){
-
-            if(source[j] === "\\" && j + 1 < source.length){
-                j += 2;
-                continue;
-            }
-
-            if(source[j] === '"'){
-                j++;
-                break;
-            }
-
-            j++;
-        }
-
-        const raw = source.slice(i + 1, j - 1);
-
-        let encoded = "";
-
-        for(let k = 0; k < raw.length; k++){
-
-            const code = raw.charCodeAt(k);
-            encoded += "\\x" + code.toString(16).padStart(2, "0");
-        }
-
-        result += '"' + encoded + '"';
-
-        i = j;
-    }
-
-    return result;
-}
-
-/* =========================================================
-   PAWN MINIFY
-========================================================= */
-
-function minifyPawn(source){
-
-    return source
-        .replace(/\r\n/g, "\n")
-        .replace(/[ \t]+/g, " ")
-        .replace(/\n[ \t]+/g, "\n")
-        .replace(/\n{2,}/g, "\n")
-        .trim();
-}
-
-/* =========================================================
-   PAWN PROCESSOR
-========================================================= */
-
-function processPawn(source){
-
-    if($("comments").checked){
-        source = removePawnComments(source);
-    }
-
-    if($("strings").checked){
-        source = encodePawnStrings(source);
-    }
-
-    if($("minify").checked){
-        source = minifyPawn(source);
-    }
-
-    source = source.replace(/\r?\n/g, " ");
-
-    return (
-        "/* BAIM OBFUSCATOR */\n" +
-        source
-    );
-}
-
-/* =========================================================
-   HTML PROCESSOR
-========================================================= */
-
-function removeHTMLComments(source){
-
-    return source.replace(/<!--[\s\S]*?-->/g, "");
-}
-
-function minifyHTML(source){
-
-    source = source.replace(/>\s+</g, "><");
-    source = source.replace(/\s{2,}/g, " ");
-    return source.trim();
-}
-
-function processHTML(source){
-
-    if($("comments").checked){
-        source = removeHTMLComments(source);
-    }
-
-    if($("minify").checked){
-        source = minifyHTML(source);
-    }
-
-    source = source.replace(/\r?\n/g, " ");
-
-    return (
-        "<!-- BAIM OBFUSCATOR -->\n" +
-        source
-    );
-}
-
-/* =========================================================
-   PROCESS
-========================================================= */
-
-function processSource(source, filename){
-
-    const ext = filename.toLowerCase().split(".").pop();
-
-    if(ext === "lua") return processLua(source);
-
-    if(ext === "pwn" || ext === "inc" || ext === "txt"){
-        return processPawn(source);
-    }
-
-    if(ext === "html" || ext === "htm"){
-        return processHTML(source);
-    }
-
-    return source;
+ setTimeout(
+  ()=>URL.revokeObjectURL(url),
+  1500
+ );
 }
 
 /* =========================================================
@@ -1581,126 +1319,134 @@ function processSource(source, filename){
 
 function outputName(filename){
 
-    const dot = filename.lastIndexOf(".");
+ const dot=filename.lastIndexOf(".");
 
-    if(dot === -1){
-        return filename + "_BAIM_OBF";
-    }
+ if(dot===-1){
+  return filename+"_BAIM_VM";
+ }
 
-    return filename.slice(0, dot) + "_BAIM_OBF" + filename.slice(dot);
-}
-
-/* =========================================================
-   DOWNLOAD
-========================================================= */
-
-function downloadFile(content, filename, mime){
-
-    const blob = new Blob([content], {type: mime});
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = filename;
-
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    setTimeout(() => URL.revokeObjectURL(url), 1500);
+ return (
+  filename.slice(0,dot)+
+  "_BAIM_VM"+
+  filename.slice(dot)
+ );
 }
 
 /* =========================================================
    START
 ========================================================= */
 
-$("start").addEventListener("click", async function(){
+$("start").addEventListener(
+ "click",
+ async function(){
 
-    if(!selectedFile){
-        $("picker").click();
-        return;
-    }
+  if(!selectedFile){
 
-    const button = this;
-    button.classList.add("loading");
-    $("status").textContent = "BAIM OBFUSCATOR";
+   $("picker").click();
+   return;
+  }
 
-    try{
+  const button=this;
 
-        const source = await selectedFile.text();
+  button.classList.add("loading");
 
-        if(!source.trim()){
-            throw new Error("EMPTY_FILE");
-        }
+  $("status").textContent=
+   "BAIM VM ENGINE PROCESSING...";
 
-        await new Promise(resolve => setTimeout(resolve, 300));
+  try{
 
-        const result = processSource(source, selectedFile.name);
+   const source=await selectedFile.text();
 
-        const ext = selectedFile.name.toLowerCase().split(".").pop();
+   if(!source.trim()){
+    throw new Error("EMPTY_FILE");
+   }
 
-        let mime = "text/plain";
+   await new Promise(
+    resolve=>setTimeout(resolve,250)
+   );
 
-        if(ext === "html" || ext === "htm"){
-            mime = "text/html";
-        }
+   const ext=
+    selectedFile.name
+    .toLowerCase()
+    .split(".")
+    .pop();
 
-        downloadFile(result, outputName(selectedFile.name), mime);
+   if(ext!=="lua"&&ext!=="txt"){
+    throw new Error("LUA_ONLY");
+   }
 
-        $("card").classList.remove("success");
-        void $("card").offsetWidth;
-        $("card").classList.add("success");
+   const result=processLua(source);
 
-        $("status").textContent = "BAIM OBFUSCATOR";
+   downloadFile(
+    result,
+    outputName(selectedFile.name)
+   );
 
-    }catch(error){
+   $("status").textContent=
+    "BAIM VM OBFUSCATION COMPLETE";
 
-        console.error(error);
-        $("status").textContent = "BAIM OBFUSCATOR";
-    }
+  }catch(error){
 
-    button.classList.remove("loading");
-});
+   console.error(error);
+
+   $("status").textContent=
+    "PROCESS ERROR — SOURCE TIDAK COCOK";
+  }
+
+  button.classList.remove("loading");
+ }
+);
 
 /* =========================================================
    DRAG DROP
 ========================================================= */
 
-const drop = $("drop");
+const drop=$("drop");
 
-["dragenter", "dragover"].forEach(eventName => {
+["dragenter","dragover"].forEach(name=>{
 
-    drop.addEventListener(eventName, event => {
+ drop.addEventListener(name,e=>{
 
-        event.preventDefault();
-        event.stopPropagation();
+  e.preventDefault();
+  e.stopPropagation();
 
-        drop.style.transform = "translateY(-4px) scale(1.01)";
-    });
+  drop.style.transform=
+   "translateY(-4px) scale(1.01)";
+ });
 });
 
-["dragleave", "drop"].forEach(eventName => {
+["dragleave","drop"].forEach(name=>{
 
-    drop.addEventListener(eventName, event => {
+ drop.addEventListener(name,e=>{
 
-        event.preventDefault();
-        event.stopPropagation();
+  e.preventDefault();
+  e.stopPropagation();
 
-        drop.style.transform = "";
-    });
+  drop.style.transform="";
+ });
 });
 
-drop.addEventListener("drop", event => {
+drop.addEventListener("drop",e=>{
 
-    const files = event.dataTransfer.files;
+ const files=e.dataTransfer.files;
 
-    if(!files || !files.length){
-        return;
-    }
+ if(!files||!files.length)return;
 
-    selectedFile = files[0];
-    showFile();
+ const file=files[0];
+
+ const ext=
+  file.name.toLowerCase().split(".").pop();
+
+ if(ext!=="lua"&&ext!=="txt"){
+  $("status").textContent=
+   "PILIH FILE LUA";
+  return;
+ }
+
+ selectedFile=file;
+ showFile();
 });
+
 </script>
 
 </body>
