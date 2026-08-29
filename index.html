@@ -130,7 +130,7 @@ input[type=file]{display:none}
 
     <section class="hero">
         <h1>Protect your <span>source.</span></h1>
-        <p>Multi-format source protection dengan Lua deep obfuscation, identifier randomization, string encoding, constant transformation, minification dan protection layer.</p>
+        <p>Lua deep obfuscation, identifier randomization, string encoding, constant transformation, minification, VM protection, dan bloat hingga 200KB.</p>
     </section>
 
     <section class="panel">
@@ -140,10 +140,13 @@ input[type=file]{display:none}
                 <div class="drop-title">Drop source file here</div>
                 <div class="drop-sub">atau pilih file dari perangkat</div>
                 <div class="drop-formats">
-                    <span class="format">LUA</span><span class="format">LUAC</span><span class="format">PWN</span><span class="format">INC</span><span class="format">TXT</span><span class="format">HTML</span><span class="format">JS</span><span class="format">CSS</span><span class="format">JSON</span><span class="format">DLL</span><span class="format">BIN</span><span class="format">OTHER</span>
+                    <span class="format">LUA</span>
+                    <span class="format">PWN</span>
+                    <span class="format">INC</span>
+                    <span class="format">TXT</span>
                 </div>
             </label>
-            <input id="picker" type="file">
+            <input id="picker" type="file" accept=".lua,.pwn,.inc,.txt">
             <div class="file-row">
                 <div class="file-name" id="fileName">Belum ada file dipilih</div>
                 <div class="file-type" id="fileType">READY</div>
@@ -173,12 +176,6 @@ input[type=file]{display:none}
                         <option value="1">Protection Level — Normal</option>
                         <option value="2" selected>Protection Level — Strong</option>
                         <option value="3">Protection Level — Extreme</option>
-                    </select>
-                    <select class="select-box" id="mode">
-                        <option value="auto" selected>Auto detect format</option>
-                        <option value="lua">Lua source</option>
-                        <option value="text">Generic text</option>
-                        <option value="binary">Binary protection</option>
                     </select>
                     <select class="select-box" id="bloatSize">
                         <option value="200">Output Size — 200KB</option>
@@ -226,6 +223,7 @@ const CHARS="IlOoXxZzVvQqAaBbCcDdEeFfKkMmNnPpRrSsTt";
 function rand(max){return Math.floor(Math.random()*max)}
 function randomName(size=16){let s="_";for(let i=0;i<size;i++)s+=CHARS[rand(CHARS.length)];return s}
 function pick(arr){return arr[rand(arr.length)]}
+function randomString(length){const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";let r="";for(let i=0;i<length;i++)r+=chars[rand(chars.length)];return r}
 
 /* LUA RESERVED */
 const RESERVED=new Set(["and","break","do","else","elseif","end","false","for","function","goto","if","in","local","nil","not","or","repeat","return","then","true","until","while"]);
@@ -365,82 +363,32 @@ function controlFlowCode(){
     return `local ${a}=1;local ${b}=${a}+1;local ${c}=false;if ${b}==2 then ${c}=true end;if not ${c} then return end;`;
 }
 
-/* VM OBFUSCATION - Enhanced Multi-layer VM with Instruction Set */
+/* VM OBFUSCATION */
 function vmProtectLua(source){
     logConsole("VM obfuscation active - building custom bytecode interpreter", "warn");
-
-    // Step 1: Convert source to byte array and encrypt with multiple layers
     const bytes = [...source].map(c => c.charCodeAt(0));
-    
-    // Layer 1: XOR with random key
     const key1 = [];
     const key1Len = 8 + rand(16);
     for(let i=0;i<key1Len;i++) key1.push(rand(256));
     const enc1 = bytes.map((b,i) => b ^ key1[i % key1Len]);
-    
-    // Layer 2: Reverse if random
     if(Math.random()>0.5) enc1.reverse();
-    
-    // Layer 3: Add offset
     const offset = rand(1,255);
     const enc2 = enc1.map(b => (b + offset) % 256);
-    
-    // Layer 4: Split into chunks and interleave with junk numbers
     const chunkSize = 4 + rand(8);
     const chunks = [];
-    for(let i=0; i<enc2.length; i+=chunkSize){
-        chunks.push(enc2.slice(i, i+chunkSize));
-    }
-    
-    // Generate Lua VM code
-    const vmName = randomName(16);
-    const dataName = randomName(16);
-    const keyName = randomName(16);
-    const offsetName = randomName(16);
-    const srcName = randomName(16);
-    const fnName = randomName(16);
-    
-    let code = `local ${vmName}={};`;
-    code += `local ${keyName}={${key1.join(",")}};`;
-    code += `local ${offsetName}=${offset};`;
-    
-    // Build data table (chunks concatenated with gaps)
+    for(let i=0; i<enc2.length; i+=chunkSize) chunks.push(enc2.slice(i, i+chunkSize));
+    const dataName = randomName(16), keyName = randomName(16), offsetName = randomName(16), srcName = randomName(16), fnName = randomName(16);
+    let code = `local ${keyName}={${key1.join(",")}};local ${offsetName}=${offset};`;
     let dataStr = "";
-    for(let i=0;i<chunks.length;i++){
-        dataStr += chunks[i].join(",");
-        if(i < chunks.length-1) dataStr += ",";
-    }
+    for(let i=0;i<chunks.length;i++){ dataStr += chunks[i].join(","); if(i < chunks.length-1) dataStr += ","; }
     code += `local ${dataName}={${dataStr}};`;
-    
-    // VM interpreter loop
-    code += `local ${srcName}="";`;
-    code += `local _i=1;`;
-    code += `while _i <= #${dataName} do `;
-    code += `local _b = (${dataName}[_i] - ${offsetName}) % 256;`;
-    code += `_b = _b ~ ${keyName}[((_i-1) % #${keyName}) + 1];`;
-    code += `${srcName} = ${srcName} .. string.char(_b);`;
-    code += `_i = _i + 1;`;
-    code += `end;`;
-    
-    // Reverse if needed
-    if(Math.random()>0.5) {
-        code += `${srcName} = ${srcName}:reverse();`;
-    }
-    
-    // Load and execute
-    code += `local ${fnName} = loadstring or load;`;
-    code += `local _f = ${fnName}(${srcName});`;
-    code += `if _f then _f() end;`;
-    
-    // Add anti-debug and junk
-    code = antiDebugCode() + code;
-    code = junkBlock(10) + code + junkBlock(5);
-    
-    // Minify
+    code += `local ${srcName}="";local _i=1;`;
+    code += `while _i <= #${dataName} do local _b = (${dataName}[_i] - ${offsetName}) % 256; _b = _b ~ ${keyName}[((_i-1) % #${keyName}) + 1]; ${srcName} = ${srcName} .. string.char(_b); _i = _i + 1; end;`;
+    if(Math.random()>0.5) code += `${srcName} = ${srcName}:reverse();`;
+    code += `local ${fnName} = loadstring or load;local _f = ${fnName}(${srcName});if _f then _f() end;`;
+    code = antiDebugCode() + junkBlock(10) + code + junkBlock(5);
     code = minifyLua(code);
-    
     if($("header").checked) code = "-- BAIM OBFUSCATOR\n-- VM PROTECTED v2\n" + code;
-    
     logConsole("VM interpreter generated successfully", "success");
     return code;
 }
@@ -466,13 +414,6 @@ function generateBloatCode(targetBytes=200*1024){
     return chunks.join("");
 }
 
-function randomString(length){
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let result = "";
-    for(let i=0;i<length;i++) result += chars[rand(chars.length)];
-    return result;
-}
-
 /* LUA PROCESSOR */
 function protectLua(source){
     logConsole("Lua protection started");
@@ -494,12 +435,10 @@ function protectLua(source){
         if($("antidebug")&&$("antidebug").checked)result=antiDebugCode()+result;
         if($("header").checked)result="-- BAIM OBFUSCATOR\n-- PROTECTED SOURCE\n"+result;
     }
-    // Bloat jika opsi aktif
     if($("bloat")&&$("bloat").checked){
         const sizeKB = Number($("bloatSize").value) || 200;
         const targetBytes = sizeKB * 1024;
         const bloatCode = generateBloatCode(targetBytes);
-        // Tambahkan bloatCode sebelum result (atau sesudah) dan minify ulang jika perlu
         result = minifyLua(bloatCode + result);
         if($("header").checked && !result.startsWith("-- BAIM")){
             result = "-- BAIM OBFUSCATOR\n-- BLOATED SOURCE\n" + result;
@@ -510,26 +449,24 @@ function protectLua(source){
     return result;
 }
 
-/* GENERIC TEXT */
+/* GENERIC TEXT (PWN/INC/TXT) */
 function genericText(source){
     logConsole("Generic text protection started");
     let s=source;
-    if($("comments").checked){s=s.replace(/\/\*[\s\S]*?\*\//g,"").replace(/(^|\s)\/\/[^\r\n]*/g,"$1").replace(/(^|\s)#(?!include|define)[^\r\n]*/g,"$1")}
-    if($("minify").checked){s=s.replace(/\r/g,"").replace(/[ \t]+/g," ").replace(/\n\s*\n+/g,"\n").trim()}
-    if($("header").checked){const ext=selectedFile?selectedFile.name.split(".").pop().toLowerCase():"";if(ext==="html")s="<!-- BAIM OBFUSCATOR -->\n"+s;else if(["js","css","pwn","inc","txt"].includes(ext))s="/* BAIM OBFUSCATOR */\n"+s}
+    if($("comments").checked){
+        s=s.replace(/\/\*[\s\S]*?\*\//g,"")
+          .replace(/(^|\s)\/\/[^\r\n]*/g,"$1")
+          .replace(/(^|\s)#(?!include|define)[^\r\n]*/g,"$1");
+    }
+    if($("minify").checked){
+        s=s.replace(/\r/g,"").replace(/[ \t]+/g," ").replace(/\n\s*\n+/g,"\n").trim();
+    }
+    if($("header").checked){
+        const ext=selectedFile?selectedFile.name.split(".").pop().toLowerCase():"";
+        if(ext==="pwn" || ext==="inc" || ext==="txt") s="/* BAIM OBFUSCATOR */\n"+s;
+    }
     logConsole("Generic text protection completed");
     return s;
-}
-
-/* BINARY */
-async function binaryBytes(file){return new Uint8Array(await file.arrayBuffer())}
-function transformBinary(bytes){
-    logConsole("Binary protection started");
-    const key=new Uint8Array(16);crypto.getRandomValues(key);
-    const out=new Uint8Array(bytes.length);
-    for(let i=0;i<bytes.length;i++)out[i]=bytes[i]^key[i%key.length];
-    logConsole("Binary protection completed");
-    return{bytes:out,key};
 }
 
 /* DOWNLOAD */
@@ -556,36 +493,29 @@ $("start").addEventListener("click",async function(){
     if(!selectedFile){$("picker").click();return}
     const button=this;button.classList.add("loading");$("status").className="status";$("status").textContent="BAIM ENGINE • ANALYZING FILE";progressTo(10);
     $("console").innerHTML="";
-    logConsole("BAIM OBFUSCATOR v5.0 ULTIMATE BLOAT");
+    logConsole("BAIM OBFUSCATOR v5.0 ULTIMATE");
     logConsole("Starting protection process...");
     try{
         await new Promise(r=>setTimeout(r,180));
-        const name=selectedFile.name;const ext=name.split(".").pop().toLowerCase();let mode=$("mode").value;
-        if(mode==="auto"){if(ext==="lua")mode="lua";else if(["txt","html","htm","js","css","json","pwn","inc","xml","svg"].includes(ext))mode="text";else mode="binary"}
-        logConsole(`Mode: ${mode}`);
+        const name=selectedFile.name;const ext=name.split(".").pop().toLowerCase();
         progressTo(30);
-        if(mode==="lua"){
+        if(ext==="lua"){
             const source=await selectedFile.text();if(!source.trim())throw new Error("EMPTY_FILE");
             progressTo(50);await new Promise(r=>setTimeout(r,250));
             const result=protectLua(source);progressTo(90);
             downloadBlob(new Blob([result],{type:"text/plain;charset=utf-8"}),outputName(name));
             logConsole("Download started", "success");
-        }else if(mode==="text"){
+        }else if(["pwn","inc","txt"].includes(ext)){
             const source=await selectedFile.text();if(!source.trim())throw new Error("EMPTY_FILE");
             progressTo(50);await new Promise(r=>setTimeout(r,220));
             const result=genericText(source);progressTo(90);
             downloadBlob(new Blob([result],{type:"text/plain;charset=utf-8"}),outputName(name));
             logConsole("Download started", "success");
         }else{
-            progressTo(45);const bytes=await binaryBytes(selectedFile);progressTo(60);
-            const result=transformBinary(bytes);
-            const magic=new TextEncoder().encode("BAIM5");const finalData=new Uint8Array(magic.length+result.key.length+result.bytes.length);
-            finalData.set(magic,0);finalData.set(result.key,magic.length);finalData.set(result.bytes,magic.length+result.key.length);
-            progressTo(90);downloadBlob(new Blob([finalData],{type:"application/octet-stream"}),name+".baim");
-            logConsole("Download started", "success");
+            throw new Error("Format tidak didukung. Gunakan .lua, .pwn, .inc, atau .txt");
         }
         progressTo(100);$("status").className="status ok";$("status").textContent="BAIM OBFUSCATOR • PROTECTION COMPLETE";logConsole("Protection complete!", "success");setTimeout(()=>progressTo(0),900);
-    }catch(error){console.error(error);progressTo(0);$("status").className="status error";$("status").textContent="PROTECTION ERROR • CHECK FILE FORMAT";logConsole("Error: "+error.message, "error")}
+    }catch(error){console.error(error);progressTo(0);$("status").className="status error";$("status").textContent="PROTECTION ERROR • "+error.message;logConsole("Error: "+error.message, "error")}
     button.classList.remove("loading");
 });
 </script>
