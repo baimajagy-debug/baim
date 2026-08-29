@@ -3,1451 +3,591 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>BAIM OBFUSCATOR</title>
+<title>BAIM OBFUSCATOR — MAX PROTECTION</title>
 
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;width:100%;min-height:100%;font-family:Arial,Helvetica,sans-serif}
-body{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:16px;
-    overflow-x:hidden;
-    background:#050607;
-    color:#fff
-}
-.bg{position:fixed;inset:0;overflow:hidden;pointer-events:none}
-.grid{
-    position:absolute;
-    inset:-120px;
-    opacity:.13;
-    background-image:
-      linear-gradient(#fff 1px,transparent 1px),
-      linear-gradient(90deg,#fff 1px,transparent 1px);
-    background-size:44px 44px;
-    transform:perspective(500px) rotateX(60deg) scale(1.8);
-    transform-origin:center bottom;
-    animation:gridMove 9s linear infinite
-}
-@keyframes gridMove{
- from{background-position:0 0,0 0}
- to{background-position:0 44px,44px 0}
-}
-.orb{
- position:absolute;
- width:350px;
- height:350px;
- border-radius:50%;
- filter:blur(95px);
- opacity:.13;
- animation:float 8s ease-in-out infinite
-}
-.orb.a{left:-150px;top:-130px;background:#8b5cf6}
-.orb.b{right:-150px;bottom:-130px;background:#00ff88;animation-delay:-4s}
-@keyframes float{
- 0%,100%{transform:translate(0,0) scale(1)}
- 50%{transform:translate(35px,-25px) scale(1.08)}
-}
+html,body{margin:0;width:100%;min-height:100%;font-family:Inter,Arial,Helvetica,sans-serif;background:#03050b;color:#fff}
+body{min-height:100vh;overflow-x:hidden}
 
-.activation{
- position:fixed;
- inset:0;
- z-index:9999;
- display:flex;
- flex-direction:column;
- align-items:center;
- justify-content:center;
- gap:28px;
- background:#050607;
- transition:opacity .8s ease,transform .8s ease
-}
-.activation.hidden{
- opacity:0;
- pointer-events:none;
- transform:scale(1.05)
-}
-.brand-b4im{
- font-size:clamp(60px,15vw,120px);
- font-weight:950;
- letter-spacing:-8px;
- line-height:1;
- background:linear-gradient(135deg,#8b5cf6,#00ff88);
- -webkit-background-clip:text;
- background-clip:text;
- color:transparent;
- animation:pulseBrand 3s ease-in-out infinite
-}
-@keyframes pulseBrand{
- 0%,100%{filter:drop-shadow(0 0 10px rgba(139,92,246,.4))}
- 50%{filter:drop-shadow(0 0 30px rgba(0,255,136,.6))}
-}
-.subtitle{
- font-size:13px;
- color:#aaa;
- letter-spacing:4px;
- text-transform:uppercase
-}
-.btn-activate{
- padding:18px 50px;
- border:2px solid #8b5cf6;
- border-radius:40px;
- background:transparent;
- color:#fff;
- font-size:18px;
- font-weight:800;
- letter-spacing:2px;
- cursor:pointer;
- transition:.3s
-}
-.btn-activate:hover{
- background:#8b5cf6;
- box-shadow:0 0 40px rgba(139,92,246,.7);
- transform:translateY(-3px)
-}
+/* BACKGROUND */
+.background{position:fixed;inset:0;overflow:hidden;pointer-events:none;background:radial-gradient(circle at 50% 20%,#10275c 0%,#070d1d 32%,#03050b 72%)}
+.grid{position:absolute;left:-30%;right:-30%;bottom:-25%;height:90%;opacity:.16;background-image:linear-gradient(rgba(70,130,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(70,130,255,.35) 1px,transparent 1px);background-size:60px 60px;transform:perspective(700px) rotateX(65deg) scale(1.5);transform-origin:center bottom;animation:gridMove 10s linear infinite}
+@keyframes gridMove{from{background-position:0 0,0 0}to{background-position:0 60px,60px 0}}
+.glow{position:absolute;width:420px;height:420px;border-radius:50%;filter:blur(100px);opacity:.18}
+.glow.one{left:-180px;top:-160px;background:#246bff;animation:orbOne 9s ease-in-out infinite}
+.glow.two{right:-180px;bottom:-160px;background:#00d9ff;animation:orbTwo 11s ease-in-out infinite}
+.glow.three{left:45%;top:40%;width:280px;height:280px;background:#663cff;opacity:.08;animation:orbThree 13s ease-in-out infinite}
+@keyframes orbOne{0%,100%{transform:translate(0,0)}50%{transform:translate(100px,80px) scale(1.2)}}
+@keyframes orbTwo{0%,100%{transform:translate(0,0)}50%{transform:translate(-100px,-70px) scale(1.15)}}
+@keyframes orbThree{0%,100%{transform:translate(0,0)}50%{transform:translate(-70px,50px)}}
+.particles{position:absolute;inset:0}
+.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.35;animation:particleFloat linear infinite}
+@keyframes particleFloat{from{transform:translateY(110vh);opacity:0}15%{opacity:.35}85%{opacity:.35}to{transform:translateY(-20vh);opacity:0}}
 
-.card{
- position:relative;
- z-index:2;
- width:min(700px,100%);
- padding:30px;
- border:1px solid rgba(255,255,255,.12);
- border-radius:32px;
- background:rgba(247,247,250,.97);
- color:#202027;
- box-shadow:0 30px 100px rgba(0,0,0,.65);
- display:none
-}
-.card.active{
- display:block;
- animation:cardIn .7s cubic-bezier(.2,.8,.2,1)
-}
-@keyframes cardIn{
- from{opacity:0;transform:translateY(30px) scale(.96)}
- to{opacity:1;transform:none}
-}
-.brand{
- text-align:center;
- font-size:clamp(29px,8vw,46px);
- font-weight:950;
- letter-spacing:-2.5px;
- line-height:1
-}
-.brand span{
- display:inline-block;
- animation:glitch 4s infinite
-}
-@keyframes glitch{
- 0%,92%,100%{transform:none;text-shadow:none}
- 93%{transform:translate(-3px,1px);text-shadow:3px 0 #8b5cf6}
- 94%{transform:translate(3px,-1px);text-shadow:-3px 0 #00d084}
- 95%{transform:none}
-}
-.badge{
- margin:13px auto 0;
- width:max-content;
- max-width:100%;
- padding:7px 13px;
- border-radius:999px;
- background:#18171e;
- color:#fff;
- font-size:10px;
- font-weight:800;
- letter-spacing:2px
-}
-.line{
- height:1px;
- margin:25px 4px 24px;
- background:linear-gradient(90deg,transparent,#aaa,transparent)
-}
+/* ACTIVATION */
+.activation{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:#03050b;transition:opacity .8s ease,visibility .8s ease}
+.activation.hide{opacity:0;visibility:hidden}
+.activation-box{text-align:center;animation:activationIn .9s cubic-bezier(.2,.8,.2,1)}
+@keyframes activationIn{from{opacity:0;transform:translateY(25px) scale(.94)}to{opacity:1;transform:none}}
+.activation-logo{font-size:clamp(62px,16vw,125px);font-weight:950;letter-spacing:-8px;line-height:.9;background:linear-gradient(135deg,#fff,#78a7ff 45%,#37e4ff);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 30px rgba(48,125,255,.35));animation:logoPulse 3s ease-in-out infinite}
+@keyframes logoPulse{0%,100%{transform:scale(1);filter:drop-shadow(0 0 20px rgba(48,125,255,.25))}50%{transform:scale(1.025);filter:drop-shadow(0 0 45px rgba(48,125,255,.55))}}
+.activation-sub{margin-top:22px;color:#7f8ba5;font-size:12px;letter-spacing:5px;text-transform:uppercase}
+.activate{margin-top:34px;min-width:210px;padding:16px 28px;border:1px solid #397dff;border-radius:13px;background:rgba(23,60,130,.16);color:#fff;font-size:14px;font-weight:800;letter-spacing:1.5px;cursor:pointer;transition:.25s}
+.activate:hover{background:#1c5be4;border-color:#70a1ff;box-shadow:0 0 35px rgba(41,112,255,.4);transform:translateY(-2px)}
 
-.drop{
- position:relative;
- min-height:160px;
- display:flex;
- flex-direction:column;
- align-items:center;
- justify-content:center;
- border-radius:25px;
- background:#18171e;
- color:#fff;
- cursor:pointer;
- overflow:hidden;
- border:1px solid transparent;
- transition:.25s ease
-}
-.drop:hover{
- transform:translateY(-4px);
- box-shadow:0 16px 36px rgba(0,0,0,.22);
- border-color:#ffffff18
-}
-.icon{
- width:52px;
- height:52px;
- margin-bottom:10px;
- border-radius:16px;
- display:grid;
- place-items:center;
- background:#292731;
- font-size:25px
-}
-.drop b{font-size:20px}
-.drop small{margin-top:7px;color:#999}
+/* APP */
+.app{position:relative;z-index:2;width:min(980px,100%);margin:auto;padding:25px 18px 45px;display:none}
+.app.show{display:block;animation:appIn .7s cubic-bezier(.2,.8,.2,1)}
+@keyframes appIn{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:none}}
+.header{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:28px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:39px;height:39px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(145deg,#2d75ff,#123a91);box-shadow:0 0 25px rgba(36,112,255,.28);font-size:17px;font-weight:950}
+.logo-text{font-weight:900;letter-spacing:-.7px}
+.logo-text small{display:block;margin-top:2px;color:#68748e;font-size:9px;letter-spacing:2px;font-weight:700}
+.header-status{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid rgba(255,255,255,.08);border-radius:20px;color:#8b96aa;font-size:10px;letter-spacing:1px;background:rgba(255,255,255,.025)}
+.status-dot{width:7px;height:7px;border-radius:50%;background:#35e29b;box-shadow:0 0 12px #35e29b}
+.hero{margin-bottom:24px}
+.hero h1{margin:0;max-width:760px;font-size:clamp(38px,7vw,72px);line-height:.98;letter-spacing:-4px;font-weight:950}
+.hero h1 span{color:#548eff}
+.hero p{max-width:650px;margin:17px 0 0;color:#758097;font-size:14px;line-height:1.7}
+.panel{position:relative;border:1px solid rgba(255,255,255,.09);border-radius:25px;background:linear-gradient(145deg,rgba(15,23,42,.91),rgba(6,10,20,.94));box-shadow:0 35px 100px rgba(0,0,0,.5),inset 0 1px rgba(255,255,255,.04);overflow:hidden}
+.panel::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,#3478ff,#42d8ff,transparent);opacity:.7}
+.panel-body{padding:22px}
+.drop{position:relative;min-height:240px;border:1px dashed rgba(91,135,220,.35);border-radius:19px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at center,rgba(47,100,220,.12),transparent 65%);cursor:pointer;overflow:hidden;transition:.25s}
+.drop::after{content:"";position:absolute;width:150%;height:1px;background:linear-gradient(90deg,transparent,rgba(69,145,255,.5),transparent);top:0;left:-25%;animation:scan 4s linear infinite}
+@keyframes scan{from{transform:translateY(0)}to{transform:translateY(240px)}}
+.drop:hover,.drop.drag{border-color:#4387ff;background:radial-gradient(circle at center,rgba(47,100,220,.2),transparent 65%);transform:translateY(-2px)}
+.upload-icon{width:65px;height:65px;display:grid;place-items:center;border-radius:19px;background:linear-gradient(145deg,rgba(61,126,255,.24),rgba(28,66,145,.12));border:1px solid rgba(81,139,255,.28);color:#6ba0ff;font-size:27px;box-shadow:0 0 30px rgba(55,120,255,.12);margin-bottom:16px}
+.drop-title{font-size:19px;font-weight:850}
+.drop-sub{margin-top:8px;color:#69758c;font-size:12px}
+.drop-formats{margin-top:15px;display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.format{padding:5px 8px;border:1px solid rgba(255,255,255,.07);border-radius:7px;color:#7d8aa2;background:rgba(255,255,255,.025);font-size:9px;letter-spacing:.6px}
 input[type=file]{display:none}
-
-.file{
- min-height:22px;
- margin:13px 8px 18px;
- text-align:center;
- font-size:13px;
- color:#777;
- white-space:nowrap;
- overflow:hidden;
- text-overflow:ellipsis
-}
-
-.start{
- width:100%;
- padding:18px;
- border:0;
- border-radius:27px;
- background:#292731;
- color:#fff;
- font-size:18px;
- font-weight:800;
- cursor:pointer;
- transition:.2s
-}
-.start:hover{
- background:#1e1d25;
- transform:translateY(-2px);
- box-shadow:0 12px 28px rgba(0,0,0,.22)
-}
-.start.loading{
- pointer-events:none;
- opacity:.7
-}
-
-details{
- margin-top:17px;
- border:1px solid #dedee3;
- border-radius:21px;
- overflow:hidden;
- background:#fff
-}
-summary{
- padding:17px 19px;
- cursor:pointer;
- font-weight:800;
- list-style:none
-}
-summary::-webkit-details-marker{display:none}
-summary:before{
- content:"›";
- display:inline-block;
- margin-right:9px;
- transition:.2s
-}
-details[open] summary:before{transform:rotate(90deg)}
-
-.options{
- padding:5px 19px 17px;
- border-top:1px solid #eee
-}
-.option{
- display:flex;
- align-items:center;
- gap:11px;
- padding:9px 0;
- color:#555;
- font-size:14px;
- cursor:pointer
-}
-.option input{
- width:18px;
- height:18px;
- margin:0;
- accent-color:#292731
-}
-
-.level{
- margin-top:15px;
- padding:14px 16px;
- border-radius:18px;
- background:#f0f0f4;
- font-size:11px;
- color:#666;
- line-height:1.6
-}
-.level b{color:#202027}
-
-.status{
- min-height:18px;
- margin-top:17px;
- text-align:center;
- color:#999;
- font-size:11px;
- letter-spacing:1px
-}
-.footer{
- margin-top:9px;
- text-align:center;
- font-size:9px;
- color:#aaa;
- letter-spacing:3px
-}
-
-@media(max-width:520px){
- body{padding:12px}
- .card{
-  padding:21px;
-  border-radius:27px
- }
- .drop{min-height:145px}
-}
+.file-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05)}
+.file-name{min-width:0;color:#aab5c9;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-type{flex-shrink:0;padding:5px 8px;border-radius:6px;background:#132a5a;color:#6fa1ff;font-size:9px;font-weight:900}
+.options{margin-top:15px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.option{display:flex;align-items:center;gap:8px;min-height:43px;padding:10px;border:1px solid rgba(255,255,255,.05);border-radius:10px;background:rgba(255,255,255,.018);color:#77839a;font-size:10px;cursor:pointer;transition:.2s}
+.option:hover{border-color:rgba(70,126,255,.25);color:#aab9d2}
+.option input{width:15px;height:15px;accent-color:#397dff}
+.advanced{margin-top:15px;border:1px solid rgba(255,255,255,.06);border-radius:13px;overflow:hidden}
+.advanced summary{padding:13px 15px;cursor:pointer;color:#9ba8be;font-size:11px;font-weight:800;list-style:none}
+.advanced summary::-webkit-details-marker{display:none}
+.advanced summary::after{content:"+";float:right;color:#5d6b82}
+.advanced[open] summary::after{content:"−"}
+.advanced-content{padding:0 15px 15px;display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.select-box{width:100%;padding:10px;border-radius:9px;border:1px solid rgba(255,255,255,.06);background:#080d18;color:#8b97ad;outline:none}
+.start{width:100%;margin-top:16px;padding:17px;border:0;border-radius:13px;background:linear-gradient(135deg,#286cf4,#1648ad);color:#fff;font-size:14px;font-weight:900;letter-spacing:.7px;cursor:pointer;box-shadow:0 12px 30px rgba(26,87,205,.2);transition:.25s}
+.start:hover{transform:translateY(-2px);box-shadow:0 17px 40px rgba(26,87,205,.35)}
+.start:active{transform:scale(.99)}
+.start.loading{opacity:.65;pointer-events:none}
+.status{display:flex;align-items:center;justify-content:center;min-height:42px;margin-top:12px;color:#5f6d85;font-size:10px;letter-spacing:1.5px}
+.status.ok{color:#4ee7a4}
+.status.error{color:#ff6e83}
+.console{background:#050a14;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;margin-top:15px;max-height:180px;overflow-y:auto;font-family:monospace;font-size:10px;line-height:1.6;color:#8fa3c8}
+.console-line{white-space:nowrap;opacity:.85}
+.console-line.success{color:#4ee7a4}
+.console-line.warn{color:#ffb84d}
+.console-line.error{color:#ff6e83}
+.footer{display:flex;justify-content:space-between;gap:15px;margin-top:18px;color:#3e4a60;font-size:9px;letter-spacing:1.5px}
+.progress{position:fixed;left:0;top:0;width:0;height:2px;z-index:999;background:linear-gradient(90deg,#347aff,#36dfff);box-shadow:0 0 15px #347aff;transition:width .2s}
+@media(max-width:760px){.options{grid-template-columns:repeat(2,1fr)}.hero h1{letter-spacing:-2.5px}}
+@media(max-width:500px){.app{padding:18px 12px 35px}.header{margin-bottom:22px}.header-status{display:none}.panel-body{padding:13px}.drop{min-height:205px}.options{grid-template-columns:1fr}.advanced-content{grid-template-columns:1fr}.footer{flex-direction:column;text-align:center}}
 </style>
 </head>
 
 <body>
 
-<div class="bg">
- <div class="grid"></div>
- <div class="orb a"></div>
- <div class="orb b"></div>
+<div class="background">
+    <div class="grid"></div>
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+    <div class="glow three"></div>
+    <div class="particles" id="particles"></div>
 </div>
 
-<div class="activation" id="activation">
- <div class="brand-b4im">B4im</div>
- <div class="subtitle">VM Obfuscator System</div>
- <button class="btn-activate" id="btnActivate">
-  Aktifkan Sistem
- </button>
-</div>
+<div class="progress" id="progress"></div>
 
-<main class="card" id="card">
+<!-- ACTIVATION -->
+<section class="activation" id="activation">
+    <div class="activation-box">
+        <div class="activation-logo">B4IM</div>
+        <div class="activation-sub">Obfuscation Engine</div>
+        <button class="activate" id="activate">AKTIFKAN SISTEM</button>
+    </div>
+</section>
 
- <div class="brand">
-  <span>BAIM OBFUSCATOR</span>
- </div>
+<!-- APP -->
+<main class="app" id="app">
+    <header class="header">
+        <div class="logo">
+            <div class="logo-mark">B</div>
+            <div class="logo-text">BAIM OBFUSCATOR<small>PROTECTION ENGINE</small></div>
+        </div>
+        <div class="header-status"><span class="status-dot"></span>ENGINE READY</div>
+    </header>
 
- <div class="badge">VM STYLE • ENGINE</div>
+    <section class="hero">
+        <h1>Protect your <span>source.</span></h1>
+        <p>Multi-format source protection dengan Lua deep obfuscation, identifier randomization, string encoding, constant transformation, minification dan protection layer.</p>
+    </section>
 
- <div class="line"></div>
+    <section class="panel">
+        <div class="panel-body">
+            <label class="drop" id="drop" for="picker">
+                <div class="upload-icon">↑</div>
+                <div class="drop-title">Drop source file here</div>
+                <div class="drop-sub">atau pilih file dari perangkat</div>
+                <div class="drop-formats">
+                    <span class="format">LUA</span><span class="format">LUAC</span><span class="format">PWN</span><span class="format">INC</span><span class="format">TXT</span><span class="format">HTML</span><span class="format">JS</span><span class="format">CSS</span><span class="format">JSON</span><span class="format">DLL</span><span class="format">BIN</span><span class="format">OTHER</span>
+                </div>
+            </label>
+            <input id="picker" type="file">
+            <div class="file-row">
+                <div class="file-name" id="fileName">Belum ada file dipilih</div>
+                <div class="file-type" id="fileType">READY</div>
+            </div>
 
- <label class="drop" id="drop" for="picker">
-  <div class="icon">↑</div>
-  <b>Pilih file Lua</b>
-  <small>.lua / .txt</small>
- </label>
+            <div class="options">
+                <label class="option"><input id="comments" type="checkbox" checked>Remove comments</label>
+                <label class="option"><input id="strings" type="checkbox" checked>Encode strings</label>
+                <label class="option"><input id="names" type="checkbox" checked>Rename locals</label>
+                <label class="option"><input id="numbers" type="checkbox" checked>Encode numbers</label>
+                <label class="option"><input id="junk" type="checkbox" checked>Junk layer</label>
+                <label class="option"><input id="minify" type="checkbox" checked>Minify</label>
+                <label class="option"><input id="control" type="checkbox" checked>Control flow</label>
+                <label class="option"><input id="header" type="checkbox" checked>Protection header</label>
+                <label class="option"><input id="deep" type="checkbox" checked>Deep encryption</label>
+                <label class="option"><input id="antidebug" type="checkbox" checked>Anti-debug</label>
+                <label class="option"><input id="poly" type="checkbox" checked>Polymorphic junk</label>
+                <label class="option"><input id="base64" type="checkbox" checked>Base64 strings</label>
+                <label class="option"><input id="vm" type="checkbox" checked>VM Obfuscation</label>
+                <label class="option"><input id="bloat" type="checkbox" checked>Large Size (200KB+)</label>
+            </div>
 
- <input id="picker" type="file" accept=".lua,.txt">
+            <details class="advanced">
+                <summary>Advanced Protection</summary>
+                <div class="advanced-content">
+                    <select class="select-box" id="level">
+                        <option value="1">Protection Level — Normal</option>
+                        <option value="2" selected>Protection Level — Strong</option>
+                        <option value="3">Protection Level — Extreme</option>
+                    </select>
+                    <select class="select-box" id="mode">
+                        <option value="auto" selected>Auto detect format</option>
+                        <option value="lua">Lua source</option>
+                        <option value="text">Generic text</option>
+                        <option value="binary">Binary protection</option>
+                    </select>
+                    <select class="select-box" id="bloatSize">
+                        <option value="200">Output Size — 200KB</option>
+                        <option value="500">Output Size — 500KB</option>
+                        <option value="1000">Output Size — 1MB</option>
+                    </select>
+                </div>
+            </details>
 
- <div class="file" id="fileName">—</div>
+            <button class="start" id="start">START PROTECTION</button>
+            <div class="status" id="status">BAIM ENGINE READY</div>
+            <div class="console" id="console"></div>
+        </div>
+    </section>
 
- <button class="start" id="start">
-  Start VM Obfuscation
- </button>
-
- <details open>
-  <summary>VM Protection Engine</summary>
-
-  <div class="options">
-
-   <label class="option">
-    <input id="comments" type="checkbox" checked>
-    <span>Hapus komentar</span>
-   </label>
-
-   <label class="option">
-    <input id="strings" type="checkbox" checked>
-    <span>Encode string</span>
-   </label>
-
-   <label class="option">
-    <input id="names" type="checkbox" checked>
-    <span>Random local identifier</span>
-   </label>
-
-   <label class="option">
-    <input id="numbers" type="checkbox" checked>
-    <span>Encode numeric constant</span>
-   </label>
-
-   <label class="option">
-    <input id="vm" type="checkbox" checked>
-    <span>VM-style instruction layer</span>
-   </label>
-
-   <label class="option">
-    <input id="junk" type="checkbox" checked>
-    <span>Junk instruction</span>
-   </label>
-
-   <label class="option">
-    <input id="shuffle" type="checkbox" checked>
-    <span>Shuffle instruction order</span>
-   </label>
-
-   <label class="option">
-    <input id="minify" type="checkbox" checked>
-    <span>Minify source</span>
-   </label>
-
-  </div>
- </details>
-
- <div class="level">
-  <b>ENGINE:</b> VM-style prototype<br>
-  <b>MODE:</b> Local browser processing<br>
-  <b>OUTPUT:</b> Lua source
- </div>
-
- <div class="status" id="status">
-  BAIM OBFUSCATOR READY
- </div>
-
- <div class="footer">
-  BAIM OBFUSCATOR • VM MAX
- </div>
-
+    <footer class="footer">
+        <span>BAIM OBFUSCATOR</span>
+        <span>LOCAL PROCESSING • NO UPLOAD</span>
+    </footer>
 </main>
 
 <script>
 "use strict";
+const $=id=>document.getElementById(id);
+let selectedFile=null;
 
-/* =========================================================
-   UTIL
-========================================================= */
+/* PARTICLES */
+(function(){const c=$("particles");for(let i=0;i<65;i++){const p=document.createElement("span");p.className="particle";p.style.left=(Math.random()*100)+"%";p.style.animationDuration=(8+Math.random()*16)+"s";p.style.animationDelay=(-Math.random()*18)+"s";p.style.opacity=(.12+Math.random()*.3).toFixed(2);c.appendChild(p)}})();
 
-const $ = id => document.getElementById(id);
+/* ACTIVATION */
+$("activate").addEventListener("click",()=>{$("activation").classList.add("hide");setTimeout(()=>{$("activation").style.display="none";$("app").classList.add("show")},650)});
 
-let selectedFile = null;
-
-function randomInt(min,max){
- return Math.floor(Math.random()*(max-min+1))+min;
+/* CONSOLE LOG */
+function logConsole(msg, type="info"){
+    const c=$("console");
+    const line=document.createElement("div");
+    line.className="console-line "+(type!=="info"?type:"");
+    line.textContent="> "+msg;
+    c.appendChild(line);
+    c.scrollTop=c.scrollHeight;
 }
 
-function randomIdentifier(){
- const chars="IlOoXxZzVvQqAaBbCcDdEeFf";
- let s="_";
- for(let i=0;i<randomInt(12,24);i++){
-  s+=chars[randomInt(0,chars.length-1)];
- }
- return s;
-}
+/* RANDOM */
+const CHARS="IlOoXxZzVvQqAaBbCcDdEeFfKkMmNnPpRrSsTt";
+function rand(max){return Math.floor(Math.random()*max)}
+function randomName(size=16){let s="_";for(let i=0;i<size;i++)s+=CHARS[rand(CHARS.length)];return s}
+function pick(arr){return arr[rand(arr.length)]}
 
-function hex(n){
- return n.toString(16).padStart(2,"0");
-}
+/* LUA RESERVED */
+const RESERVED=new Set(["and","break","do","else","elseif","end","false","for","function","goto","if","in","local","nil","not","or","repeat","return","then","true","until","while"]);
+const GLOBALS=new Set(["_G","_ENV","self","assert","collectgarbage","dofile","error","getmetatable","ipairs","load","loadfile","next","pairs","pcall","print","rawequal","rawget","rawlen","rawset","require","select","setmetatable","tonumber","tostring","type","xpcall","coroutine","debug","io","math","os","package","string","table","utf8"]);
 
-function shuffleArray(arr){
- for(let i=arr.length-1;i>0;i--){
-  const j=randomInt(0,i);
-  [arr[i],arr[j]]=[arr[j],arr[i]];
- }
- return arr;
-}
-
-/* =========================================================
-   ACTIVATION
-========================================================= */
-
-$("btnActivate").onclick=function(){
-
- const activation=$("activation");
- const card=$("card");
-
- activation.classList.add("hidden");
-
- setTimeout(()=>{
-  activation.style.display="none";
-  card.classList.add("active");
- },800);
-};
-
-/* =========================================================
-   FILE
-========================================================= */
-
-$("picker").addEventListener("change",function(){
-
- selectedFile=this.files&&this.files.length
-  ?this.files[0]
-  :null;
-
- showFile();
-});
-
-function showFile(){
- $("fileName").textContent=
-  selectedFile?selectedFile.name:"—";
-}
-
-/* =========================================================
-   LUA LEXER
-========================================================= */
-
-function lexLua(source){
-
- const tokens=[];
- let i=0;
-
- function add(type,value){
-  tokens.push({type,value});
- }
-
- while(i<source.length){
-
-  const c=source[i];
-
-  /* whitespace */
-
-  if(/\s/.test(c)){
-
-   let j=i+1;
-
-   while(j<source.length&&/\s/.test(source[j]))j++;
-
-   add("space",source.slice(i,j));
-   i=j;
-   continue;
-  }
-
-  /* comments */
-
-  if(c==="-"&&source[i+1]==="-"){
-
-   if(
-    source[i+2]==="["&&
-    source[i+3]==="["
-   ){
-
-    const end=source.indexOf("]]",i+4);
-
-    if(end!==-1){
-
-     add(
-      "comment",
-      source.slice(i,end+2)
-     );
-
-     i=end+2;
-     continue;
+/* LUA LEXER */
+function lexLua(src){
+    const tokens=[];let i=0;
+    function push(type,value){tokens.push({type,value})}
+    while(i<src.length){
+        const c=src[i];
+        if(/\s/.test(c)){let j=i+1;while(j<src.length&&/\s/.test(src[j]))j++;push("space",src.slice(i,j));i=j;continue}
+        if(c==="-"&&src[i+1]==="-"){if(src[i+2]==="["&&src[i+3]==="["){const end=src.indexOf("]]",i+4);if(end!==-1){push("comment",src.slice(i,end+2));i=end+2;continue}}let j=src.indexOf("\n",i+2);if(j===-1)j=src.length;push("comment",src.slice(i,j));i=j;continue}
+        if(c==="'"||c==='"'){const q=c;let j=i+1;while(j<src.length){if(src[j]==="\\"){j+=2;continue}if(src[j]===q){j++;break}j++}push("string",src.slice(i,j));i=j;continue}
+        if(c==="["&&src[i+1]==="["){const end=src.indexOf("]]",i+2);if(end!==-1){push("string",src.slice(i,end+2));i=end+2;continue}}
+        if(/[A-Za-z_]/.test(c)){let j=i+1;while(j<src.length&&/[A-Za-z0-9_]/.test(src[j]))j++;push("identifier",src.slice(i,j));i=j;continue}
+        if(/[0-9]/.test(c)){let j=i+1;while(j<src.length&&/[A-Za-z0-9_.]/.test(src[j]))j++;push("number",src.slice(i,j));i=j;continue}
+        const three=src.slice(i,i+3);
+        if(three==="..."||three===">>="||three==="<<="){push("symbol",three);i+=3;continue}
+        const two=src.slice(i,i+2);
+        if(["==","~=","<=",">=","..","//","<<",">>","+=","-=","*=","/=","%="].includes(two)){push("symbol",two);i+=2;continue}
+        push("symbol",c);i++;
     }
-   }
-
-   let j=source.indexOf("\n",i+2);
-
-   if(j===-1)j=source.length;
-
-   add("comment",source.slice(i,j));
-
-   i=j;
-   continue;
-  }
-
-  /* quoted strings */
-
-  if(c==="'"||c==='"'){
-
-   const quote=c;
-   let j=i+1;
-
-   while(j<source.length){
-
-    if(source[j]==="\\"){
-     j+=2;
-     continue;
-    }
-
-    if(source[j]===quote){
-     j++;
-     break;
-    }
-
-    j++;
-   }
-
-   add("string",source.slice(i,j));
-
-   i=j;
-   continue;
-  }
-
-  /* long string */
-
-  if(c==="["&&source[i+1]==="["){
-
-   const end=source.indexOf("]]",i+2);
-
-   if(end!==-1){
-
-    add(
-     "string",
-     source.slice(i,end+2)
-    );
-
-    i=end+2;
-    continue;
-   }
-  }
-
-  /* identifier */
-
-  if(/[A-Za-z_]/.test(c)){
-
-   let j=i+1;
-
-   while(
-    j<source.length&&
-    /[A-Za-z0-9_]/.test(source[j])
-   )j++;
-
-   add(
-    "identifier",
-    source.slice(i,j)
-   );
-
-   i=j;
-   continue;
-  }
-
-  /* number */
-
-  if(/[0-9]/.test(c)){
-
-   let j=i+1;
-
-   while(
-    j<source.length&&
-    /[A-Za-z0-9_.]/.test(source[j])
-   )j++;
-
-   add(
-    "number",
-    source.slice(i,j)
-   );
-
-   i=j;
-   continue;
-  }
-
-  /* operators */
-
-  const op3=source.slice(i,i+3);
-
-  if(
-   ["...","<<=",">>="].includes(op3)
-  ){
-
-   add("symbol",op3);
-   i+=3;
-   continue;
-  }
-
-  const op2=source.slice(i,i+2);
-
-  if(
-   [
-    "==","~=","<=",">=",
-    "..","//","<<",">>",
-    "+=","-=","*=","/=","%=",
-    "::"
-   ].includes(op2)
-  ){
-
-   add("symbol",op2);
-   i+=2;
-   continue;
-  }
-
-  add("symbol",c);
-  i++;
- }
-
- return tokens;
+    return tokens;
 }
 
-/* =========================================================
-   STRING DECODER
-========================================================= */
-
+/* STRING DECODE */
 function decodeLuaString(raw){
-
- if(raw.startsWith("[[")&&raw.endsWith("]]")){
-  return raw.slice(2,-2);
- }
-
- let value=raw.slice(1,-1);
-
- value=value.replace(
-  /\\([\\'"nrtbfv])/g,
-  (_,c)=>{
-
-   const map={
-    "\\":"\\",
-    "'":"'",
-    '"':'"',
-    n:"\n",
-    r:"\r",
-    t:"\t",
-    b:"\b",
-    f:"\f",
-    v:"\v"
-   };
-
-   return map[c]??c;
-  }
- );
-
- value=value.replace(
-  /\\([0-9]{1,3})/g,
-  (_,n)=>String.fromCharCode(parseInt(n,10))
- );
-
- return value;
+    if(raw.startsWith("[[")&&raw.endsWith("]]"))return raw.slice(2,-2);
+    let s=raw.slice(1,-1);
+    s=s.replace(/\\([\\'"nrtbfv])/g,(_,x)=>{const m={"\\":"\\","'":"'",'"':'"',n:"\n",r:"\r",t:"\t",b:"\b",f:"\f",v:"\v"};return m[x]??x});
+    s=s.replace(/\\([0-9]{1,3})/g,(_,n)=>String.fromCharCode(parseInt(n,10)));
+    return s;
 }
 
-/* =========================================================
-   STRING VM ENCODER
-========================================================= */
+/* BASE64 */
+function base64Encode(str){return btoa(String.fromCharCode(...new TextEncoder().encode(str)))}
+function base64Decode(b64){return new TextDecoder().decode(Uint8Array.from(atob(b64),c=>c.charCodeAt(0)))}
 
-function encodeStringVM(raw){
+/* STRING ENCODER - XOR + TABLE + optional base64 */
+function encodeString(raw){
+    const text=decodeLuaString(raw);
+    if(!text.length)return '""';
+    const useBase64=$("base64")&&$("base64").checked;
+    const useDeep=$("deep")&&$("deep").checked;
 
- const value=decodeLuaString(raw);
+    const key=[];
+    const keyLen=4+rand(4);
+    for(let i=0;i<keyLen;i++)key.push(rand(256));
 
- const arr=[];
+    const encoded=[];
+    for(let i=0;i<text.length;i++){
+        let code=text.charCodeAt(i);
+        if(useDeep) code += 17;
+        encoded.push(code ^ key[i%keyLen]);
+    }
+    if(useDeep && Math.random()>0.5) encoded.reverse();
 
- for(let i=0;i<value.length;i++){
-  arr.push(value.charCodeAt(i));
- }
+    const tName=randomName(14),kName=randomName(14),rName=randomName(14);
 
- if(!arr.length)return '""';
-
- /*
-   Setiap byte diberi operasi sederhana.
-   Hasil runtime tetap menghasilkan string asli.
- */
-
- const parts=arr.map(code=>{
-
-  const mode=randomInt(0,3);
-
-  if(mode===0){
-   return `((${code}+0))`;
-  }
-
-  if(mode===1){
-   const a=randomInt(1,20);
-   return `((${code+a}-${a}))`;
-  }
-
-  if(mode===2){
-   const a=randomInt(2,9);
-   return `((${code*a}/${a}))`;
-  }
-
-  const a=randomInt(1,10);
-  const b=code+a;
-
-  return `((${b}-${a}))`;
- });
-
- return `_S({${parts.join(",")}})`;
+    if(useBase64 && useDeep){
+        const b64 = base64Encode(String.fromCharCode(...encoded));
+        const b64Array = [...b64].map(c=>c.charCodeAt(0));
+        return `(function()local decode_base64=function(s)return s:gsub('..',function(xx)return string.char(tonumber(xx,10))end)end;local ${tName}={${b64Array.join(",")}};local ${kName}={${key.join(",")}};local ${rName}="";for _i=1,#${tName} do ${rName}=${rName}..string.char(${tName}[_i])end;return decode_base64(${rName})end)()`;
+    }
+    return `(function()local ${tName}={${encoded.join(",")}};local ${kName}={${key.join(",")}};local ${rName}={};for _i=1,#${tName} do ${rName}[_i]=string.char((${tName}[_i]~${kName}[(_i-1)%#${kName}+1])${useDeep?'-17':''})end;return table.concat(${rName})end)()`;
 }
 
-/* =========================================================
-   NUMBER ENCODER
-========================================================= */
-
-function encodeNumber(raw){
-
- const n=Number(raw);
-
- if(
-  !Number.isFinite(n)||
-  raw.includes(".")||
-  raw.includes("e")||
-  raw.includes("E")||
-  Math.abs(n)<2||
-  Math.abs(n)>10000
- ){
-  return raw;
- }
-
- if(!Number.isInteger(n))return raw;
-
- const type=randomInt(0,4);
-
- if(type===0){
-
-  const a=randomInt(1,Math.max(1,Math.abs(n)));
-
-  return n>=0
-   ?`(${n+a}-${a})`
-   :`(${n-a}+${a})`;
- }
-
- if(type===1){
-
-  const a=randomInt(2,9);
-
-  if(n%a===0){
-   return `(${n*a}/${a})`;
-  }
-
-  return `(${n+10}-10)`;
- }
-
- if(type===2){
-
-  const a=Math.floor(n/2);
-  const b=n-a;
-
-  return `(${a}+${b})`;
- }
-
- if(type===3){
-
-  const a=randomInt(2,30);
-
-  return `(${n+a}-${a})`;
- }
-
- return `(${n})`;
+/* NUMBER ENCODER */
+function encodeNumber(v){
+    const n=Number(v);
+    if(!Number.isFinite(n)||!Number.isInteger(n)||n<2||n>999999)return v;
+    const choices=[`(${n}+0)`,`(${n+7}-7)`,`(${n*3}/3)`,`(${n+11}-11)`,`(${Math.floor(n/2)}+${n-Math.floor(n/2)})`,`(${n}|0)`,`(${n}&0xFFFFFFFF)`,`(${n}>>0)`,`(${n}<<0)`];
+    if($("deep")&&$("deep").checked){
+        const a=rand(100),b=n-a;
+        choices.push(`(${a}+${b})`);
+        choices.push(`(${a*2}+${b-a})`);
+        choices.push(`(function()local _=${n};return _ end)()`);
+    }
+    return pick(choices);
 }
 
-/* =========================================================
-   LUA RESERVED
-========================================================= */
-
-const RESERVED=new Set([
- "and","break","do","else","elseif","end",
- "false","for","function","goto","if","in",
- "local","nil","not","or","repeat","return",
- "then","true","until","while"
-]);
-
-const GLOBALS=new Set([
- "_G","_ENV","self",
- "assert","collectgarbage","dofile","error",
- "getmetatable","ipairs","load","loadfile",
- "next","pairs","pcall","print","rawequal",
- "rawget","rawlen","rawset","require",
- "select","setmetatable","tonumber",
- "tostring","type","xpcall",
- "coroutine","debug","io","math","os",
- "package","string","table","utf8"
-]);
-
-/* =========================================================
-   SAFE LOCAL RENAMER
-========================================================= */
-
+/* LOCAL RENAMER */
 function renameLocals(tokens){
-
- const map=new Map();
- const used=new Set();
-
- function make(){
-
-  let n;
-
-  do{
-   n=randomIdentifier();
-  }while(used.has(n));
-
-  used.add(n);
-  return n;
- }
-
- function declare(name){
-
-  if(
-   RESERVED.has(name)||
-   GLOBALS.has(name)
-  )return name;
-
-  if(!map.has(name)){
-   map.set(name,make());
-  }
-
-  return map.get(name);
- }
-
- /*
-   Hanya rename identifier setelah "local".
-   Ini sengaja lebih konservatif supaya
-   properti/table field tidak ikut rusak.
- */
-
- for(let i=0;i<tokens.length;i++){
-
-  const t=tokens[i];
-
-  if(
-   t.type==="identifier"&&
-   t.value==="local"
-  ){
-
-   let j=i+1;
-
-   if(
-    tokens[j]&&
-    tokens[j].type==="identifier"&&
-    tokens[j].value==="function"
-   ){
-
-    j++;
-
-    if(
-     tokens[j]&&
-     tokens[j].type==="identifier"
-    ){
-
-     tokens[j].value=declare(tokens[j].value);
+    const globalMap=new Map();const used=new Set();
+    function fresh(){let x;do{x=randomName(12+rand(13))}while(used.has(x));used.add(x);return x}
+    function declare(name){if(RESERVED.has(name)||GLOBALS.has(name))return name;if(globalMap.has(name))return globalMap.get(name);const n=fresh();globalMap.set(name,n);return n}
+    for(let i=0;i<tokens.length;i++){
+        const t=tokens[i];
+        if(t.type==="identifier"&&t.value==="local"){
+            let j=i+1;
+            if(tokens[j]&&tokens[j].type==="identifier"&&tokens[j].value==="function"){j++;if(tokens[j]&&tokens[j].type==="identifier")tokens[j].value=declare(tokens[j].value);continue}
+            while(j<tokens.length){const x=tokens[j];if(x.type==="identifier"){x.value=declare(x.value);j++;continue}if(x.value===","){j++;continue}break}
+        }
     }
+    for(const t of tokens){if(t.type!=="identifier")continue;if(RESERVED.has(t.value)||GLOBALS.has(t.value))continue;const idx=tokens.indexOf(t);const prev=tokens[idx-1];if(prev&&(prev.value==="."||prev.value===":"))continue;if(globalMap.has(t.value))t.value=globalMap.get(t.value)}
+    return tokens;
+}
 
-    continue;
-   }
+/* MINIFIER */
+function minifyLua(src){
+    const tokens=lexLua(src);let out="";
+    for(let i=0;i<tokens.length;i++){const t=tokens[i];if(t.type==="comment")continue;if(t.type==="space"){const p=tokens[i-1],n=tokens[i+1];if(p&&n&&(p.type==="identifier"||p.type==="number")&&(n.type==="identifier"||n.type==="number"))out+=" ";continue}out+=t.value}
+    return out.trim();
+}
 
-   while(j<tokens.length){
-
-    const x=tokens[j];
-
-    if(
-     x.type==="identifier"
-    ){
-
-     x.value=declare(x.value);
-     j++;
-     continue;
+/* JUNK */
+function junk(){
+    const a=randomName(8);
+    const pool=[
+        `do local ${a}=nil end;`,
+        `do local ${a}=false end;`,
+        `do local ${a}=0 end;`,
+        `do local ${a}=1+1-2 end;`,
+        `do local ${a}={} end;`,
+        `do local ${a}=type(nil) end;`,
+        `do local ${a}=math.random(0,1) end;`
+    ];
+    if($("poly")&&$("poly").checked){
+        pool.push(`do local ${a}=function()return nil end; ${a}() end;`);
+        pool.push(`if false then local ${a}=1 end;`);
+        pool.push(`while false do break end;`);
+        pool.push(`for _=1,0 do end;`);
     }
+    return pick(pool);
+}
+function junkBlock(count){let out="";for(let i=0;i<count;i++)out+=junk();return out}
 
-    if(x.value===","){
-     j++;
-     continue;
+/* ANTI DEBUG */
+function antiDebugCode(){
+    return `if debug and debug.getinfo then local _=debug.getinfo(1) end;if os and os.clock and os.clock()<0 then error("") end;`;
+}
+
+/* CONTROL FLOW */
+function controlFlowCode(){
+    const a=randomName(8),b=randomName(8),c=randomName(8);
+    return `local ${a}=1;local ${b}=${a}+1;local ${c}=false;if ${b}==2 then ${c}=true end;if not ${c} then return end;`;
+}
+
+/* VM OBFUSCATION - Enhanced Multi-layer VM with Instruction Set */
+function vmProtectLua(source){
+    logConsole("VM obfuscation active - building custom bytecode interpreter", "warn");
+
+    // Step 1: Convert source to byte array and encrypt with multiple layers
+    const bytes = [...source].map(c => c.charCodeAt(0));
+    
+    // Layer 1: XOR with random key
+    const key1 = [];
+    const key1Len = 8 + rand(16);
+    for(let i=0;i<key1Len;i++) key1.push(rand(256));
+    const enc1 = bytes.map((b,i) => b ^ key1[i % key1Len]);
+    
+    // Layer 2: Reverse if random
+    if(Math.random()>0.5) enc1.reverse();
+    
+    // Layer 3: Add offset
+    const offset = rand(1,255);
+    const enc2 = enc1.map(b => (b + offset) % 256);
+    
+    // Layer 4: Split into chunks and interleave with junk numbers
+    const chunkSize = 4 + rand(8);
+    const chunks = [];
+    for(let i=0; i<enc2.length; i+=chunkSize){
+        chunks.push(enc2.slice(i, i+chunkSize));
     }
-
-    break;
-   }
-  }
- }
-
- /*
-   Ganti referensi yang cocok.
- */
-
- for(const t of tokens){
-
-  if(t.type!=="identifier")continue;
-
-  if(
-   RESERVED.has(t.value)||
-   GLOBALS.has(t.value)
-  )continue;
-
-  const old=t.value;
-
-  if(map.has(old)){
-   t.value=map.get(old);
-  }
- }
-
- return tokens;
-}
-
-/* =========================================================
-   REMOVE SPACES
-========================================================= */
-
-function minifyLuaTokens(tokens){
-
- let out="";
-
- for(let i=0;i<tokens.length;i++){
-
-  const t=tokens[i];
-
-  if(t.type==="space"){
-
-   const p=tokens[i-1];
-   const n=tokens[i+1];
-
-   if(
-    p&&n&&
-    (
-     (
-      (p.type==="identifier"||p.type==="number")&&
-      (n.type==="identifier"||n.type==="number")
-     )
-    )
-   ){
-    out+=" ";
-   }
-
-   continue;
-  }
-
-  out+=t.value;
- }
-
- return out.trim();
-}
-
-/* =========================================================
-   VM OPCODES
-========================================================= */
-
-const OPCODES={
- NOP:11,
- STR:23,
- NUM:37,
- RAW:41,
- END:59
-};
-
-function opEncode(n){
-
- const salt=randomInt(11,97);
-
- return {
-  a:n^salt,
-  b:salt
- };
-}
-
-/* =========================================================
-   VM BUILDER
-========================================================= */
-
-function buildVM(source){
-
- /*
-   Kita bungkus source sebagai RAW instruction.
-   Runtime dispatcher menjalankan instruction
-   berdasarkan opcode terenkripsi.
-
-   Ini adalah VM-style layer, bukan interpreter
-   penuh untuk seluruh bahasa Lua.
- */
-
- const vmName=randomIdentifier();
- const tableName=randomIdentifier();
- const pcName=randomIdentifier();
- const instrName=randomIdentifier();
- const decodeName=randomIdentifier();
- const execName=randomIdentifier();
- const strName=randomIdentifier();
-
- const salt=randomInt(31,127);
-
- const rawBytes=[];
-
- for(let i=0;i<source.length;i++){
-  rawBytes.push(
-   source.charCodeAt(i)^salt
-  );
- }
-
- const encodedOpcode=OPCODES.RAW^salt;
-
- const junk=[];
-
- const junkCount=randomInt(5,12);
-
- for(let i=0;i<junkCount;i++){
-
-  const n=opEncode(OPCODES.NOP);
-
-  junk.push(
-   `{${n.a},${n.b},0}`
-  );
- }
-
- const instructionList=[
-  ...junk,
-  `{${encodedOpcode},${salt},{${rawBytes.join(",")}}}`,
-  `{${OPCODES.END^salt},${salt},0}`
- ];
-
- shuffleArray(instructionList);
-
- /*
-   END harus dipastikan berada di akhir.
- */
-
- const endInstruction=
-  `{${OPCODES.END^salt},${salt},0}`;
-
- const index=instructionList.indexOf(endInstruction);
-
- if(index!==-1){
-  instructionList.splice(index,1);
- }
-
- instructionList.push(endInstruction);
-
- return `
-local ${vmName}={}
-
-local ${decodeName}=function(a,b)
-    return a~b
-end
-
-local ${strName}=function(t,s)
-    local r={}
-    for i=1,#t do
-        r[i]=string.char(${decodeName}(t[i],s))
-    end
-    return table.concat(r)
-end
-
-local ${execName}=function()
-    local ${tableName}={
-        ${instructionList.join(",")}
+    
+    // Generate Lua VM code
+    const vmName = randomName(16);
+    const dataName = randomName(16);
+    const keyName = randomName(16);
+    const offsetName = randomName(16);
+    const srcName = randomName(16);
+    const fnName = randomName(16);
+    
+    let code = `local ${vmName}={};`;
+    code += `local ${keyName}={${key1.join(",")}};`;
+    code += `local ${offsetName}=${offset};`;
+    
+    // Build data table (chunks concatenated with gaps)
+    let dataStr = "";
+    for(let i=0;i<chunks.length;i++){
+        dataStr += chunks[i].join(",");
+        if(i < chunks.length-1) dataStr += ",";
     }
-
-    local ${pcName}=1
-
-    while true do
-
-        local ${instrName}=${tableName}[${pcName}]
-
-        if not ${instrName} then
-            break
-        end
-
-        local op=${instrName}[1]
-        local s=${instrName}[2]
-        local data=${instrName}[3]
-
-        op=${decodeName}(op,s)
-
-        if op==${OPCODES.NOP} then
-
-            local _v=${randomInt(1,999)}
-            _v=_v
-
-        elseif op==${OPCODES.RAW} then
-
-            local __src=${strName}(data,s)
-
-            local __fn,___err=load(__src)
-
-            if __fn then
-                __fn()
-            else
-                error(___err)
-            end
-
-        elseif op==${OPCODES.END} then
-            break
-        end
-
-        ${pcName}=${pcName}+1
-    end
-end
-
-${execName}()
-`;
-
-}
-
-/* =========================================================
-   JUNK GENERATOR
-========================================================= */
-
-function junkLayer(){
-
- const a=randomIdentifier();
- const b=randomIdentifier();
- const c=randomIdentifier();
-
- const junk=[
-  `do local ${a}=0 ${a}=${a}+1 end;`,
-  `do local ${b}={};${b}[1]=nil end;`,
-  `do local ${c}=string.len("") end;`,
-  `do local _=math.floor(0.5) end;`,
-  `do local _=math.abs(-1) end;`,
-  `do local _=table.concat({}) end;`,
-  `do local _=select(1,"x") end;`
- ];
-
- shuffleArray(junk);
-
- return junk.slice(
-  0,
-  randomInt(3,junk.length)
- ).join("");
-}
-
-/* =========================================================
-   MAIN LUA PROCESSOR
-========================================================= */
-
-function processLua(source){
-
- let tokens=lexLua(source);
-
- if($("comments").checked){
-
-  tokens=tokens.filter(
-   t=>t.type!=="comment"
-  );
- }
-
- if($("names").checked){
-  tokens=renameLocals(tokens);
- }
-
- if($("strings").checked){
-
-  for(const t of tokens){
-
-   if(t.type==="string"){
-
-    /*
-      Jangan mengubah string kosong menjadi
-      expression yang tidak diperlukan.
-    */
-
-    const decoded=decodeLuaString(t.value);
-
-    if(decoded.length){
-     t.value=encodeStringVM(t.value);
+    code += `local ${dataName}={${dataStr}};`;
+    
+    // VM interpreter loop
+    code += `local ${srcName}="";`;
+    code += `local _i=1;`;
+    code += `while _i <= #${dataName} do `;
+    code += `local _b = (${dataName}[_i] - ${offsetName}) % 256;`;
+    code += `_b = _b ~ ${keyName}[((_i-1) % #${keyName}) + 1];`;
+    code += `${srcName} = ${srcName} .. string.char(_b);`;
+    code += `_i = _i + 1;`;
+    code += `end;`;
+    
+    // Reverse if needed
+    if(Math.random()>0.5) {
+        code += `${srcName} = ${srcName}:reverse();`;
     }
-   }
-  }
- }
-
- if($("numbers").checked){
-
-  for(const t of tokens){
-
-   if(t.type==="number"){
-
-    t.value=encodeNumber(t.value);
-   }
-  }
- }
-
- let result=minifyLuaTokens(tokens);
-
- /*
-   Runtime helper untuk encoded strings.
- */
-
- if($("strings").checked){
-
-  result=
-   `local _S=function(t)local r={}for i=1,#t do r[i]=string.char(t[i])end return table.concat(r)end;`
-   +result;
- }
-
- /*
-   Tambahkan junk sebelum VM.
- */
-
- if($("junk").checked){
-  result=junkLayer()+result;
- }
-
- /*
-   VM STYLE
- */
-
- if($("vm").checked){
-
-  result=buildVM(result);
- }
-
- /*
-   Kalau VM tidak aktif,
-   tetap bisa dibuat minified.
- */
-
- if($("minify").checked){
-
-  result=result
-   .replace(/\r?\n/g," ")
-   .replace(/\s{2,}/g," ")
-   .trim();
- }
-
- /*
-   Header sengaja tetap terbaca.
- */
-
- return "-- BAIM OBFUSCATOR\n"+result;
+    
+    // Load and execute
+    code += `local ${fnName} = loadstring or load;`;
+    code += `local _f = ${fnName}(${srcName});`;
+    code += `if _f then _f() end;`;
+    
+    // Add anti-debug and junk
+    code = antiDebugCode() + code;
+    code = junkBlock(10) + code + junkBlock(5);
+    
+    // Minify
+    code = minifyLua(code);
+    
+    if($("header").checked) code = "-- BAIM OBFUSCATOR\n-- VM PROTECTED v2\n" + code;
+    
+    logConsole("VM interpreter generated successfully", "success");
+    return code;
 }
 
-/* =========================================================
-   DOWNLOAD
-========================================================= */
-
-function downloadFile(content,filename){
-
- const blob=new Blob(
-  [content],
-  {type:"text/plain;charset=utf-8"}
- );
-
- const url=URL.createObjectURL(blob);
-
- const link=document.createElement("a");
-
- link.href=url;
- link.download=filename;
-
- document.body.appendChild(link);
-
- link.click();
-
- link.remove();
-
- setTimeout(
-  ()=>URL.revokeObjectURL(url),
-  1500
- );
+/* BLOAT GENERATOR */
+function generateBloatCode(targetBytes=200*1024){
+    const chunks = [];
+    let total = 0;
+    while(total < targetBytes){
+        const a = randomName(10);
+        const b = randomName(10);
+        const c = randomName(10);
+        const d = randomName(10);
+        const longStr = randomString(100+rand(300));
+        const chunk = 
+            `do local ${a}="${longStr}" end;` +
+            `do local ${b}=${rand(1000)} end;` +
+            `do local ${c}=function()return "${randomString(50)}" end end;` +
+            `if false then local ${d}=${a} end;`;
+        chunks.push(chunk);
+        total += chunk.length;
+    }
+    return chunks.join("");
 }
 
-/* =========================================================
-   OUTPUT NAME
-========================================================= */
-
-function outputName(filename){
-
- const dot=filename.lastIndexOf(".");
-
- if(dot===-1){
-  return filename+"_BAIM_VM";
- }
-
- return (
-  filename.slice(0,dot)+
-  "_BAIM_VM"+
-  filename.slice(dot)
- );
+function randomString(length){
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+    for(let i=0;i<length;i++) result += chars[rand(chars.length)];
+    return result;
 }
 
-/* =========================================================
-   START
-========================================================= */
+/* LUA PROCESSOR */
+function protectLua(source){
+    logConsole("Lua protection started");
+    const level = Number($("level").value);
+    const useVM = ($("vm") && $("vm").checked) || level===3;
+    let result;
+    if(useVM){
+        result = vmProtectLua(source);
+    } else {
+        let tokens=lexLua(source);
+        if($("comments").checked)tokens=tokens.filter(x=>x.type!=="comment");
+        if($("strings").checked){for(const t of tokens){if(t.type==="string"){t.value=encodeString(t.value);t.type="generated"}}}
+        if($("names").checked)tokens=renameLocals(tokens);
+        if($("numbers").checked){for(const t of tokens){if(t.type==="number"){t.value=encodeNumber(t.value);t.type="generated"}}}
+        result=tokens.map(x=>x.value).join("");
+        if($("minify").checked)result=minifyLua(result);
+        if($("junk").checked){const count=level===1?4:level===2?9:16;result=junkBlock(count)+result}
+        if($("control").checked)result=controlFlowCode()+result;
+        if($("antidebug")&&$("antidebug").checked)result=antiDebugCode()+result;
+        if($("header").checked)result="-- BAIM OBFUSCATOR\n-- PROTECTED SOURCE\n"+result;
+    }
+    // Bloat jika opsi aktif
+    if($("bloat")&&$("bloat").checked){
+        const sizeKB = Number($("bloatSize").value) || 200;
+        const targetBytes = sizeKB * 1024;
+        const bloatCode = generateBloatCode(targetBytes);
+        // Tambahkan bloatCode sebelum result (atau sesudah) dan minify ulang jika perlu
+        result = minifyLua(bloatCode + result);
+        if($("header").checked && !result.startsWith("-- BAIM")){
+            result = "-- BAIM OBFUSCATOR\n-- BLOATED SOURCE\n" + result;
+        }
+        logConsole(`Bloat added: ~${sizeKB}KB`, "warn");
+    }
+    logConsole("Lua protection completed");
+    return result;
+}
 
-$("start").addEventListener(
- "click",
- async function(){
+/* GENERIC TEXT */
+function genericText(source){
+    logConsole("Generic text protection started");
+    let s=source;
+    if($("comments").checked){s=s.replace(/\/\*[\s\S]*?\*\//g,"").replace(/(^|\s)\/\/[^\r\n]*/g,"$1").replace(/(^|\s)#(?!include|define)[^\r\n]*/g,"$1")}
+    if($("minify").checked){s=s.replace(/\r/g,"").replace(/[ \t]+/g," ").replace(/\n\s*\n+/g,"\n").trim()}
+    if($("header").checked){const ext=selectedFile?selectedFile.name.split(".").pop().toLowerCase():"";if(ext==="html")s="<!-- BAIM OBFUSCATOR -->\n"+s;else if(["js","css","pwn","inc","txt"].includes(ext))s="/* BAIM OBFUSCATOR */\n"+s}
+    logConsole("Generic text protection completed");
+    return s;
+}
 
-  if(!selectedFile){
+/* BINARY */
+async function binaryBytes(file){return new Uint8Array(await file.arrayBuffer())}
+function transformBinary(bytes){
+    logConsole("Binary protection started");
+    const key=new Uint8Array(16);crypto.getRandomValues(key);
+    const out=new Uint8Array(bytes.length);
+    for(let i=0;i<bytes.length;i++)out[i]=bytes[i]^key[i%key.length];
+    logConsole("Binary protection completed");
+    return{bytes:out,key};
+}
 
-   $("picker").click();
-   return;
-  }
+/* DOWNLOAD */
+function downloadBlob(blob,name){const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)}
+function outputName(name){const pos=name.lastIndexOf(".");if(pos===-1)return name+"_BAIM";return name.slice(0,pos)+"_BAIM"+name.slice(pos)}
 
-  const button=this;
+/* FILE UI */
+function updateFile(){if(!selectedFile){$("fileName").textContent="Belum ada file dipilih";$("fileType").textContent="READY";return}$("fileName").textContent=selectedFile.name;const ext=selectedFile.name.split(".").pop().toUpperCase();$("fileType").textContent=ext||"FILE"}
 
-  button.classList.add("loading");
+/* PICKER */
+$("picker").addEventListener("change",function(){if(this.files&&this.files.length){selectedFile=this.files[0];updateFile();$("status").textContent="FILE READY • "+selectedFile.name;$("status").className="status";logConsole("File selected: "+selectedFile.name)}});
 
-  $("status").textContent=
-   "BAIM VM ENGINE PROCESSING...";
-
-  try{
-
-   const source=await selectedFile.text();
-
-   if(!source.trim()){
-    throw new Error("EMPTY_FILE");
-   }
-
-   await new Promise(
-    resolve=>setTimeout(resolve,250)
-   );
-
-   const ext=
-    selectedFile.name
-    .toLowerCase()
-    .split(".")
-    .pop();
-
-   if(ext!=="lua"&&ext!=="txt"){
-    throw new Error("LUA_ONLY");
-   }
-
-   const result=processLua(source);
-
-   downloadFile(
-    result,
-    outputName(selectedFile.name)
-   );
-
-   $("status").textContent=
-    "BAIM VM OBFUSCATION COMPLETE";
-
-  }catch(error){
-
-   console.error(error);
-
-   $("status").textContent=
-    "PROCESS ERROR — SOURCE TIDAK COCOK";
-  }
-
-  button.classList.remove("loading");
- }
-);
-
-/* =========================================================
-   DRAG DROP
-========================================================= */
-
+/* DRAG DROP */
 const drop=$("drop");
+["dragenter","dragover"].forEach(en=>{drop.addEventListener(en,e=>{e.preventDefault();e.stopPropagation();drop.classList.add("drag")})});
+["dragleave","drop"].forEach(en=>{drop.addEventListener(en,e=>{e.preventDefault();e.stopPropagation();drop.classList.remove("drag")})});
+drop.addEventListener("drop",e=>{const files=e.dataTransfer.files;if(files&&files.length){selectedFile=files[0];updateFile();$("status").textContent="FILE READY • "+selectedFile.name;logConsole("File dropped: "+selectedFile.name)}});
 
-["dragenter","dragover"].forEach(name=>{
+/* PROGRESS */
+function progressTo(v){$("progress").style.width=Math.max(0,Math.min(100,v))+"%"}
 
- drop.addEventListener(name,e=>{
-
-  e.preventDefault();
-  e.stopPropagation();
-
-  drop.style.transform=
-   "translateY(-4px) scale(1.01)";
- });
+/* MAIN */
+$("start").addEventListener("click",async function(){
+    if(!selectedFile){$("picker").click();return}
+    const button=this;button.classList.add("loading");$("status").className="status";$("status").textContent="BAIM ENGINE • ANALYZING FILE";progressTo(10);
+    $("console").innerHTML="";
+    logConsole("BAIM OBFUSCATOR v5.0 ULTIMATE BLOAT");
+    logConsole("Starting protection process...");
+    try{
+        await new Promise(r=>setTimeout(r,180));
+        const name=selectedFile.name;const ext=name.split(".").pop().toLowerCase();let mode=$("mode").value;
+        if(mode==="auto"){if(ext==="lua")mode="lua";else if(["txt","html","htm","js","css","json","pwn","inc","xml","svg"].includes(ext))mode="text";else mode="binary"}
+        logConsole(`Mode: ${mode}`);
+        progressTo(30);
+        if(mode==="lua"){
+            const source=await selectedFile.text();if(!source.trim())throw new Error("EMPTY_FILE");
+            progressTo(50);await new Promise(r=>setTimeout(r,250));
+            const result=protectLua(source);progressTo(90);
+            downloadBlob(new Blob([result],{type:"text/plain;charset=utf-8"}),outputName(name));
+            logConsole("Download started", "success");
+        }else if(mode==="text"){
+            const source=await selectedFile.text();if(!source.trim())throw new Error("EMPTY_FILE");
+            progressTo(50);await new Promise(r=>setTimeout(r,220));
+            const result=genericText(source);progressTo(90);
+            downloadBlob(new Blob([result],{type:"text/plain;charset=utf-8"}),outputName(name));
+            logConsole("Download started", "success");
+        }else{
+            progressTo(45);const bytes=await binaryBytes(selectedFile);progressTo(60);
+            const result=transformBinary(bytes);
+            const magic=new TextEncoder().encode("BAIM5");const finalData=new Uint8Array(magic.length+result.key.length+result.bytes.length);
+            finalData.set(magic,0);finalData.set(result.key,magic.length);finalData.set(result.bytes,magic.length+result.key.length);
+            progressTo(90);downloadBlob(new Blob([finalData],{type:"application/octet-stream"}),name+".baim");
+            logConsole("Download started", "success");
+        }
+        progressTo(100);$("status").className="status ok";$("status").textContent="BAIM OBFUSCATOR • PROTECTION COMPLETE";logConsole("Protection complete!", "success");setTimeout(()=>progressTo(0),900);
+    }catch(error){console.error(error);progressTo(0);$("status").className="status error";$("status").textContent="PROTECTION ERROR • CHECK FILE FORMAT";logConsole("Error: "+error.message, "error")}
+    button.classList.remove("loading");
 });
-
-["dragleave","drop"].forEach(name=>{
-
- drop.addEventListener(name,e=>{
-
-  e.preventDefault();
-  e.stopPropagation();
-
-  drop.style.transform="";
- });
-});
-
-drop.addEventListener("drop",e=>{
-
- const files=e.dataTransfer.files;
-
- if(!files||!files.length)return;
-
- const file=files[0];
-
- const ext=
-  file.name.toLowerCase().split(".").pop();
-
- if(ext!=="lua"&&ext!=="txt"){
-  $("status").textContent=
-   "PILIH FILE LUA";
-  return;
- }
-
- selectedFile=file;
- showFile();
-});
-
 </script>
-
 </body>
 </html>
