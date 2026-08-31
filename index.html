@@ -3,381 +3,3132 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#030806">
 <title>BAIM OBFUSCATOR — PRO</title>
-<style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;background:#03050b;color:#fff}
-body{overflow-x:hidden}.background{position:fixed;inset:0;z-index:-2;overflow:hidden;background:radial-gradient(circle at 50% 15%,#10275c,#070d1d 34%,#03050b 75%)}
-.grid{position:absolute;left:-30%;right:-30%;bottom:-25%;height:90%;opacity:.16;background-image:linear-gradient(rgba(70,130,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(70,130,255,.35) 1px,transparent 1px);background-size:60px 60px;transform:perspective(700px) rotateX(65deg) scale(1.5);transform-origin:center bottom;animation:gridMove 10s linear infinite}
-@keyframes gridMove{to{background-position:0 60px,60px 0}}.glow{position:absolute;width:420px;height:420px;border-radius:50%;filter:blur(100px);opacity:.18}.one{left:-180px;top:-160px;background:#246bff}.two{right:-180px;bottom:-160px;background:#00d9ff}.three{left:45%;top:40%;width:280px;height:280px;background:#663cff;opacity:.08}
-.particles{position:absolute;inset:0}.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.3;animation:float linear infinite}@keyframes float{from{transform:translateY(110vh);opacity:0}15%,85%{opacity:.3}to{transform:translateY(-20vh);opacity:0}}
-.app{width:min(1120px,100%);margin:auto;padding:22px 16px 50px}.navbar{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:25px}.logo{display:flex;align-items:center;gap:11px}.logo-mark{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,#2d75ff,#123a91);font-weight:950;box-shadow:0 0 25px #246bff44}.logo-text{font-weight:900}.logo-text small{display:block;color:#68748e;font-size:9px;letter-spacing:2px;margin-top:2px}.nav-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.badge,.navbtn{border:1px solid #ffffff12;background:#ffffff06;border-radius:20px;padding:8px 12px;color:#a1aec2;font-size:10px}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#35e29b;box-shadow:0 0 12px #35e29b;margin-right:6px}.navbtn{cursor:pointer;border-radius:10px;color:#c4d0e4}.navbtn:hover{border-color:#4387ff;color:#fff}.hero{margin:10px 0 25px}.hero h1{margin:0;font-size:clamp(38px,7vw,72px);line-height:.98;letter-spacing:-4px;font-weight:950}.hero h1 span{color:#548eff}.hero p{max-width:760px;color:#758097;font-size:14px;line-height:1.7;margin:16px 0 0}
-.tabs{display:flex;gap:8px;margin-bottom:14px;overflow:auto}.tab{border:1px solid #ffffff10;background:#ffffff05;color:#8290a8;border-radius:11px;padding:11px 15px;cursor:pointer;font-weight:800;font-size:11px;white-space:nowrap}.tab.active{background:#286cf422;border-color:#4387ff66;color:#fff}.page{display:none}.page.active{display:block}
-.panel{border:1px solid #ffffff12;border-radius:22px;background:linear-gradient(145deg,#0f172ae8,#060a14f0);box-shadow:0 35px 100px #0008;overflow:hidden;position:relative}.panel:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,#3478ff,#42d8ff,transparent)}.body{padding:20px}.drop{min-height:220px;border:1px dashed #5b87dc55;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle,#2f64dc1f,transparent 65%);cursor:pointer}.drop:hover{border-color:#4387ff;background:radial-gradient(circle,#2f64dc30,transparent 65%)}.upload-icon{width:62px;height:62px;display:grid;place-items:center;border-radius:18px;background:#3d7eff22;border:1px solid #518bff44;color:#70a4ff;font-size:27px;margin-bottom:14px}.drop-title{font-size:18px;font-weight:850}.drop-sub{margin-top:7px;color:#69758c;font-size:12px}.formats{margin-top:14px;display:flex;gap:6px}.format{padding:5px 8px;border:1px solid #ffffff0d;border-radius:7px;color:#7d8aa2;font-size:9px}.file-row{display:flex;justify-content:space-between;gap:10px;margin-top:12px;padding:12px;border-radius:11px;background:#ffffff05;border:1px solid #ffffff08}.file-name{color:#aab5c9;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.file-type{color:#6fa1ff;font-size:9px;font-weight:900}.options{margin-top:13px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.option{display:flex;gap:8px;align-items:center;padding:10px;border:1px solid #ffffff09;border-radius:10px;background:#ffffff03;color:#8995aa;font-size:10px}.option input{accent-color:#397dff}.advanced{margin-top:13px;border:1px solid #ffffff0d;border-radius:12px}.advanced summary{padding:12px;cursor:pointer;color:#9ba8be;font-size:11px;font-weight:800}.advanced-content{padding:0 12px 12px;display:grid;grid-template-columns:1fr 1fr;gap:8px}.select{width:100%;padding:10px;border-radius:9px;border:1px solid #ffffff0d;background:#080d18;color:#9aa6ba}.primary{width:100%;margin-top:14px;padding:16px;border:0;border-radius:12px;background:linear-gradient(135deg,#286cf4,#1648ad);color:#fff;font-weight:900;cursor:pointer}.primary:disabled{opacity:.5}.status{text-align:center;min-height:32px;padding-top:10px;color:#68758c;font-size:10px;letter-spacing:1px}.ok{color:#4ee7a4}.error{color:#ff7185}.console{background:#050a14;border:1px solid #ffffff0d;border-radius:11px;padding:12px;margin-top:8px;max-height:160px;overflow:auto;font:10px/1.7 monospace;color:#91a5c8}.success{color:#4ee7a4}.warn{color:#ffb84d}.danger{color:#ff7185}
-.library-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap}.search{flex:1;min-width:180px;padding:12px;border-radius:10px;border:1px solid #ffffff12;background:#ffffff05;color:#fff;outline:none}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.file-card{border:1px solid #ffffff0d;background:#ffffff04;border-radius:15px;padding:14px}.file-card h3{margin:0 0 6px;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{color:#68758c;font-size:10px;line-height:1.7}.card-actions{display:flex;gap:7px;margin-top:11px}.smallbtn{border:1px solid #ffffff12;background:#ffffff07;color:#b9c6d9;padding:8px 10px;border-radius:8px;font-size:10px;cursor:pointer}.smallbtn:hover{border-color:#4387ff}.empty{text-align:center;padding:35px;color:#68758c;font-size:12px}.admin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}.stat{padding:15px;border:1px solid #ffffff0d;border-radius:14px;background:#ffffff04}.stat b{display:block;font-size:25px}.stat span{color:#718098;font-size:10px}.admin-list{display:flex;flex-direction:column;gap:8px}.admin-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;border:1px solid #ffffff0d;border-radius:11px;background:#ffffff04}.admin-row strong{font-size:11px}.login{max-width:430px;margin:auto}.input{width:100%;padding:13px;margin-bottom:9px;border-radius:10px;border:1px solid #ffffff12;background:#070c16;color:#fff;outline:none}.login-note{color:#718098;font-size:10px;line-height:1.6;margin-bottom:12px}.modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;padding:15px;z-index:20}.modal.show{display:grid}.modalbox{width:min(440px,100%);padding:20px;border:1px solid #ffffff14;border-radius:18px;background:#0a101d;box-shadow:0 30px 80px #000}.modalbox h2{margin-top:0}.close{float:right;background:none;border:0;color:#8190a8;font-size:20px;cursor:pointer}.footer{display:flex;justify-content:space-between;color:#3e4a60;font-size:9px;letter-spacing:1.5px;margin-top:16px}@media(max-width:760px){.options{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.admin-grid{grid-template-columns:1fr}.hero h1{letter-spacing:-2px}}@media(max-width:500px){.options{grid-template-columns:1fr}.advanced-content{grid-template-columns:1fr}.footer{flex-direction:column;gap:6px;text-align:center}.body{padding:13px}}
-</style>
-</head>
-<body>
-<div class="background"><div class="grid"></div><div class="glow one"></div><div class="glow two"></div><div class="glow three"></div><div class="particles" id="particles"></div></div>
-
-<main class="app">
-<nav class="navbar">
- <div class="logo"><div class="logo-mark">B</div><div class="logo-text">BAIM OBFUSCATOR<small>PROTECTION ENGINE</small></div></div>
- <div class="nav-actions">
-  <div class="badge"><span class="dot"></span><span id="onlineCount">0</span> online</div>
-  <button class="navbtn" id="authBtn">Login</button>
- </div>
-</nav>
-
-<section class="hero">
- <h1>Protect your <span>source.</span></h1>
- <p>Obfuscator Lua client-side dengan library publik, upload source Lua, statistik online, dan panel admin berbasis Supabase.</p>
-</section>
-
-<div class="tabs">
- <button class="tab active" data-page="obfuscator">Obfuscator</button>
- <button class="tab" data-page="library">Lua Library</button>
- <button class="tab" data-page="upload">Upload Lua</button>
- <button class="tab" data-page="admin">Admin</button>
-</div>
-
-<section class="page active" id="page-obfuscator">
-<div class="panel"><div class="body">
- <label class="drop" id="drop" for="picker">
-  <div class="upload-icon">↑</div><div class="drop-title">Drop source file here</div><div class="drop-sub">atau pilih file dari perangkat</div>
-  <div class="formats"><span class="format">LUA</span><span class="format">PWN</span><span class="format">INC</span><span class="format">TXT</span></div>
- </label>
- <input id="picker" type="file" accept=".lua,.pwn,.inc,.txt">
- <div class="file-row"><div class="file-name" id="fileName">Belum ada file dipilih</div><div class="file-type" id="fileType">READY</div></div>
- <div class="options">
-  <label class="option"><input id="comments" type="checkbox" checked>Remove comments</label>
-  <label class="option"><input id="strings" type="checkbox" checked>Encode strings</label>
-  <label class="option"><input id="names" type="checkbox" checked>Rename locals</label>
-  <label class="option"><input id="numbers" type="checkbox" checked>Encode numbers</label>
-  <label class="option"><input id="junk" type="checkbox" checked>Junk layer</label>
-  <label class="option"><input id="minify" type="checkbox" checked>Minify</label>
-  <label class="option"><input id="control" type="checkbox" checked>Control flow</label>
-  <label class="option"><input id="header" type="checkbox" checked>Protection header</label>
-  <label class="option"><input id="deep" type="checkbox" checked>Deep strings</label>
-  <label class="option"><input id="antidebug" type="checkbox" checked>Anti-debug</label>
-  <label class="option"><input id="poly" type="checkbox" checked>Polymorphic junk</label>
-  <label class="option"><input id="base64" type="checkbox" checked>Base64</label>
-  <label class="option"><input id="vm" type="checkbox">VM wrapper</label>
-  <label class="option"><input id="bloat" type="checkbox">Large size</label>
- </div>
- <details class="advanced"><summary>Advanced Protection</summary><div class="advanced-content">
-  <select class="select" id="level"><option value="1">Protection — Normal</option><option value="2" selected>Protection — Strong</option><option value="3">Protection — Extreme</option></select>
-  <select class="select" id="bloatSize"><option value="200">Output — 200KB</option><option value="500">Output — 500KB</option><option value="1000">Output — 1MB</option></select>
- </div></details>
- <button class="primary" id="start">START PROTECTION</button>
- <div class="status" id="status">BAIM ENGINE READY</div><div class="console" id="console"></div>
-</div></div>
-</section>
-
-<section class="page" id="page-library">
-<div class="panel"><div class="body">
- <div class="library-head"><h2 style="margin:0">Public Lua Library</h2><input class="search" id="search" placeholder="Cari file Lua..."></div>
- <div class="cards" id="fileCards"></div>
-</div></div>
-</section>
-
-<section class="page" id="page-upload">
-<div class="panel"><div class="body">
- <h2 style="margin-top:0">Upload Lua</h2>
- <p class="login-note">Login diperlukan. File yang di-upload akan masuk ke Supabase Storage dan metadata-nya disimpan di database. Jangan upload source yang berisi password, token, API secret, atau data pribadi.</p>
- <input class="input" id="uploadTitle" placeholder="Judul file">
- <input class="input" id="uploadDesc" placeholder="Deskripsi (opsional)">
- <input class="input" id="uploadFile" type="file" accept=".lua,text/plain">
- <button class="primary" id="uploadBtn">UPLOAD KE PUBLIC LIBRARY</button>
- <div class="status" id="uploadStatus"></div>
-</div></div>
-</section>
-
-<section class="page" id="page-admin">
-<div class="panel"><div class="body" id="adminArea">
- <div class="empty">Login sebagai admin untuk membuka dashboard.</div>
-</div></div>
-</section>
-
-<footer class="footer"><span>BAIM OBFUSCATOR</span><span>SUPABASE • VERCEL</span></footer>
-</main>
-
-<div class="modal" id="authModal"><div class="modalbox">
- <button class="close" id="closeAuth">×</button><h2 id="authTitle">Login</h2>
- <input class="input" id="email" type="email" placeholder="Email">
- <input class="input" id="password" type="password" placeholder="Password">
- <button class="primary" id="loginBtn">LOGIN</button>
- <button class="navbtn" id="signupBtn" style="width:100%;margin-top:8px">BUAT AKUN USER</button>
- <div class="status" id="authStatus"></div>
-</div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  min-height:100%;
+  font-family:Inter,Arial,Helvetica,sans-serif;
+  background:#030806;
+  color:#effff5
+}
+body{min-height:100vh;overflow-x:hidden}
+
+.background{
+  position:fixed;
+  inset:0;
+  z-index:-5;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 15% 10%,#07542e 0%,transparent 32%),
+    radial-gradient(circle at 90% 85%,#063b24 0%,transparent 30%),
+    #030806
+}
+.grid{
+  position:absolute;
+  left:-30%;
+  right:-30%;
+  bottom:-25%;
+  height:90%;
+  opacity:.14;
+  background-image:
+    linear-gradient(rgba(45,235,125,.35) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(45,235,125,.35) 1px,transparent 1px);
+  background-size:60px 60px;
+  transform:perspective(700px) rotateX(65deg) scale(1.5);
+  transform-origin:center bottom;
+  animation:gridMove 10s linear infinite
+}
+@keyframes gridMove{
+  from{background-position:0 0,0 0}
+  to{background-position:0 60px,60px 0}
+}
+.glow{
+  position:absolute;
+  width:400px;
+  height:400px;
+  border-radius:50%;
+  filter:blur(110px);
+  opacity:.15
+}
+.glow.one{
+  left:-180px;
+  top:-150px;
+  background:#00e56f;
+  animation:orb1 9s ease-in-out infinite
+}
+.glow.two{
+  right:-180px;
+  bottom:-160px;
+  background:#00c978;
+  animation:orb2 11s ease-in-out infinite
+}
+@keyframes orb1{
+  0%,100%{transform:translate(0)}
+  50%{transform:translate(100px,80px) scale(1.2)}
+}
+@keyframes orb2{
+  0%,100%{transform:translate(0)}
+  50%{transform:translate(-100px,-70px) scale(1.15)}
+}
+
+.particles{
+  position:absolute;
+  inset:0
+}
+.particle{
+  position:absolute;
+  width:2px;
+  height:2px;
+  border-radius:50%;
+  background:#fff;
+  opacity:.3;
+  animation:particleFloat linear infinite
+}
+@keyframes particleFloat{
+  from{transform:translateY(110vh);opacity:0}
+  15%{opacity:.3}
+  85%{opacity:.3}
+  to{transform:translateY(-20vh);opacity:0}
+}
+
+.wrap{
+  width:min(1100px,100%);
+  margin:auto;
+  padding:18px
+}
+
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px
+}
+.logo{
+  width:43px;
+  height:43px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  background:linear-gradient(145deg,#23ed7e,#079345);
+  color:#fff;
+  font-weight:950;
+  box-shadow:0 0 30px #16db6b55
+}
+.brand-name{
+  font-weight:950;
+  letter-spacing:-.5px
+}
+.brand small{
+  display:block;
+  color:#668171;
+  font-size:9px;
+  letter-spacing:2px;
+  margin-top:3px
+}
+
+.actions{
+  display:flex;
+  align-items:center;
+  gap:7px
+}
+
+.pill,.btn,.tab{
+  border:1px solid #ffffff13;
+  background:#ffffff07;
+  color:#abc0b1;
+  border-radius:10px;
+  padding:9px 12px;
+  font-size:11px
+}
+
+.btn,.tab{
+  cursor:pointer;
+  transition:.2s
+}
+.btn:hover,.tab:hover{
+  border-color:#28df7955;
+  color:#fff;
+  transform:translateY(-1px)
+}
+.btn.green,.tab.active{
+  background:#16c968;
+  color:#fff;
+  border-color:#16c968;
+  box-shadow:0 8px 25px #16c96822
+}
+
+.dot{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#39ef8a;
+  box-shadow:0 0 10px #39ef8a;
+  margin-right:5px
+}
+
+.tabs{
+  display:flex;
+  gap:7px;
+  overflow:auto;
+  padding:2px 0;
+  margin:19px 0
+}
+
+.tab{
+  white-space:nowrap
+}
+
+.page{
+  display:none
+}
+.page.show{
+  display:block;
+  animation:pageIn .45s ease
+}
+@keyframes pageIn{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:none}
+}
+
+.hero{
+  padding:14px 2px 22px
+}
+.hero h1{
+  margin:0;
+  font-size:clamp(40px,8vw,74px);
+  line-height:.94;
+  letter-spacing:-4px;
+  font-weight:950
+}
+.hero h1 span{
+  color:#30e67d
+}
+.hero p{
+  max-width:730px;
+  margin:17px 0 0;
+  color:#71877a;
+  line-height:1.75;
+  font-size:13px
+}
+
+.panel{
+  position:relative;
+  overflow:hidden;
+  padding:18px;
+  border:1px solid #ffffff12;
+  border-radius:21px;
+  background:linear-gradient(145deg,#07120bee,#040a07ee);
+  box-shadow:0 30px 90px #0009
+}
+.panel:before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,#20dd75,#70ffb0,transparent)
+}
+
+.drop{
+  min-height:220px;
+  border:1px dashed #2ce77c55;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  cursor:pointer;
+  background:radial-gradient(circle,#18c96812,transparent 65%);
+  transition:.25s
+}
+.drop:hover,.drop.drag{
+  border-color:#32eb83;
+  background:radial-gradient(circle,#18c96822,transparent 65%);
+  transform:translateY(-2px)
+}
+.upload-icon{
+  font-size:38px;
+  color:#42ee8c;
+  margin-bottom:8px
+}
+.drop b{
+  display:block;
+  font-size:18px
+}
+.drop small{
+  display:block;
+  margin-top:7px;
+  color:#718579
+}
+
+input[type=file]{
+  display:none
+}
+
+.file{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:10px;
+  padding:12px;
+  border:1px solid #ffffff0b;
+  border-radius:10px;
+  background:#ffffff04;
+  color:#91a59a
+}
+.file-type{
+  color:#4bed94;
+  font-size:9px;
+  font-weight:900
+}
+
+.options{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin-top:10px
+}
+.option{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  min-height:42px;
+  padding:9px;
+  border:1px solid #ffffff0c;
+  border-radius:9px;
+  background:#ffffff04;
+  color:#81978a;
+  font-size:10px;
+  cursor:pointer
+}
+.option:hover{
+  border-color:#28df7933;
+  color:#b8cbbf
+}
+.option input{
+  accent-color:#19d66d
+}
+
+.advanced{
+  margin-top:10px;
+  border:1px solid #ffffff0c;
+  border-radius:10px;
+  overflow:hidden
+}
+.advanced summary{
+  cursor:pointer;
+  padding:12px;
+  color:#8ba095;
+  font-size:10px;
+  font-weight:800
+}
+.advanced-content{
+  padding:0 12px 12px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px
+}
+.select{
+  width:100%;
+  padding:10px;
+  border:1px solid #ffffff12;
+  border-radius:8px;
+  background:#030805;
+  color:#9aafa1
+}
+
+.start{
+  width:100%;
+  margin-top:10px;
+  padding:15px;
+  border:0;
+  border-radius:10px;
+  background:linear-gradient(135deg,#1bda6e,#07984a);
+  color:#fff;
+  font-weight:950;
+  cursor:pointer;
+  box-shadow:0 12px 30px #11c96722;
+  transition:.2s
+}
+.start:hover{
+  transform:translateY(-2px);
+  box-shadow:0 18px 40px #11c9673b
+}
+.start.loading{
+  opacity:.55;
+  pointer-events:none
+}
+
+.console{
+  height:145px;
+  overflow:auto;
+  margin-top:10px;
+  padding:11px;
+  border:1px solid #ffffff0d;
+  border-radius:10px;
+  background:#020503;
+  color:#71917d;
+  font:10px/1.65 monospace
+}
+.console .ok{color:#49ed94}
+.console .err{color:#ff7474}
+.console .warn{color:#ffc45c}
+
+.status{
+  text-align:center;
+  padding:10px 0 0;
+  color:#617669;
+  font-size:10px
+}
+.status.ok{color:#49ed94}
+.status.error{color:#ff7474}
+
+.search{
+  width:100%;
+  margin:10px 0;
+  padding:11px;
+  border:1px solid #ffffff12;
+  border-radius:9px;
+  background:#030805;
+  color:#fff;
+  outline:none
+}
+.search:focus{
+  border-color:#2be17b66
+}
+
+.list{
+  display:grid;
+  gap:8px
+}
+.item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:13px;
+  border:1px solid #ffffff0d;
+  border-radius:11px;
+  background:#ffffff04
+}
+.item-name{
+  font-size:12px;
+  font-weight:800
+}
+.meta{
+  color:#6e8376;
+  font-size:9px;
+  margin-top:4px;
+  line-height:1.5
+}
+
+.login{
+  width:min(440px,100%);
+  margin:20px auto
+}
+.login h2{
+  margin-top:0
+}
+.field{
+  margin:10px 0
+}
+.field label{
+  display:block;
+  margin-bottom:5px;
+  color:#81968a;
+  font-size:10px
+}
+.field input{
+  width:100%;
+  padding:12px;
+  border:1px solid #ffffff12;
+  border-radius:9px;
+  outline:none;
+  background:#030805;
+  color:#fff
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-bottom:10px
+}
+.card{
+  padding:15px;
+  border:1px solid #ffffff0d;
+  border-radius:12px;
+  background:#ffffff05
+}
+.card small{
+  color:#71877a;
+  font-size:9px
+}
+.card strong{
+  display:block;
+  margin-top:6px;
+  font-size:25px
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:50;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:#000b
+}
+.modal.show{
+  display:flex
+}
+.modal-box{
+  width:min(850px,100%);
+  max-height:85vh;
+  overflow:auto;
+  padding:15px;
+  border:1px solid #ffffff16;
+  border-radius:16px;
+  background:#07100b
+}
+.modal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:10px
+}
+.code-view{
+  white-space:pre;
+  overflow:auto;
+  max-height:65vh;
+  padding:15px;
+  border-radius:10px;
+  background:#020403;
+  color:#a5c5af;
+  font:11px/1.6 monospace
+}
+
+.footer{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:18px;
+  padding:4px 2px;
+  color:#3d5949;
+  font-size:9px;
+  letter-spacing:1px
+}
+
+.hidden{
+  display:none!important
+}
+
+@media(max-width:750px){
+  .options{
+    grid-template-columns:repeat(2,1fr)
+  }
+  .cards{
+    grid-template-columns:1fr 1fr
+  }
+}
+@media(max-width:480px){
+  .wrap{
+    padding:13px
+  }
+  .options,
+  .cards,
+  .advanced-content{
+    grid-template-columns:1fr
+  }
+  .hero h1{
+    letter-spacing:-2.5px
+  }
+  .item{
+    align-items:flex-start;
+    flex-direction:column
+  }
+  .footer{
+    flex-direction:column;
+    text-align:center
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background">
+  <div class="grid"></div>
+  <div class="glow one"></div>
+  <div class="glow two"></div>
+  <div class="particles" id="particles"></div>
+</div>
+
+<div class="wrap">
+
+<header class="top">
+
+  <div class="brand">
+    <div class="logo">B</div>
+    <div>
+      <div class="brand-name">BAIM OBFUSCATOR</div>
+      <small>PROTECTION ENGINE</small>
+    </div>
+  </div>
+
+  <div class="actions">
+
+    <div class="pill">
+      <span class="dot"></span>
+      <span id="onlineCount">0</span> online
+    </div>
+
+    <button class="btn" id="authButton">
+      Login
+    </button>
+
+  </div>
+
+</header>
+
+<nav class="tabs">
+
+  <button class="tab active" data-page="obfuscator">
+    Obfuscator
+  </button>
+
+  <button class="tab" data-page="library">
+    Lua Library
+  </button>
+
+  <button class="tab" data-page="account">
+    Account
+  </button>
+
+  <button class="tab hidden" id="adminTab" data-page="admin">
+    Admin
+  </button>
+
+</nav>
+
+<!-- =========================================================
+     OBFUSCATOR
+========================================================= -->
+
+<section class="page show" id="obfuscator">
+
+  <div class="hero">
+
+    <h1>
+      Protect your <span>source.</span>
+    </h1>
+
+    <p>
+      BAIM OBFUSCATOR untuk memproses source Lua,
+      PWN, INC dan TXT langsung di browser.
+      File tidak dikirim ke server saat proses obfuscation.
+    </p>
+
+  </div>
+
+  <div class="panel">
+
+    <label class="drop" id="drop" for="picker">
+
+      <div>
+
+        <div class="upload-icon">↑</div>
+
+        <b>
+          Drop source file here
+        </b>
+
+        <small>
+          atau pilih file dari perangkat
+        </small>
+
+      </div>
+
+    </label>
+
+    <input
+      id="picker"
+      type="file"
+      accept=".lua,.pwn,.inc,.txt"
+    >
+
+    <div class="file">
+
+      <span id="fileName">
+        Belum ada file dipilih
+      </span>
+
+      <span
+        class="file-type"
+        id="fileType">
+        READY
+      </span>
+
+    </div>
+
+    <div class="options">
+
+      <label class="option">
+        <input id="comments" type="checkbox" checked>
+        Remove comments
+      </label>
+
+      <label class="option">
+        <input id="strings" type="checkbox" checked>
+        Encode strings
+      </label>
+
+      <label class="option">
+        <input id="names" type="checkbox" checked>
+        Rename locals
+      </label>
+
+      <label class="option">
+        <input id="numbers" type="checkbox" checked>
+        Transform numbers
+      </label>
+
+      <label class="option">
+        <input id="junk" type="checkbox" checked>
+        Junk layer
+      </label>
+
+      <label class="option">
+        <input id="minify" type="checkbox" checked>
+        Minify
+      </label>
+
+      <label class="option">
+        <input id="header" type="checkbox" checked>
+        Protection header
+      </label>
+
+      <label class="option">
+        <input id="vm" type="checkbox">
+        VM wrapper
+      </label>
+
+    </div>
+
+    <details class="advanced">
+
+      <summary>
+        Advanced Protection
+      </summary>
+
+      <div class="advanced-content">
+
+        <select class="select" id="level">
+          <option value="1">
+            Protection — Normal
+          </option>
+
+          <option value="2" selected>
+            Protection — Strong
+          </option>
+
+          <option value="3">
+            Protection — Extreme
+          </option>
+        </select>
+
+        <select class="select" id="bloat">
+          <option value="0">
+            Size — Normal
+          </option>
+
+          <option value="100">
+            Size — +100 KB
+          </option>
+
+          <option value="200">
+            Size — +200 KB
+          </option>
+        </select>
+
+      </div>
+
+    </details>
+
+    <button
+      class="start"
+      id="start">
+      START PROTECTION
+    </button>
+
+    <div
+      class="status"
+      id="status">
+      BAIM ENGINE READY
+    </div>
+
+    <div
+      class="console"
+      id="console">
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     LIBRARY
+========================================================= -->
+
+<section class="page" id="library">
+
+  <div class="hero">
+
+    <h1>
+      Lua <span>Library.</span>
+    </h1>
+
+    <p>
+      File Lua publik yang di-upload oleh pengguna.
+      Login diperlukan untuk mengupload.
+    </p>
+
+  </div>
+
+  <div class="panel">
+
+    <button
+      class="btn green"
+      id="uploadButton">
+      ＋ Upload Lua
+    </button>
+
+    <input
+      id="uploadPicker"
+      type="file"
+      accept=".lua">
+
+    <input
+      class="search"
+      id="search"
+      placeholder="Cari file Lua...">
+
+    <div
+      class="list"
+      id="libraryList">
+      <div class="meta">
+        Memuat library...
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     ACCOUNT
+========================================================= -->
+
+<section class="page" id="account">
+
+  <div class="panel login">
+
+    <h2>
+      Account
+    </h2>
+
+    <p class="meta">
+      Login menggunakan Supabase Auth.
+      Admin ditentukan dari tabel admins di Supabase.
+    </p>
+
+    <div class="field">
+
+      <label>
+        Email
+      </label>
+
+      <input
+        id="email"
+        type="email"
+        autocomplete="email"
+        placeholder="email@example.com">
+
+    </div>
+
+    <div class="field">
+
+      <label>
+        Password
+      </label>
+
+      <input
+        id="password"
+        type="password"
+        autocomplete="current-password"
+        placeholder="Password">
+
+    </div>
+
+    <button
+      class="btn green"
+      id="loginButton">
+      LOGIN
+    </button>
+
+    <button
+      class="btn"
+      id="logoutButton">
+      LOGOUT
+    </button>
+
+    <div
+      class="meta"
+      id="authStatus"
+      style="margin-top:12px">
+      Belum login
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     ADMIN
+========================================================= -->
+
+<section class="page" id="admin">
+
+  <div class="hero">
+
+    <h1>
+      Admin <span>Panel.</span>
+    </h1>
+
+    <p>
+      Panel pengelolaan library dan status sistem.
+    </p>
+
+  </div>
+
+  <div class="cards">
+
+    <div class="card">
+      <small>ONLINE</small>
+      <strong id="adminOnline">0</strong>
+    </div>
+
+    <div class="card">
+      <small>PUBLIC FILES</small>
+      <strong id="adminFiles">0</strong>
+    </div>
+
+    <div class="card">
+      <small>ADMIN</small>
+      <strong id="adminEmail">—</strong>
+    </div>
+
+  </div>
+
+  <div class="panel">
+
+    <button
+      class="btn green"
+      id="refreshAdmin">
+      Refresh
+    </button>
+
+    <div
+      class="list"
+      id="adminList"
+      style="margin-top:10px">
+    </div>
+
+  </div>
+
+</section>
+
+<footer class="footer">
+
+  <span>
+    BAIM OBFUSCATOR
+  </span>
+
+  <span>
+    SUPABASE • VERCEL
+  </span>
+
+</footer>
+
+</div>
+
+<!-- =========================================================
+     VIEW MODAL
+========================================================= -->
+
+<div
+  class="modal"
+  id="viewer">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <b id="viewerTitle">
+        Lua File
+      </b>
+
+      <button
+        class="btn"
+        id="closeViewer">
+        Close
+      </button>
+
+    </div>
+
+    <pre
+      class="code-view"
+      id="codeView"></pre>
+
+  </div>
+
+</div>
+
 <script>
 "use strict";
 
-/* =========================================================
-   SUPABASE
-   Publishable key aman untuk frontend.
-   JANGAN pernah memasukkan SUPABASE_SECRET_KEY di sini.
-========================================================= */
-const SUPABASE_URL="https://lelnzpdcprgrnkwuocxj.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY="sb_publishable_JnKdp1COtiQiyAH1t5c2Hg_0SmA2bX5";
-const sb=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+/*
+=========================================================
+SUPABASE CONFIGURATION
+=========================================================
 
-const $=id=>document.getElementById(id);
-let selectedFile=null,currentUser=null,isAdmin=false;
+ONLY PUBLIC/PUBLISHABLE KEY IS USED HERE.
 
-(function(){const c=$("particles");for(let i=0;i<55;i++){let p=document.createElement("span");p.className="particle";p.style.left=Math.random()*100+"%";p.style.animationDuration=8+Math.random()*16+"s";p.style.animationDelay=-Math.random()*18+"s";c.appendChild(p)}})();
+DO NOT PUT:
+sb_secret_...
 
-document.querySelectorAll(".tab").forEach(btn=>btn.onclick=()=>showPage(btn.dataset.page));
-function showPage(page){
- document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.dataset.page===page));
- document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id==="page-"+page));
- if(page==="library")loadLibrary();
- if(page==="admin")renderAdmin();
+IN THIS FILE.
+*/
+
+const SUPABASE_URL =
+  "https://dgbsffzqrftrrwlncski.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_4vKmaWZUeJnKaW2poJmZ0w_kZLC8iKo";
+
+const STORAGE_BUCKET = "lua-files";
+
+const client =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+/*
+=========================================================
+HELPERS
+=========================================================
+*/
+
+const $ = id =>
+  document.getElementById(id);
+
+let selectedFile = null;
+let currentUser = null;
+let isAdmin = false;
+let presenceId = null;
+let presenceTimer = null;
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
 }
 
-function logConsole(msg,type=""){let x=document.createElement("div");x.className=type;x.textContent="> "+msg;$("console").appendChild(x);$("console").scrollTop=$("console").scrollHeight}
-function setStatus(el,text,type=""){el.textContent=text;el.className="status "+type}
+function log(message,type=""){
 
-/* ================= AUTH ================= */
-$("authBtn").onclick=()=>{$("authModal").classList.add("show");$("authStatus").textContent=""};
-$("closeAuth").onclick=()=>$("authModal").classList.remove("show");
+  const box = $("console");
+
+  const line =
+    document.createElement("div");
+
+  line.className = type;
+
+  line.textContent =
+    "> " + message;
+
+  box.appendChild(line);
+
+  box.scrollTop =
+    box.scrollHeight;
+
+}
+
+function sleep(ms){
+
+  return new Promise(
+    resolve => setTimeout(resolve,ms)
+  );
+
+}
+
+/*
+=========================================================
+PARTICLES
+=========================================================
+*/
+
+(function(){
+
+  const container =
+    $("particles");
+
+  for(let i=0;i<60;i++){
+
+    const p =
+      document.createElement("span");
+
+    p.className =
+      "particle";
+
+    p.style.left =
+      Math.random()*100 + "%";
+
+    p.style.animationDuration =
+      8 + Math.random()*15 + "s";
+
+    p.style.animationDelay =
+      -Math.random()*18 + "s";
+
+    container.appendChild(p);
+
+  }
+
+})();
+
+/*
+=========================================================
+PAGE NAVIGATION
+=========================================================
+*/
+
+function showPage(id){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(page => {
+
+      page.classList.toggle(
+        "show",
+        page.id === id
+      );
+
+    });
+
+  document
+    .querySelectorAll(".tab")
+    .forEach(tab => {
+
+      tab.classList.toggle(
+        "active",
+        tab.dataset.page === id
+      );
+
+    });
+
+  if(id === "library")
+    loadLibrary();
+
+  if(id === "admin"){
+
+    if(!isAdmin){
+
+      showPage("account");
+
+      return;
+
+    }
+
+    loadAdmin();
+
+  }
+
+}
+
+document
+  .querySelectorAll(".tab")
+  .forEach(tab => {
+
+    tab.addEventListener(
+      "click",
+      () => showPage(tab.dataset.page)
+    );
+
+  });
+
+$("authButton")
+  .addEventListener(
+    "click",
+    () => {
+
+      showPage(
+        currentUser
+          ? (isAdmin ? "admin" : "account")
+          : "account"
+      );
+
+    }
+  );
+
+/*
+=========================================================
+FILE PICKER
+=========================================================
+*/
+
+function updateFile(){
+
+  if(!selectedFile){
+
+    $("fileName").textContent =
+      "Belum ada file dipilih";
+
+    $("fileType").textContent =
+      "READY";
+
+    return;
+
+  }
+
+  $("fileName").textContent =
+    selectedFile.name;
+
+  const ext =
+    selectedFile.name
+      .split(".")
+      .pop()
+      .toUpperCase();
+
+  $("fileType").textContent =
+    ext || "FILE";
+
+}
+
+$("picker")
+  .addEventListener(
+    "change",
+    event => {
+
+      const files =
+        event.target.files;
+
+      if(files && files.length){
+
+        selectedFile =
+          files[0];
+
+        updateFile();
+
+        $("status").textContent =
+          "FILE READY • " +
+          selectedFile.name;
+
+      }
+
+    }
+  );
+
+/*
+=========================================================
+DRAG DROP
+=========================================================
+*/
+
+const drop =
+  $("drop");
+
+["dragenter","dragover"]
+  .forEach(eventName => {
+
+    drop.addEventListener(
+      eventName,
+      event => {
+
+        event.preventDefault();
+
+        drop.classList.add("drag");
+
+      }
+    );
+
+  });
+
+["dragleave","drop"]
+  .forEach(eventName => {
+
+    drop.addEventListener(
+      eventName,
+      event => {
+
+        event.preventDefault();
+
+        drop.classList.remove("drag");
+
+      }
+    );
+
+  });
+
+drop.addEventListener(
+  "drop",
+  event => {
+
+    const files =
+      event.dataTransfer.files;
+
+    if(files && files.length){
+
+      selectedFile =
+        files[0];
+
+      updateFile();
+
+      $("status").textContent =
+        "FILE READY • " +
+        selectedFile.name;
+
+    }
+
+  }
+);
+
+/*
+=========================================================
+LUA OBFUSCATOR
+=========================================================
+*/
+
+const RESERVED =
+  new Set([
+    "and","break","do","else",
+    "elseif","end","false","for",
+    "function","goto","if","in",
+    "local","nil","not","or",
+    "repeat","return","then",
+    "true","until","while"
+  ]);
+
+const GLOBALS =
+  new Set([
+    "_G","_ENV","self",
+    "assert","collectgarbage",
+    "dofile","error",
+    "getmetatable","ipairs",
+    "load","loadfile","next",
+    "pairs","pcall","print",
+    "rawequal","rawget",
+    "rawlen","rawset",
+    "require","select",
+    "setmetatable","tonumber",
+    "tostring","type",
+    "xpcall","coroutine",
+    "debug","io","math",
+    "os","package",
+    "string","table","utf8"
+  ]);
+
+const CHARSET =
+  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+function randomName(){
+
+  let result = "_";
+
+  for(let i=0;i<12;i++){
+
+    result +=
+      CHARSET[
+        Math.floor(
+          Math.random() *
+          CHARSET.length
+        )
+      ];
+
+  }
+
+  return result;
+
+}
+
+function lexLua(source){
+
+  const tokens = [];
+
+  let i = 0;
+
+  while(i < source.length){
+
+    const c =
+      source[i];
+
+    if(/\s/.test(c)){
+
+      let j=i+1;
+
+      while(
+        j<source.length &&
+        /\s/.test(source[j])
+      ) j++;
+
+      tokens.push({
+        type:"space",
+        value:source.slice(i,j)
+      });
+
+      i=j;
+
+      continue;
+
+    }
+
+    if(
+      c==="-" &&
+      source[i+1]==="-"
+    ){
+
+      let j =
+        source.indexOf(
+          "\n",
+          i+2
+        );
+
+      if(j===-1)
+        j=source.length;
+
+      tokens.push({
+        type:"comment",
+        value:source.slice(i,j)
+      });
+
+      i=j;
+
+      continue;
+
+    }
+
+    if(
+      c==="'" ||
+      c==='"'
+    ){
+
+      const quote=c;
+
+      let j=i+1;
+
+      while(j<source.length){
+
+        if(source[j]==="\\"){
+
+          j+=2;
+
+          continue;
+
+        }
+
+        if(source[j]===quote){
+
+          j++;
+
+          break;
+
+        }
+
+        j++;
+
+      }
+
+      tokens.push({
+        type:"string",
+        value:source.slice(i,j)
+      });
+
+      i=j;
+
+      continue;
+
+    }
+
+    if(/[A-Za-z_]/.test(c)){
+
+      let j=i+1;
+
+      while(
+        j<source.length &&
+        /[A-Za-z0-9_]/.test(source[j])
+      ) j++;
+
+      tokens.push({
+        type:"identifier",
+        value:source.slice(i,j)
+      });
+
+      i=j;
+
+      continue;
+
+    }
+
+    if(/[0-9]/.test(c)){
+
+      let j=i+1;
+
+      while(
+        j<source.length &&
+        /[A-Za-z0-9_.]/.test(source[j])
+      ) j++;
+
+      tokens.push({
+        type:"number",
+        value:source.slice(i,j)
+      });
+
+      i=j;
+
+      continue;
+
+    }
+
+    const two =
+      source.slice(i,i+2);
+
+    if([
+      "==","~=",
+      "<=",">=",
+      "..","//",
+      "<<",">>",
+      "+=","-=",
+      "*=","/=",
+      "%="
+    ].includes(two)){
+
+      tokens.push({
+        type:"symbol",
+        value:two
+      });
+
+      i+=2;
+
+      continue;
+
+    }
+
+    tokens.push({
+      type:"symbol",
+      value:c
+    });
+
+    i++;
+
+  }
+
+  return tokens;
+
+}
+
+function encodeLuaString(token){
+
+  let text =
+    token.slice(1,-1);
+
+  if(!text)
+    return '""';
+
+  const codes =
+    [...text]
+      .map(
+        char =>
+          char.charCodeAt(0)
+      );
+
+  const table =
+    codes.join(",");
+
+  const n =
+    randomName();
+
+  const r =
+    randomName();
+
+  return `
+(function()
+local ${n}={${table}}
+local ${r}=""
+for i=1,#${n} do
+${r}=${r}..string.char(${n}[i])
+end
+return ${r}
+end)()
+`.replace(/\s+/g," ");
+
+}
+
+function transformNumber(value){
+
+  const n =
+    Number(value);
+
+  if(
+    !Number.isFinite(n) ||
+    !Number.isInteger(n) ||
+    n < 2
+  )
+    return value;
+
+  const a =
+    Math.floor(
+      Math.random()*20
+    );
+
+  const b =
+    n-a;
+
+  return `(${a}+${b})`;
+
+}
+
+function renameLocals(tokens){
+
+  const map =
+    new Map();
+
+  function fresh(){
+
+    let name;
+
+    do{
+      name=randomName();
+    }while(
+      [...map.values()]
+        .includes(name)
+    );
+
+    return name;
+
+  }
+
+  for(
+    let i=0;
+    i<tokens.length;
+    i++
+  ){
+
+    if(
+      tokens[i].type ===
+      "identifier" &&
+      tokens[i].value ===
+      "local"
+    ){
+
+      let j=i+1;
+
+      while(
+        j<tokens.length
+      ){
+
+        if(
+          tokens[j].type ===
+          "identifier"
+        ){
+
+          const old =
+            tokens[j].value;
+
+          if(
+            !RESERVED.has(old) &&
+            !GLOBALS.has(old) &&
+            !map.has(old)
+          ){
+
+            map.set(
+              old,
+              fresh()
+            );
+
+          }
+
+          j++;
+
+          continue;
+
+        }
+
+        if(
+          tokens[j].value === ","
+        ){
+
+          j++;
+
+          continue;
+
+        }
+
+        break;
+
+      }
+
+    }
+
+  }
+
+  for(const token of tokens){
+
+    if(
+      token.type !==
+      "identifier"
+    )
+      continue;
+
+    if(
+      map.has(token.value)
+    ){
+
+      token.value =
+        map.get(token.value);
+
+    }
+
+  }
+
+  return tokens;
+
+}
+
+function junkCode(){
+
+  const n =
+    randomName();
+
+  const variants = [
+
+    `do local ${n}=nil end;`,
+
+    `do local ${n}=false end;`,
+
+    `do local ${n}=0 end;`,
+
+    `do local ${n}=1+1-2 end;`,
+
+    `do local ${n}={} end;`,
+
+    `if false then local ${n}=1 end;`
+
+  ];
+
+  return variants[
+    Math.floor(
+      Math.random() *
+      variants.length
+    )
+  ];
+
+}
+
+function createJunk(level){
+
+  let result="";
+
+  const count =
+    level === 3
+      ? 18
+      : level === 2
+        ? 10
+        : 5;
+
+  for(let i=0;i<count;i++)
+    result += junkCode();
+
+  return result;
+
+}
+
+function protectLua(source){
+
+  log(
+    "Lua lexer initialized"
+  );
+
+  let tokens =
+    lexLua(source);
+
+  if($("comments").checked){
+
+    tokens =
+      tokens.filter(
+        token =>
+          token.type !==
+          "comment"
+      );
+
+    log(
+      "Comments removed"
+    );
+
+  }
+
+  if($("strings").checked){
+
+    for(
+      const token of tokens
+    ){
+
+      if(
+        token.type ===
+        "string"
+      ){
+
+        token.value =
+          encodeLuaString(
+            token.value
+          );
+
+      }
+
+    }
+
+    log(
+      "String transformation complete"
+    );
+
+  }
+
+  if($("names").checked){
+
+    tokens =
+      renameLocals(tokens);
+
+    log(
+      "Local identifiers randomized"
+    );
+
+  }
+
+  if($("numbers").checked){
+
+    for(
+      const token of tokens
+    ){
+
+      if(
+        token.type ===
+        "number"
+      ){
+
+        token.value =
+          transformNumber(
+            token.value
+          );
+
+      }
+
+    }
+
+    log(
+      "Numeric transformation complete"
+    );
+
+  }
+
+  let result =
+    tokens
+      .map(token => token.value)
+      .join("");
+
+  if($("minify").checked){
+
+    result =
+      result
+        .replace(/\s+/g," ")
+        .trim();
+
+    log(
+      "Minification complete"
+    );
+
+  }
+
+  if($("junk").checked){
+
+    result =
+      createJunk(
+        Number($("level").value)
+      ) +
+      result;
+
+    log(
+      "Junk layer added",
+      "warn"
+    );
+
+  }
+
+  if($("vm").checked){
+
+    const source =
+      result
+        .replace(/\]\]/g,"] ]");
+
+    result =
+`local _BAIM_SOURCE=[[${source}]]
+local _BAIM_LOAD=loadstring or load
+local _BAIM_FN=_BAIM_LOAD(_BAIM_SOURCE)
+if _BAIM_FN then _BAIM_FN() end`;
+
+    log(
+      "VM wrapper generated",
+      "warn"
+    );
+
+  }
+
+  if($("bloat").value !== "0"){
+
+    const target =
+      Number(
+        $("bloat").value
+      ) * 1024;
+
+    let junk="";
+
+    while(junk.length < target){
+
+      junk +=
+        junkCode();
+
+    }
+
+    result =
+      junk +
+      result;
+
+    log(
+      "Additional output layer added",
+      "warn"
+    );
+
+  }
+
+  if($("header").checked){
+
+    result =
+`-- BAIM OBFUSCATOR
+-- PROTECTED SOURCE
+
+${result}`;
+
+  }
+
+  return result;
+
+}
+
+/*
+=========================================================
+GENERIC PROCESSOR
+=========================================================
+*/
+
+function genericProtect(source){
+
+  let result =
+    source;
+
+  if($("comments").checked){
+
+    result =
+      result
+        .replace(
+          /\/\*[\s\S]*?\*\//g,
+          ""
+        )
+        .replace(
+          /(^|\s)\/\/[^\r\n]*/g,
+          "$1"
+        );
+
+  }
+
+  if($("minify").checked){
+
+    result =
+      result
+        .replace(/\r/g,"")
+        .replace(/[ \t]+/g," ")
+        .replace(/\n\s*\n+/g,"\n")
+        .trim();
+
+  }
+
+  if($("header").checked){
+
+    result =
+      "/* BAIM OBFUSCATOR */\n" +
+      result;
+
+  }
+
+  return result;
+
+}
+
+/*
+=========================================================
+DOWNLOAD
+=========================================================
+*/
+
+function downloadFile(
+  content,
+  filename
+){
+
+  const blob =
+    new Blob(
+      [content],
+      {
+        type:
+          "text/plain;charset=utf-8"
+      }
+    );
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
+
+  a.href=url;
+
+  a.download=filename;
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+  setTimeout(
+    () => URL.revokeObjectURL(url),
+    1500
+  );
+
+}
+
+/*
+=========================================================
+START OBFUSCATION
+=========================================================
+*/
+
+$("start")
+  .addEventListener(
+    "click",
+    async function(){
+
+      if(!selectedFile){
+
+        $("picker").click();
+
+        return;
+
+      }
+
+      const button =
+        this;
+
+      button.classList.add(
+        "loading"
+      );
+
+      $("console").innerHTML="";
+
+      $("status").className =
+        "status";
+
+      $("status").textContent =
+        "PROCESSING...";
+
+      try{
+
+        log(
+          "BAIM OBFUSCATOR START"
+        );
+
+        const source =
+          await selectedFile.text();
+
+        if(!source.trim())
+          throw new Error(
+            "File kosong"
+          );
+
+        await sleep(150);
+
+        const ext =
+          selectedFile.name
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+        let result;
+
+        if(ext === "lua"){
+
+          result =
+            protectLua(
+              source
+            );
+
+        }else if([
+          "pwn",
+          "inc",
+          "txt"
+        ].includes(ext)){
+
+          result =
+            genericProtect(
+              source
+            );
+
+        }else{
+
+          throw new Error(
+            "Format tidak didukung"
+          );
+
+        }
+
+        const outputName =
+          selectedFile.name.replace(
+            /(\.[^.]+)$/,
+            "_BAIM$1"
+          );
+
+        downloadFile(
+          result,
+          outputName
+        );
+
+        $("status").className =
+          "status ok";
+
+        $("status").textContent =
+          "PROTECTION COMPLETE";
+
+        log(
+          "Output generated",
+          "ok"
+        );
+
+      }catch(error){
+
+        console.error(error);
+
+        $("status").className =
+          "status error";
+
+        $("status").textContent =
+          "ERROR";
+
+        log(
+          error.message,
+          "err"
+        );
+
+      }finally{
+
+        button.classList.remove(
+          "loading"
+        );
+
+      }
+
+    }
+  );
+
+/*
+=========================================================
+AUTH
+=========================================================
+*/
 
 async function refreshAuth(){
- const {data}=await sb.auth.getUser();
- currentUser=data?.user||null;
- isAdmin=false;
- if(currentUser){
-   const {data:a}=await sb.from("admins").select("user_id").eq("user_id",currentUser.id).maybeSingle();
-   isAdmin=!!a;
-   $("authBtn").textContent=isAdmin?"Admin / Logout":"Logout";
- }else $("authBtn").textContent="Login";
- renderAdmin();
-}
-$("authBtn").addEventListener("click",async()=>{
- if(currentUser){await sb.auth.signOut();await refreshAuth();return}
- $("authModal").classList.add("show");
-});
-$("loginBtn").onclick=async()=>{
- setStatus($("authStatus"),"LOGIN...");
- const email=$("email").value.trim(),password=$("password").value;
- if(!email||!password)return setStatus($("authStatus"),"Email dan password wajib diisi","error");
- const {error}=await sb.auth.signInWithPassword({email,password});
- if(error)return setStatus($("authStatus"),error.message,"error");
- $("authModal").classList.remove("show");await refreshAuth();
-};
-$("signupBtn").onclick=async()=>{
- setStatus($("authStatus"),"MEMBUAT AKUN...");
- const email=$("email").value.trim(),password=$("password").value;
- if(!email||password.length<6)return setStatus($("authStatus"),"Email wajib dan password minimal 6 karakter","error");
- const {error}=await sb.auth.signUp({email,password});
- if(error)return setStatus($("authStatus"),error.message,"error");
- setStatus($("authStatus"),"Akun dibuat. Jika email confirmation aktif, cek email kamu.","ok");
-};
-sb.auth.onAuthStateChange(()=>setTimeout(refreshAuth,0));
 
-/* ================= ONLINE ================= */
+  const result =
+    await client.auth.getUser();
+
+  currentUser =
+    result.data?.user || null;
+
+  isAdmin=false;
+
+  if(currentUser){
+
+    try{
+
+      const adminQuery =
+        await client
+          .from("admins")
+          .select("user_id")
+          .eq(
+            "user_id",
+            currentUser.id
+          )
+          .maybeSingle();
+
+      isAdmin =
+        !!adminQuery.data;
+
+    }catch(error){
+
+      console.warn(
+        "Admin check:",
+        error
+      );
+
+    }
+
+  }
+
+  $("adminTab")
+    .classList.toggle(
+      "hidden",
+      !isAdmin
+    );
+
+  if(currentUser){
+
+    $("authButton").textContent =
+      isAdmin
+        ? "Admin"
+        : "Account";
+
+    $("authStatus").textContent =
+      "Login sebagai " +
+      currentUser.email;
+
+    startPresence();
+
+  }else{
+
+    $("authButton").textContent =
+      "Login";
+
+    $("authStatus").textContent =
+      "Belum login";
+
+    stopPresence();
+
+  }
+
+}
+
+$("loginButton")
+  .addEventListener(
+    "click",
+    async () => {
+
+      const email =
+        $("email").value.trim();
+
+      const password =
+        $("password").value;
+
+      if(!email || !password){
+
+        $("authStatus").textContent =
+          "Email dan password wajib diisi";
+
+        return;
+
+      }
+
+      $("loginButton")
+        .classList.add(
+          "loading"
+        );
+
+      const result =
+        await client.auth.signInWithPassword({
+          email,
+          password
+        });
+
+      $("loginButton")
+        .classList.remove(
+          "loading"
+        );
+
+      if(result.error){
+
+        $("authStatus").textContent =
+          result.error.message;
+
+        return;
+
+      }
+
+      await refreshAuth();
+
+      showPage(
+        isAdmin
+          ? "admin"
+          : "library"
+      );
+
+    }
+  );
+
+$("logoutButton")
+  .addEventListener(
+    "click",
+    async () => {
+
+      await stopPresence();
+
+      await client.auth.signOut();
+
+      await refreshAuth();
+
+      showPage("account");
+
+    }
+  );
+
+client.auth.onAuthStateChange(
+  () => {
+
+    setTimeout(
+      refreshAuth,
+      100
+    );
+
+  }
+);
+
+/*
+=========================================================
+ONLINE PRESENCE
+=========================================================
+*/
+
+async function startPresence(){
+
+  if(!currentUser)
+    return;
+
+  await stopPresence();
+
+  presenceId =
+    crypto.randomUUID();
+
+  async function heartbeat(){
+
+    if(!currentUser ||
+       !presenceId)
+      return;
+
+    const now =
+      new Date().toISOString();
+
+    try{
+
+      await client
+        .from("online_sessions")
+        .upsert({
+          id:presenceId,
+          user_id:currentUser.id,
+          updated_at:now
+        });
+
+    }catch(error){
+
+      console.warn(
+        "Presence:",
+        error
+      );
+
+    }
+
+    updateOnline();
+
+  }
+
+  await heartbeat();
+
+  presenceTimer =
+    setInterval(
+      heartbeat,
+      20000
+    );
+
+}
+
+async function stopPresence(){
+
+  if(presenceTimer){
+
+    clearInterval(
+      presenceTimer
+    );
+
+    presenceTimer=null;
+
+  }
+
+  if(presenceId){
+
+    try{
+
+      await client
+        .from("online_sessions")
+        .delete()
+        .eq(
+          "id",
+          presenceId
+        );
+
+    }catch(error){}
+
+    presenceId=null;
+
+  }
+
+}
+
 async function updateOnline(){
- const {data,error}=await sb.rpc("get_online_count");
- if(!error && typeof data!=="undefined")$("onlineCount").textContent=data;
-}
-async function heartbeat(){
- if(!currentUser)return;
- await sb.from("online_sessions").upsert(
-   {session_id:localStorage.baim_session_id,user_id:currentUser.id,last_seen:new Date().toISOString()},
-   {onConflict:"session_id"}
- );
-}
-if(!localStorage.baim_session_id)localStorage.baim_session_id=crypto.randomUUID();
-setInterval(updateOnline,15000);setInterval(heartbeat,30000);
 
-/* ================= LIBRARY ================= */
-function escapeHTML(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function fmtBytes(n){if(!n)return"0 B";const u=["B","KB","MB","GB"];let i=Math.floor(Math.log(n)/Math.log(1024));return(n/Math.pow(1024,i)).toFixed(i?1:0)+" "+u[i]}
-function fmtDate(d){return new Date(d).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"})}
+  const cutoff =
+    new Date(
+      Date.now()-60000
+    ).toISOString();
+
+  try{
+
+    await client
+      .from("online_sessions")
+      .delete()
+      .lt(
+        "updated_at",
+        cutoff
+      );
+
+    const result =
+      await client
+        .from("online_sessions")
+        .select("*",{
+          count:"exact",
+          head:true
+        })
+        .gte(
+          "updated_at",
+          cutoff
+        );
+
+    const count =
+      result.count ?? 0;
+
+    $("onlineCount").textContent =
+      count;
+
+    $("adminOnline").textContent =
+      count;
+
+  }catch(error){
+
+    $("onlineCount").textContent =
+      "—";
+
+    $("adminOnline").textContent =
+      "—";
+
+  }
+
+}
+
+setInterval(
+  updateOnline,
+  20000
+);
+
+/*
+=========================================================
+PUBLIC LUA LIBRARY
+=========================================================
+
+Expected table:
+
+lua_files
+
+id
+name
+storage_path
+size
+user_id
+is_public
+created_at
+=========================================================
+*/
 
 async function loadLibrary(){
- const box=$("fileCards");box.innerHTML='<div class="empty">Memuat library...</div>';
- const {data,error}=await sb.from("lua_files").select("*").eq("is_public",true).eq("is_approved",true).order("created_at",{ascending:false});
- if(error){box.innerHTML='<div class="empty">Gagal memuat library: '+escapeHTML(error.message)+'</div>';return}
- window.publicFiles=data||[];renderFiles(window.publicFiles);
-}
-function renderFiles(files){
- const q=$("search").value.toLowerCase().trim();
- const list=(files||[]).filter(f=>(f.original_name+" "+(f.title||"")+" "+(f.description||"")).toLowerCase().includes(q));
- if(!list.length){$("fileCards").innerHTML='<div class="empty">Belum ada file yang cocok.</div>';return}
- $("fileCards").innerHTML=list.map(f=>`
- <article class="file-card">
-  <h3>${escapeHTML(f.title||f.original_name)}</h3>
-  <div class="meta">${escapeHTML(f.original_name)}<br>${escapeHTML(f.description||"Tidak ada deskripsi")}<br>${fmtBytes(f.file_size)} • ${f.views||0} views • ${f.downloads||0} downloads<br>${fmtDate(f.created_at)}</div>
-  <div class="card-actions"><button class="smallbtn" onclick="viewLua('${f.id}')">Lihat</button><button class="smallbtn" onclick="downloadLua('${f.id}')">Download</button></div>
- </article>`).join("");
-}
-$("search").oninput=()=>renderFiles(window.publicFiles||[]);
 
-async function viewLua(id){
- const f=(window.publicFiles||[]).find(x=>x.id===id);if(!f)return;
- await sb.rpc("increment_lua_view",{file_id:id});
- const {data}=sb.storage.from("lua-files").getPublicUrl(f.storage_path);
- window.open(data.publicUrl,"_blank","noopener");
- loadLibrary();
-}
-async function downloadLua(id){
- const f=(window.publicFiles||[]).find(x=>x.id===id);if(!f)return;
- await sb.rpc("increment_lua_download",{file_id:id});
- const {data}=sb.storage.from("lua-files").getPublicUrl(f.storage_path);
- const a=document.createElement("a");a.href=data.publicUrl;a.download=f.original_name;a.target="_blank";document.body.appendChild(a);a.click();a.remove();
- loadLibrary();
-}
+  const list =
+    $("libraryList");
 
-/* ================= UPLOAD ================= */
-$("uploadBtn").onclick=async()=>{
- if(!currentUser){$("authModal").classList.add("show");return}
- const file=$("uploadFile").files[0],title=$("uploadTitle").value.trim(),desc=$("uploadDesc").value.trim();
- if(!file)return setStatus($("uploadStatus"),"Pilih file .lua dulu","error");
- if(!file.name.toLowerCase().endsWith(".lua"))return setStatus($("uploadStatus"),"Hanya file .lua","error");
- if(file.size>10*1024*1024)return setStatus($("uploadStatus"),"Maksimal 10MB","error");
- const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
- const path=currentUser.id+"/"+Date.now()+"_"+safe;
- setStatus($("uploadStatus"),"UPLOAD...");
- const {error:upErr}=await sb.storage.from("lua-files").upload(path,file,{contentType:"text/plain",upsert:false});
- if(upErr)return setStatus($("uploadStatus"),upErr.message,"error");
- const {error:dbErr}=await sb.from("lua_files").insert({
-   user_id:currentUser.id,original_name:file.name,storage_path:path,title:title||file.name,description:desc,
-   file_size:file.size,mime_type:"text/plain",is_public:true,is_approved:true
- });
- if(dbErr){
-   await sb.storage.from("lua-files").remove([path]);
-   return setStatus($("uploadStatus"),dbErr.message,"error");
- }
- setStatus($("uploadStatus"),"UPLOAD BERHASIL • FILE PUBLIC","ok");
- $("uploadTitle").value="";$("uploadDesc").value="";$("uploadFile").value="";
- loadLibrary();
-};
+  list.innerHTML =
+    '<div class="meta">Loading...</div>';
 
-/* ================= ADMIN ================= */
-async function renderAdmin(){
- const area=$("adminArea");
- if(!currentUser||!isAdmin){area.innerHTML='<div class="empty">🔒 Login dengan akun yang ada di tabel <b>admins</b> untuk membuka dashboard admin.</div>';return}
- const {data,error}=await sb.from("lua_files").select("*").order("created_at",{ascending:false});
- if(error){area.innerHTML='<div class="empty">'+escapeHTML(error.message)+'</div>';return}
- const files=data||[],publicCount=files.filter(x=>x.is_public&&x.is_approved).length;
- area.innerHTML=`
- <div class="admin-grid">
-  <div class="stat"><b>${files.length}</b><span>Total upload</span></div>
-  <div class="stat"><b>${publicCount}</b><span>Public</span></div>
-  <div class="stat"><b>${files.reduce((a,b)=>a+(b.downloads||0),0)}</b><span>Total download</span></div>
- </div>
- <div class="library-head"><h2 style="margin:0">Admin File Manager</h2><button class="smallbtn" onclick="renderAdmin()">Refresh</button></div>
- <div class="admin-list">${files.length?files.map(f=>`
-  <div class="admin-row">
-   <div><strong>${escapeHTML(f.original_name)}</strong><div class="meta">${f.is_public&&f.is_approved?"PUBLIC":"HIDDEN"} • ${f.views||0} views • ${f.downloads||0} downloads</div></div>
-   <div class="card-actions">
-    <button class="smallbtn" onclick="togglePublic('${f.id}',${!!f.is_public})">${f.is_public?"Hide":"Show"}</button>
-    <button class="smallbtn" onclick="deleteFile('${f.id}')">Delete</button>
-   </div>
-  </div>`).join(""):'<div class="empty">Belum ada file.</div>'}</div>`;
-}
-async function togglePublic(id,state){
- const {error}=await sb.from("lua_files").update({is_public:!state}).eq("id",id);
- if(error)alert(error.message);else renderAdmin();
-}
-async function deleteFile(id){
- if(!confirm("Hapus file ini dari database dan storage?"))return;
- const {data,error}=await sb.from("lua_files").select("storage_path").eq("id",id).single();
- if(error)return alert(error.message);
- const {error:se}=await sb.storage.from("lua-files").remove([data.storage_path]);
- if(se)return alert(se.message);
- const {error:de}=await sb.from("lua_files").delete().eq("id",id);
- if(de)return alert(de.message);
- renderAdmin();loadLibrary();
+  const result =
+    await client
+      .from("lua_files")
+      .select("*")
+      .eq(
+        "is_public",
+        true
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      )
+      .limit(100);
+
+  if(result.error){
+
+    list.innerHTML =
+      `<div class="meta">${escapeHTML(
+        result.error.message
+      )}</div>`;
+
+    return;
+
+  }
+
+  renderLibrary(
+    result.data || [],
+    list
+  );
+
 }
 
-/* ================= OBFUSCATOR ================= */
-let selectedObf=null;
-const CHARS="IlOoXxZzVvQqAaBbCcDdEeFfKkMmNnPpRrSsTt";
-const RESERVED=new Set(["and","break","do","else","elseif","end","false","for","function","goto","if","in","local","nil","not","or","repeat","return","then","true","until","while"]);
-const GLOBALS=new Set(["_G","_ENV","self","assert","error","getmetatable","ipairs","load","loadfile","next","pairs","pcall","print","rawequal","rawget","rawlen","rawset","require","select","setmetatable","tonumber","tostring","type","xpcall","coroutine","debug","io","math","os","package","string","table","utf8"]);
-function rand(n){return Math.floor(Math.random()*n)}
-function randomName(n=14){let s="_";for(let i=0;i<n;i++)s+=CHARS[rand(CHARS.length)];return s}
-function pick(a){return a[rand(a.length)]}
-function lexLua(src){
- const t=[];let i=0,push=(type,value)=>t.push({type,value});
- while(i<src.length){let c=src[i];
-  if(/\s/.test(c)){let j=i+1;while(j<src.length&&/\s/.test(src[j]))j++;push("space",src.slice(i,j));i=j;continue}
-  if(c==="-"&&src[i+1]==="-"){let j=src.indexOf("\n",i+2);if(j<0)j=src.length;push("comment",src.slice(i,j));i=j;continue}
-  if(c==="'"||c==='"'){let q=c,j=i+1;while(j<src.length){if(src[j]==="\\"){j+=2;continue}if(src[j]===q){j++;break}j++}push("string",src.slice(i,j));i=j;continue}
-  if(c==="["&&src[i+1]==="["){let e=src.indexOf("]]",i+2);if(e>=0){push("string",src.slice(i,e+2));i=e+2;continue}}
-  if(/[A-Za-z_]/.test(c)){let j=i+1;while(j<src.length&&/[A-Za-z0-9_]/.test(src[j]))j++;push("identifier",src.slice(i,j));i=j;continue}
-  if(/[0-9]/.test(c)){let j=i+1;while(j<src.length&&/[A-Za-z0-9_.]/.test(src[j]))j++;push("number",src.slice(i,j));i=j;continue}
-  let two=src.slice(i,i+2);if(["==","~=","<=",">=","..","//","<<",">>","+=","-=","*=","/=","%="].includes(two)){push("symbol",two);i+=2;continue}
-  push("symbol",c);i++;
- }
- return t;
-}
-function decodeLuaString(raw){
- if(raw.startsWith("[[")&&raw.endsWith("]]"))return raw.slice(2,-2);
- let s=raw.slice(1,-1);return s.replace(/\\([\\'"nrtbfv])/g,(_,x)=>({"\\":"\\","'":"'","\"":"\"",n:"\n",r:"\r",t:"\t",b:"\b",f:"\f",v:"\v"}[x]||x)).replace(/\\([0-9]{1,3})/g,(_,n)=>String.fromCharCode(+n));
-}
-function encodeString(raw){
- const text=decodeLuaString(raw);if(!text.length)return'""';
- const key=Array.from({length:4+rand(4)},()=>rand(256)),enc=[];
- for(let i=0;i<text.length;i++)enc.push(text.charCodeAt(i)^key[i%key.length]);
- const a=randomName(12),k=randomName(12),r=randomName(12);
- return `(function()local ${a}={${enc.join(",")}};local ${k}={${key.join(",")}};local ${r}={};for _i=1,#${a} do ${r}[_i]=string.char(${a}[_i]~${k}[(_i-1)%#${k}+1])end;return table.concat(${r})end)()`;
-}
-function renameLocals(tokens){
- const map=new Map(),used=new Set();function fresh(){let n;do n=randomName(10+rand(10));while(used.has(n));used.add(n);return n}
- for(let i=0;i<tokens.length;i++)if(tokens[i].type==="identifier"&&tokens[i].value==="local"){
-   let j=i+1;while(j<tokens.length&&tokens[j].type!=="symbol"&&tokens[j].value!==";"){if(tokens[j].type==="identifier"&&!RESERVED.has(tokens[j].value)&&!GLOBALS.has(tokens[j].value)){let old=tokens[j].value;if(!map.has(old))map.set(old,fresh())}j++}
- }
- tokens.forEach(x=>{if(x.type==="identifier"&&map.has(x.value))x.value=map.get(x.value)});return tokens;
-}
-function minifyLua(src){
- const ts=lexLua(src);let out="";
- for(let i=0;i<ts.length;i++){let t=ts[i];if(t.type==="comment")continue;if(t.type==="space"){let p=ts[i-1],n=ts[i+1];if(p&&n&&(p.type==="identifier"||p.type==="number")&&(n.type==="identifier"||n.type==="number"))out+=" ";continue}out+=t.value}
- return out.trim();
-}
-function junk(){let a=randomName(8);return pick([`do local ${a}=nil end;`,`do local ${a}=false end;`,`do local ${a}=0 end;`,`do local ${a}={} end;`,`if false then local ${a}=1 end;`,`while false do break end;`])}
-function junkBlock(n){let s="";for(let i=0;i<n;i++)s+=junk();return s}
-function protectLua(src){
- logConsole("Analyzing Lua source");
- let ts=lexLua(src);
- if($("comments").checked)ts=ts.filter(x=>x.type!=="comment");
- if($("strings").checked)for(const x of ts)if(x.type==="string")x.value=encodeString(x.value);
- if($("names").checked)ts=renameLocals(ts);
- let result=ts.map(x=>x.value).join("");
- if($("minify").checked)result=minifyLua(result);
- const level=+$("level").value;
- if($("junk").checked)result=junkBlock(level===1?4:level===2?9:15)+result;
- if($("control").checked)result=`do local _${rand(9999)}=1 end;`+result;
- if($("antidebug").checked)result=`if debug and debug.getinfo then local _=${"debug"}.getinfo(1) end;`+result;
- if($("header").checked)result="-- BAIM OBFUSCATOR\n-- PROTECTED SOURCE\n"+result;
- if($("bloat").checked){let target=+$("bloatSize").value*1024,b="";while(b.length<target)b+=junkBlock(20);result=b+result}
- return result;
-}
-function genericProtect(src){let s=src.replace(/\/\*[\s\S]*?\*\//g,"").replace(/(^|\s)\/\/[^\r\n]*/g,"$1");return $("minify").checked?s.replace(/\r/g,"").replace(/[ \t]+/g," ").replace(/\n\s*\n+/g,"\n").trim():s}
-function downloadText(text,name){let u=URL.createObjectURL(new Blob([text],{type:"text/plain;charset=utf-8"})),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500)}
-function outputName(n){let p=n.lastIndexOf(".");return p<0?n+"_BAIM":n.slice(0,p)+"_BAIM"+n.slice(p)}
+function renderLibrary(
+  rows,
+  container
+){
 
-function updateObfFile(){if(!selectedObf){$("fileName").textContent="Belum ada file dipilih";$("fileType").textContent="READY";return}$("fileName").textContent=selectedObf.name;$("fileType").textContent=(selectedObf.name.split(".").pop()||"FILE").toUpperCase()}
-$("picker").onchange=e=>{if(e.target.files[0]){selectedObf=e.target.files[0];updateObfFile();setStatus($("status"),"FILE READY • "+selectedObf.name)}};
-$("drop").ondragover=e=>e.preventDefault();
-$("drop").ondrop=e=>{e.preventDefault();if(e.dataTransfer.files[0]){selectedObf=e.dataTransfer.files[0];updateObfFile()}};
-$("start").onclick=async()=>{
- if(!selectedObf)return $("picker").click();
- $("console").innerHTML="";setStatus($("status"),"PROCESSING...");
- try{
-  let ext=selectedObf.name.split(".").pop().toLowerCase(),src=await selectedObf.text(),result;
-  if(!src.trim())throw Error("EMPTY_FILE");
-  logConsole("BAIM ENGINE START");
-  if(ext==="lua")result=protectLua(src);else if(["pwn","inc","txt"].includes(ext))result=genericProtect(src);else throw Error("Format tidak didukung");
-  downloadText(result,outputName(selectedObf.name));logConsole("Protection complete","success");setStatus($("status"),"PROTECTION COMPLETE","ok");
- }catch(e){logConsole(e.message,"danger");setStatus($("status"),"ERROR • "+e.message,"error")}
-};
+  const term =
+    $("search")
+      .value
+      .trim()
+      .toLowerCase();
 
-/* initial state */
-(async()=>{await refreshAuth();await updateOnline();await heartbeat();loadLibrary()})();
+  const filtered =
+    rows.filter(
+      row =>
+        String(row.name || "")
+          .toLowerCase()
+          .includes(term)
+    );
+
+  if(!filtered.length){
+
+    container.innerHTML =
+      '<div class="meta">Belum ada file.</div>';
+
+    return;
+
+  }
+
+  container.innerHTML =
+    filtered.map(
+      row => {
+
+        const size =
+          row.size
+            ? Math.round(
+                row.size/1024
+              ) + " KB"
+            : "—";
+
+        return `
+<div class="item">
+
+  <div>
+
+    <div class="item-name">
+      ${escapeHTML(row.name)}
+    </div>
+
+    <div class="meta">
+      ${size}
+      •
+      ${row.created_at
+        ? new Date(
+            row.created_at
+          ).toLocaleString("id-ID")
+        : "—"}
+    </div>
+
+  </div>
+
+  <div>
+
+    <button
+      class="btn"
+      data-view="${escapeHTML(
+        row.storage_path || ""
+      )}"
+      data-name="${escapeHTML(
+        row.name || "Lua"
+      )}">
+      Lihat
+    </button>
+
+  </div>
+
+</div>`;
+
+      }
+    ).join("");
+
+  container
+    .querySelectorAll(
+      "[data-view]"
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          () =>
+            viewLua(
+              button.dataset.view,
+              button.dataset.name
+            )
+        );
+
+      }
+    );
+
+}
+
+$("search")
+  .addEventListener(
+    "input",
+    loadLibrary
+  );
+
+/*
+=========================================================
+UPLOAD LUA
+=========================================================
+*/
+
+$("uploadButton")
+  .addEventListener(
+    "click",
+    () => {
+
+      if(!currentUser){
+
+        showPage("account");
+
+        return;
+
+      }
+
+      $("uploadPicker").click();
+
+    }
+  );
+
+$("uploadPicker")
+  .addEventListener(
+    "change",
+    async event => {
+
+      const file =
+        event.target.files?.[0];
+
+      if(!file)
+        return;
+
+      if(!currentUser){
+
+        showPage("account");
+
+        return;
+
+      }
+
+      if(
+        !file.name
+          .toLowerCase()
+          .endsWith(".lua")
+      ){
+
+        alert(
+          "Hanya file .lua yang diperbolehkan."
+        );
+
+        return;
+
+      }
+
+      if(file.size > 2*1024*1024){
+
+        alert(
+          "Ukuran maksimum 2 MB."
+        );
+
+        return;
+
+      }
+
+      $("uploadButton")
+        .classList.add(
+          "loading"
+        );
+
+      try{
+
+        const safeName =
+          file.name.replace(
+            /[^a-zA-Z0-9._-]/g,
+            "_"
+          );
+
+        const path =
+          currentUser.id +
+          "/" +
+          Date.now() +
+          "_" +
+          safeName;
+
+        const upload =
+          await client
+            .storage
+            .from(STORAGE_BUCKET)
+            .upload(
+              path,
+              file,
+              {
+                contentType:
+                  "text/plain",
+                upsert:false
+              }
+            );
+
+        if(upload.error)
+          throw upload.error;
+
+        const insert =
+          await client
+            .from("lua_files")
+            .insert({
+              name:file.name,
+              storage_path:path,
+              size:file.size,
+              user_id:currentUser.id,
+              is_public:true
+            });
+
+        if(insert.error){
+
+          await client
+            .storage
+            .from(STORAGE_BUCKET)
+            .remove([path]);
+
+          throw insert.error;
+
+        }
+
+        alert(
+          "Upload berhasil."
+        );
+
+        await loadLibrary();
+
+      }catch(error){
+
+        console.error(error);
+
+        alert(
+          "Upload gagal: " +
+          error.message
+        );
+
+      }finally{
+
+        $("uploadButton")
+          .classList.remove(
+            "loading"
+          );
+
+        event.target.value="";
+
+      }
+
+    }
+  );
+
+/*
+=========================================================
+VIEW LUA
+=========================================================
+*/
+
+async function viewLua(
+  path,
+  name
+){
+
+  if(!path)
+    return;
+
+  try{
+
+    const result =
+      await client
+        .storage
+        .from(STORAGE_BUCKET)
+        .download(path);
+
+    if(result.error)
+      throw result.error;
+
+    const text =
+      await result.data.text();
+
+    $("viewerTitle").textContent =
+      name;
+
+    $("codeView").textContent =
+      text;
+
+    $("viewer")
+      .classList.add(
+        "show"
+      );
+
+  }catch(error){
+
+    alert(
+      "Tidak bisa membaca file: " +
+      error.message
+    );
+
+  }
+
+}
+
+$("closeViewer")
+  .addEventListener(
+    "click",
+    () =>
+      $("viewer")
+        .classList.remove(
+          "show"
+        )
+  );
+
+$("viewer")
+  .addEventListener(
+    "click",
+    event => {
+
+      if(
+        event.target ===
+        $("viewer")
+      ){
+
+        $("viewer")
+          .classList.remove(
+            "show"
+          );
+
+      }
+
+    }
+  );
+
+/*
+=========================================================
+ADMIN
+=========================================================
+*/
+
+async function loadAdmin(){
+
+  if(!isAdmin)
+    return;
+
+  $("adminEmail").textContent =
+    currentUser?.email || "—";
+
+  const result =
+    await client
+      .from("lua_files")
+      .select("*")
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      )
+      .limit(200);
+
+  if(result.error){
+
+    $("adminList").innerHTML =
+      `<div class="meta">${escapeHTML(
+        result.error.message
+      )}</div>`;
+
+    return;
+
+  }
+
+  const rows =
+    result.data || [];
+
+  $("adminFiles").textContent =
+    rows.length;
+
+  const container =
+    $("adminList");
+
+  if(!rows.length){
+
+    container.innerHTML =
+      '<div class="meta">Tidak ada file.</div>';
+
+    return;
+
+  }
+
+  container.innerHTML =
+    rows.map(
+      row => `
+
+<div class="item">
+
+  <div>
+
+    <div class="item-name">
+      ${escapeHTML(row.name)}
+    </div>
+
+    <div class="meta">
+      User:
+      ${escapeHTML(row.user_id || "—")}
+      •
+      ${row.is_public
+        ? "PUBLIC"
+        : "PRIVATE"}
+    </div>
+
+  </div>
+
+  <div>
+
+    <button
+      class="btn"
+      data-admin-view="${escapeHTML(
+        row.storage_path || ""
+      )}"
+      data-admin-name="${escapeHTML(
+        row.name || "Lua"
+      )}">
+      Lihat
+    </button>
+
+    <button
+      class="btn"
+      data-delete="${escapeHTML(
+        row.id
+      )}"
+      data-path="${escapeHTML(
+        row.storage_path || ""
+      )}">
+      Hapus
+    </button>
+
+  </div>
+
+</div>
+
+`
+    ).join("");
+
+  container
+    .querySelectorAll(
+      "[data-admin-view]"
+    )
+    .forEach(
+      button => {
+
+        button.onclick =
+          () =>
+            viewLua(
+              button.dataset.adminView,
+              button.dataset.adminName
+            );
+
+      }
+    );
+
+  container
+    .querySelectorAll(
+      "[data-delete]"
+    )
+    .forEach(
+      button => {
+
+        button.onclick =
+          () =>
+            deleteLua(
+              button.dataset.delete,
+              button.dataset.path
+            );
+
+      }
+    );
+
+  updateOnline();
+
+}
+
+async function deleteLua(
+  id,
+  path
+){
+
+  if(!isAdmin)
+    return;
+
+  if(
+    !confirm(
+      "Hapus file ini?"
+    )
+  )
+    return;
+
+  try{
+
+    if(path){
+
+      const storage =
+        await client
+          .storage
+          .from(STORAGE_BUCKET)
+          .remove([path]);
+
+      if(storage.error)
+        throw storage.error;
+
+    }
+
+    const result =
+      await client
+        .from("lua_files")
+        .delete()
+        .eq(
+          "id",
+          id
+        );
+
+    if(result.error)
+      throw result.error;
+
+    await loadAdmin();
+
+    await loadLibrary();
+
+  }catch(error){
+
+    alert(
+      "Gagal menghapus: " +
+      error.message
+    );
+
+  }
+
+}
+
+$("refreshAdmin")
+  .addEventListener(
+    "click",
+    loadAdmin
+  );
+
+/*
+=========================================================
+INITIALIZATION
+=========================================================
+*/
+
+(async function init(){
+
+  await refreshAuth();
+
+  await updateOnline();
+
+  await loadLibrary();
+
+})();
+
+window.addEventListener(
+  "beforeunload",
+  () => {
+    if(presenceId){
+
+      client
+        .from("online_sessions")
+        .delete()
+        .eq(
+          "id",
+          presenceId
+        );
+
+    }
+  }
+);
+
 </script>
+
 </body>
-</html>
+ </html>
