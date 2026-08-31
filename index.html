@@ -955,6 +955,8 @@ input[type=file]{
     font-size:9px;  
 }  
   
+.form-input{font-family:inherit;resize:vertical;min-height:44px}
+
 .form-input:focus{  
     border-color:#678aff;  
     box-shadow:0 0 0 3px rgba(103,138,255,.08);  
@@ -1865,7 +1867,7 @@ footer{
                 <div class="card-head">  
 
                     <div>  
-                        <h2>Upload Lua</h2>  
+                        <h2>Upload File</h2>  
 
                         <p id="adminAccount">  
                             Admin  
@@ -1890,7 +1892,7 @@ footer{
                         <strong>Administrator access</strong>  
 
                         <span>  
-                            Upload dan delete hanya tersedia  
+                            Upload Lua/ZIP dan delete hanya tersedia  
                             untuk role admin.  
                         </span>  
                     </div>  
@@ -1908,7 +1910,7 @@ footer{
                             </div>  
 
                             <h3>  
-                                Select Lua file  
+                                Select Lua / ZIP file  
                             </h3>  
 
                             <p>  
@@ -1917,6 +1919,7 @@ footer{
 
                             <div class="tags">  
                                 <span class="tag">.LUA</span>  
+                                <span class="tag">.ZIP</span>
                                 <span class="tag">STORAGE</span>  
                                 <span class="tag">PUBLIC</span>  
                             </div>  
@@ -1928,7 +1931,7 @@ footer{
                     <input  
                         id="adminFile"  
                         type="file"  
-                        accept=".lua"  
+                        accept=".lua,.zip"  
                     >  
 
 
@@ -1941,12 +1944,27 @@ footer{
                             Belum ada file  
                         </span>  
 
-                        <span class="file-type">  
-                            LUA  
+                        <span class="file-type" id="adminFileType">  
+                            FILE  
                         </span>  
 
                     </div>  
 
+
+                    <div class="form-field" style="margin-top:10px">
+                        <label for="uploadTitle">JUDUL FILE</label>
+                        <input class="form-input" id="uploadTitle" type="text" maxlength="120" placeholder="Contoh: Baim Helper V2">
+                    </div>
+
+                    <div class="form-field">
+                        <label for="uploadDescription">DESKRIPSI</label>
+                        <textarea class="form-input" id="uploadDescription" maxlength="1000" rows="4" placeholder="Tulis deskripsi file..."></textarea>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="uploadCmd">CMD / COMMAND</label>
+                        <input class="form-input" id="uploadCmd" type="text" maxlength="180" placeholder="Contoh: /baimhelper">
+                    </div>
 
                     <button  
                         class="primary"  
@@ -2610,13 +2628,17 @@ function createFileCard(file,isAdmin){
     item.innerHTML = `  
         <div class="file-info">  
   
-            <div class="file-title">  
-                ${escapeHtml(file.name)}  
-            </div>  
-  
-            <div class="file-meta">  
-                ${bytes(file.size)} • ${date}  
-            </div>  
+            <div class="file-title">
+                ${escapeHtml(file.title || file.name || "Untitled")}
+            </div>
+
+            ${file.description ? `<div style="margin-top:5px;color:#737e94;font-size:7px;line-height:1.55;white-space:normal">${escapeHtml(file.description)}</div>` : ""}
+
+            <div class="file-meta">
+                ${bytes(file.size)} • ${date} • ${/\.zip$/i.test(String(file.name || "")) ? "ZIP" : "LUA"}
+            </div>
+
+            ${file.command ? `<div style="margin-top:7px;display:flex;align-items:center;gap:6px"><code style="padding:5px 7px;border:1px solid var(--line2);border-radius:6px;color:#9db1f0;background:rgba(100,130,255,.05);font:7px monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(file.command)}</code><button class="small-btn copy-cmd-btn" type="button">COPY CMD</button></div>` : ""}  
   
         </div>  
   
@@ -2645,7 +2667,19 @@ function createFileCard(file,isAdmin){
     item  
         .querySelector(".download-btn")  
         .onclick = () =>  
-            downloadFile(file);  
+            downloadFile(file);
+
+    const copyCmd = item.querySelector(".copy-cmd-btn");
+    if(copyCmd){
+        copyCmd.onclick = async () => {
+            try{
+                await navigator.clipboard.writeText(String(file.command || ""));
+                notify("CMD disalin", "Command sudah masuk clipboard.");
+            }catch(e){
+                notify("Clipboard", "Tidak bisa menyalin command di perangkat ini.");
+            }
+        };
+    }  
   
   
     if(isAdmin){  
@@ -2804,9 +2838,9 @@ $("searchFiles").addEventListener(
   
         const filtered =  
             allFiles.filter(file =>  
-                String(file.name || "")  
-                    .toLowerCase()  
-                    .includes(query)  
+                [file.name, file.title, file.description, file.command]
+                    .map(v => String(v || "").toLowerCase())
+                    .some(v => v.includes(query))  
             );  
   
   
@@ -3074,7 +3108,9 @@ $("adminFile").onchange =
         $("adminFileName").textContent =  
             adminFile  
                 ? adminFile.name  
-                : "Belum ada file";  
+                : "Belum ada file";
+
+        $("adminFileType").textContent = adminFile ? (/\.zip$/i.test(adminFile.name) ? "ZIP" : "LUA") : "FILE";  
   
     };  
   
@@ -3123,32 +3159,31 @@ $("uploadLua").onclick =
         }  
   
   
-        if(!adminFile){  
-  
-            notify(  
-                "Upload",  
-                "Pilih file Lua terlebih dahulu."  
-            );  
-  
-            return;  
-        }  
-  
-  
-        if(  
-            !/\.lua$/i.test(  
-                adminFile.name  
-            )  
-        ){  
-  
-            notify(  
-                "Format",  
-                "Hanya file .lua yang diperbolehkan."  
-            );  
-  
-            return;  
-        }  
-  
-  
+        if(!adminFile){
+
+            notify(
+                "Upload",
+                "Pilih file Lua atau ZIP terlebih dahulu."
+            );
+
+            return;
+        }
+
+        const title = $("uploadTitle").value.trim();
+        const description = $("uploadDescription").value.trim();
+        const command = $("uploadCmd").value.trim();
+
+        if(!title){
+            notify("Judul", "Judul file wajib diisi.");
+            $("uploadTitle").focus();
+            return;
+        }
+
+        if(!/\.(lua|zip)$/i.test(adminFile.name)){
+            notify("Format", "Hanya file .lua atau .zip yang diperbolehkan.");
+            return;
+        }
+
         if(  
             adminFile.size >  
             10 * 1024 * 1024  
@@ -3207,8 +3242,9 @@ $("uploadLua").onclick =
                     adminFile,  
                     {  
                         cacheControl:"3600",  
-                        contentType:  
-                            "text/plain",  
+                        contentType: /\.zip$/i.test(adminFile.name)
+                            ? "application/zip"
+                            : "text/plain",  
                         upsert:false  
                     }  
                 );  
@@ -3231,7 +3267,13 @@ $("uploadLua").onclick =
                 .from("files")  
                 .insert({  
                     name:  
-                        adminFile.name,  
+                        adminFile.name,
+
+                    title: title,
+
+                    description: description,
+
+                    command: command,  
   
                     path:  
                         uploaded.path,  
@@ -3285,6 +3327,11 @@ $("uploadLua").onclick =
   
             $("adminFileName").textContent =  
                 "Belum ada file";  
+
+            $("uploadTitle").value = "";
+            $("uploadDescription").value = "";
+            $("uploadCmd").value = "";
+            $("adminFileType").textContent = "FILE";
   
   
             await loadFiles();  
@@ -5626,4 +5673,4 @@ loadFiles();
 checkAdmin();  
   
 </script>  </body>  
-    </html>
+              </html>
