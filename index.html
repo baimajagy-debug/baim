@@ -1041,26 +1041,15 @@ async function downloadFile(file){
 }
 async function incrementCounter(fileId, field){
   try{
-    if(field !== "views" && field !== "downloads"){
-      throw new Error("Invalid counter");
-    }
-
+    if(field !== "views" && field !== "downloads") throw new Error("Invalid counter");
     const { error } = await db.rpc("increment_file_counter", {
       p_file_id: fileId,
       p_field: field
     });
-
     if(error) throw error;
-
     const file = allFiles.find(f=>f.id===fileId);
-    if(file){
-      file[field] = (file[field] || 0) + 1;
-    }
-
-    loadStats();
-  }catch(e){
-    console.warn("Counter update failed", e);
-  }
+    if(file) file[field] = (file[field] || 0) + 1;
+  }catch(e){ console.warn("Counter update failed",e); }
 }
 
 // ================= ADMIN UPLOAD =================
@@ -1269,4 +1258,4 @@ checkAdmin();
 setupChat();
 </script>
 </body>
-    </html>
+</html>
