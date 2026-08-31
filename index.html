@@ -1,7 +1,7 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BAIM OBFUSCATOR</title>
 
@@ -9,959 +9,835 @@
 
 <style>
 *{box-sizing:border-box}
+
 html,body{
     margin:0;
     min-height:100%;
-    font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-    background:#03070a;
-    color:#eefdf5
-}
-body{overflow-x:hidden}
-
-:root{
-    --green:#20e890;
-    --green2:#0abf6a;
-    --green3:#75ffc0;
-    --bg:#03070a;
-    --panel:rgba(7,18,14,.88);
-    --line:rgba(63,255,164,.13);
-    --muted:#769086;
-    --danger:#ff637d;
+    font-family:Inter,Arial,sans-serif;
+    background:#03050b;
+    color:#fff;
 }
 
-.background{
+body{
+    overflow-x:hidden;
+}
+
+.bg{
     position:fixed;
     inset:0;
     z-index:-5;
-    overflow:hidden;
     background:
-      radial-gradient(circle at 15% 10%,rgba(0,255,135,.13),transparent 30%),
-      radial-gradient(circle at 85% 85%,rgba(0,210,130,.10),transparent 30%),
-      #03070a
+        radial-gradient(circle at 15% 10%,rgba(35,105,255,.25),transparent 30%),
+        radial-gradient(circle at 85% 85%,rgba(0,220,180,.12),transparent 30%),
+        #03050b;
 }
+
 .grid{
-    position:absolute;
-    left:-30%;
-    right:-30%;
-    bottom:-20%;
-    height:85%;
-    opacity:.13;
+    position:fixed;
+    inset:0;
+    z-index:-4;
+    opacity:.12;
     background-image:
-      linear-gradient(rgba(40,255,150,.35) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(40,255,150,.35) 1px,transparent 1px);
+        linear-gradient(rgba(50,120,255,.3) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(50,120,255,.3) 1px,transparent 1px);
     background-size:55px 55px;
-    transform:perspective(650px) rotateX(65deg) scale(1.4);
-    animation:gridMove 12s linear infinite
+    transform:perspective(600px) rotateX(60deg) scale(1.5);
+    transform-origin:center bottom;
 }
-@keyframes gridMove{
-    from{background-position:0 0,0 0}
-    to{background-position:0 55px,55px 0}
-}
-.orb{
-    position:absolute;
-    width:350px;
-    height:350px;
-    border-radius:50%;
-    filter:blur(110px);
-    opacity:.12
-}
-.orb.a{background:#00ff88;left:-170px;top:-130px}
-.orb.b{background:#00d98b;right:-180px;bottom:-130px}
 
 .container{
-    width:min(1120px,100%);
+    width:min(1100px,calc(100% - 28px));
     margin:auto;
-    padding:22px 16px 60px
+    padding:25px 0 60px;
 }
 
 /* NAV */
+
 .nav{
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
     gap:15px;
-    margin-bottom:28px;
-    flex-wrap:wrap
+    margin-bottom:35px;
 }
+
 .brand{
     display:flex;
     align-items:center;
-    gap:11px
+    gap:12px;
 }
-.logo{
-    width:42px;
-    height:42px;
-    border-radius:13px;
+
+.brand-icon{
+    width:44px;
+    height:44px;
     display:grid;
     place-items:center;
-    font-weight:1000;
-    color:#00180d;
-    background:linear-gradient(145deg,var(--green3),var(--green2));
-    box-shadow:0 0 28px rgba(32,232,144,.22)
-}
-.brand-text{
+    border-radius:13px;
     font-weight:950;
-    letter-spacing:-.5px
+    background:linear-gradient(135deg,#2877ff,#123a91);
+    box-shadow:0 0 30px rgba(40,119,255,.3);
 }
-.brand-text small{
+
+.brand-title{
+    font-weight:900;
+    letter-spacing:-.5px;
+}
+
+.brand-title small{
     display:block;
-    color:#60756c;
+    color:#65728a;
     font-size:9px;
     letter-spacing:2px;
-    margin-top:2px
+    margin-top:3px;
 }
+
 .nav-right{
     display:flex;
     gap:8px;
     align-items:center;
-    flex-wrap:wrap
 }
-.badge,.btn{
-    border:1px solid var(--line);
-    background:rgba(255,255,255,.025);
-    color:#9eb2a8;
-    border-radius:12px;
-    padding:9px 12px;
-    font-size:11px
-}
-.badge{
+
+.online{
     display:flex;
     align-items:center;
-    gap:7px
+    gap:7px;
+    padding:9px 13px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+    background:rgba(255,255,255,.025);
+    color:#8995a9;
+    font-size:10px;
 }
-.dot{
+
+.online-dot{
     width:7px;
     height:7px;
     border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 12px var(--green)
-}
-.btn{
-    cursor:pointer;
-    transition:.2s
-}
-.btn:hover{
-    border-color:rgba(32,232,144,.45);
-    color:#fff;
-    background:rgba(32,232,144,.08)
-}
-.btn.green{
-    background:linear-gradient(135deg,#13c878,#079456);
-    color:#00160c;
-    border:0;
-    font-weight:900
-}
-.btn.danger{
-    color:#ff9bab
+    background:#38e69f;
+    box-shadow:0 0 12px #38e69f;
 }
 
 /* HERO */
+
 .hero{
-    margin-bottom:22px
+    margin-bottom:28px;
 }
+
 .hero h1{
     margin:0;
-    font-size:clamp(42px,7vw,76px);
+    font-size:clamp(42px,8vw,78px);
     line-height:.95;
-    letter-spacing:-4px;
-    font-weight:1000
+    letter-spacing:-5px;
 }
+
 .hero h1 span{
-    color:var(--green)
+    color:#4e8cff;
 }
+
 .hero p{
     max-width:700px;
-    color:#71867c;
-    font-size:14px;
+    color:#758197;
     line-height:1.7;
-    margin:17px 0 0
+    font-size:14px;
+}
+
+/* PANELS */
+
+.panel{
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:24px;
+    background:linear-gradient(
+        145deg,
+        rgba(15,23,42,.93),
+        rgba(5,9,18,.96)
+    );
+    box-shadow:0 30px 90px rgba(0,0,0,.45);
+    overflow:hidden;
+    margin-bottom:20px;
+}
+
+.panel-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 20px;
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.panel-title{
+    font-weight:850;
+}
+
+.panel-sub{
+    color:#65728a;
+    font-size:10px;
+    margin-top:4px;
+}
+
+.panel-body{
+    padding:20px;
 }
 
 /* TABS */
+
 .tabs{
     display:flex;
     gap:7px;
-    overflow:auto;
-    padding-bottom:8px;
-    margin-bottom:15px
+    margin-bottom:20px;
 }
+
 .tab{
-    flex:0 0 auto;
-    padding:10px 15px;
-    border:1px solid var(--line);
+    padding:10px 14px;
     border-radius:10px;
-    background:rgba(255,255,255,.025);
-    color:#74887f;
-    cursor:pointer;
-    font-size:11px;
-    font-weight:800
-}
-.tab.active{
-    color:#00160c;
-    background:var(--green);
-    border-color:var(--green)
-}
-
-/* PANEL */
-.panel{
-    border:1px solid var(--line);
-    border-radius:23px;
-    background:linear-gradient(145deg,rgba(9,24,18,.92),rgba(3,11,8,.94));
-    box-shadow:0 30px 90px rgba(0,0,0,.45);
-    overflow:hidden;
-    margin-bottom:18px
-}
-.panel-head{
-    padding:18px 20px;
-    border-bottom:1px solid rgba(255,255,255,.05);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px
-}
-.panel-title{
-    font-size:14px;
-    font-weight:900
-}
-.panel-sub{
-    color:#60766b;
-    font-size:10px;
-    margin-top:4px
-}
-.panel-body{
-    padding:20px
-}
-
-/* UPLOAD */
-.drop{
-    min-height:230px;
-    border:1px dashed rgba(32,232,144,.25);
-    border-radius:18px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    text-align:center;
-    cursor:pointer;
-    background:radial-gradient(circle,rgba(32,232,144,.08),transparent 65%);
-    transition:.2s
-}
-.drop:hover,.drop.drag{
-    border-color:var(--green);
-    background:radial-gradient(circle,rgba(32,232,144,.14),transparent 65%);
-    transform:translateY(-2px)
-}
-.upload-icon{
-    width:62px;
-    height:62px;
-    border-radius:18px;
-    display:grid;
-    place-items:center;
-    background:rgba(32,232,144,.1);
-    border:1px solid rgba(32,232,144,.2);
-    color:var(--green);
-    font-size:28px;
-    margin-bottom:14px
-}
-.drop strong{
-    font-size:18px
-}
-.drop small{
-    color:#60766b;
-    margin-top:7px
-}
-.formats{
-    display:flex;
-    gap:6px;
-    margin-top:15px
-}
-.format{
-    padding:5px 8px;
-    border:1px solid rgba(255,255,255,.06);
-    border-radius:7px;
-    color:#70867b;
-    font-size:9px
-}
-input[type=file]{display:none}
-
-.field{
-    margin-top:13px
-}
-.field label{
-    display:block;
-    color:#80968b;
-    font-size:10px;
-    font-weight:800;
-    margin-bottom:6px
-}
-.input,.textarea,.select{
-    width:100%;
     border:1px solid rgba(255,255,255,.07);
-    background:#050d09;
-    color:#e9fff4;
-    outline:none;
-    border-radius:10px;
-    padding:11px 12px;
-    font:inherit;
-    font-size:12px
-}
-.textarea{
-    min-height:80px;
-    resize:vertical
-}
-.input:focus,.textarea:focus,.select:focus{
-    border-color:rgba(32,232,144,.4)
-}
-.file-selected{
-    margin-top:10px;
-    color:#8da198;
+    background:rgba(255,255,255,.025);
+    color:#758198;
+    cursor:pointer;
     font-size:11px;
-    padding:10px 12px;
-    border-radius:9px;
-    background:rgba(255,255,255,.025)
+    font-weight:800;
 }
 
-/* OBFUSCATOR */
-.options{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:8px;
-    margin-top:14px
-}
-.option{
-    padding:11px;
-    border:1px solid rgba(255,255,255,.055);
-    border-radius:10px;
-    color:#758a80;
-    font-size:10px;
-    display:flex;
-    align-items:center;
-    gap:7px
-}
-.option input{
-    accent-color:var(--green)
-}
-.action{
-    width:100%;
-    border:0;
-    border-radius:12px;
-    padding:14px;
-    margin-top:15px;
-    cursor:pointer;
-    background:linear-gradient(135deg,#16d27d,#078b52);
-    color:#00150b;
-    font-weight:950;
-    letter-spacing:.5px
-}
-.action:disabled{
-    opacity:.5;
-    cursor:not-allowed
+.tab.active{
+    color:#fff;
+    background:rgba(50,115,255,.17);
+    border-color:rgba(70,130,255,.4);
 }
 
 /* FILE LIST */
-.files{
+
+.file-list{
     display:grid;
-    gap:9px
+    gap:9px;
 }
-.file-card{
+
+.file{
     display:flex;
     align-items:center;
     justify-content:space-between;
     gap:12px;
     padding:14px;
+    border-radius:13px;
     border:1px solid rgba(255,255,255,.06);
-    background:rgba(255,255,255,.018);
-    border-radius:13px
+    background:rgba(255,255,255,.025);
 }
-.file-main{
-    min-width:0
+
+.file-info{
+    min-width:0;
 }
+
 .file-name{
+    font-weight:750;
     font-size:12px;
-    font-weight:850;
     overflow:hidden;
     text-overflow:ellipsis;
-    white-space:nowrap
+    white-space:nowrap;
 }
+
 .file-meta{
+    color:#68758b;
+    font-size:9px;
     margin-top:5px;
-    color:#62776d;
-    font-size:9px
 }
+
 .file-actions{
     display:flex;
     gap:6px;
-    flex-shrink:0
+    flex-shrink:0;
 }
+
+.btn{
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.04);
+    color:#aab5c8;
+    border-radius:9px;
+    padding:9px 12px;
+    cursor:pointer;
+    font-size:10px;
+    font-weight:800;
+}
+
+.btn:hover{
+    color:#fff;
+    border-color:#377eff;
+    background:rgba(55,126,255,.12);
+}
+
+.btn.primary{
+    border:0;
+    background:linear-gradient(135deg,#286cf4,#1648ad);
+    color:#fff;
+}
+
+.btn.danger{
+    color:#ff7789;
+}
+
 .empty{
     text-align:center;
-    color:#61756c;
-    padding:30px 10px;
-    font-size:12px
+    padding:40px 15px;
+    color:#59667c;
+    font-size:12px;
 }
 
 /* ADMIN */
-.admin-grid{
+
+.admin-panel{
+    display:none;
+}
+
+.admin-panel.show{
+    display:block;
+}
+
+.admin-login{
+    max-width:420px;
+    margin:auto;
+}
+
+.input{
+    width:100%;
+    padding:13px 14px;
+    margin-bottom:10px;
+    border-radius:11px;
+    border:1px solid rgba(255,255,255,.08);
+    background:#070c17;
+    color:#fff;
+    outline:none;
+}
+
+.input:focus{
+    border-color:#397dff;
+}
+
+.upload-box{
+    border:1px dashed rgba(80,135,255,.35);
+    border-radius:17px;
+    padding:30px 20px;
+    text-align:center;
+    background:rgba(50,110,255,.04);
+}
+
+.upload-box input{
+    display:none;
+}
+
+.upload-label{
+    display:inline-block;
+    padding:13px 18px;
+    border-radius:11px;
+    background:linear-gradient(135deg,#286cf4,#1648ad);
+    cursor:pointer;
+    font-size:11px;
+    font-weight:850;
+}
+
+.selected{
+    margin-top:13px;
+    color:#78859a;
+    font-size:10px;
+}
+
+.admin-tools{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:15px;
+}
+
+.message{
+    min-height:25px;
+    padding-top:7px;
+    color:#718097;
+    font-size:10px;
+}
+
+.message.success{
+    color:#46e4a0;
+}
+
+.message.error{
+    color:#ff7184;
+}
+
+/* STATS */
+
+.stats{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:10px
-}
-.stat{
-    padding:17px;
-    border:1px solid rgba(255,255,255,.06);
-    border-radius:14px;
-    background:rgba(255,255,255,.018)
-}
-.stat small{
-    color:#60766b;
-    font-size:9px
-}
-.stat strong{
-    display:block;
-    margin-top:7px;
-    font-size:25px;
-    color:var(--green)
-}
-.admin-table{
-    width:100%;
-    border-collapse:collapse;
-    font-size:10px
-}
-.admin-table th,.admin-table td{
-    text-align:left;
-    padding:11px 8px;
-    border-bottom:1px solid rgba(255,255,255,.05)
-}
-.admin-table th{
-    color:#62766c
-}
-.admin-table td{
-    color:#a0b2aa
+    gap:10px;
 }
 
-/* AUTH */
-.auth-screen{
-    position:fixed;
-    inset:0;
-    z-index:100;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+.stat{
     padding:18px;
-    background:rgba(2,7,5,.96);
-    backdrop-filter:blur(15px)
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:15px;
+    background:rgba(255,255,255,.025);
 }
-.auth-box{
-    width:min(420px,100%);
-    border:1px solid rgba(32,232,144,.16);
-    border-radius:23px;
-    background:#07110d;
-    box-shadow:0 30px 100px rgba(0,0,0,.6);
-    padding:25px
+
+.stat-value{
+    font-size:25px;
+    font-weight:900;
 }
-.auth-logo{
-    width:52px;
-    height:52px;
+
+.stat-label{
+    color:#65728a;
+    font-size:9px;
+    margin-top:5px;
+}
+
+/* OBFUSCATOR */
+
+.drop{
+    min-height:210px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    border:1px dashed rgba(80,135,255,.35);
+    border-radius:18px;
+    cursor:pointer;
+    background:radial-gradient(circle,rgba(50,110,255,.13),transparent 65%);
+}
+
+.drop:hover{
+    border-color:#4387ff;
+}
+
+.drop-icon{
+    width:60px;
+    height:60px;
     display:grid;
     place-items:center;
-    border-radius:15px;
-    background:var(--green);
-    color:#00150b;
-    font-weight:1000;
-    font-size:20px;
-    margin-bottom:17px
+    border-radius:18px;
+    background:rgba(50,115,255,.15);
+    color:#6ea1ff;
+    font-size:27px;
+    margin-bottom:14px;
 }
-.auth-box h2{
-    margin:0;
-    font-size:27px
+
+.drop-title{
+    font-size:18px;
+    font-weight:850;
 }
-.auth-box p{
-    color:#687d73;
+
+.drop-sub{
+    color:#69758c;
     font-size:11px;
-    line-height:1.6
+    margin-top:7px;
 }
-.auth-switch{
-    margin-top:13px;
-    text-align:center;
-    color:#6d8278;
-    font-size:10px
+
+#sourcePicker{
+    display:none;
 }
-.auth-switch button{
-    border:0;
-    background:none;
-    color:var(--green);
-    cursor:pointer;
-    font-weight:800
+
+.options{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+    margin-top:12px;
 }
-.auth-error{
-    color:#ff7087;
+
+.option{
+    padding:11px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,.06);
+    background:rgba(255,255,255,.02);
+    color:#78859b;
     font-size:10px;
-    margin-top:10px;
-    min-height:15px
 }
 
-/* TOAST */
-.toast{
-    position:fixed;
-    right:18px;
-    bottom:18px;
-    z-index:200;
-    max-width:340px;
-    padding:12px 15px;
+.option input{
+    accent-color:#397dff;
+    margin-right:7px;
+}
+
+.start{
+    width:100%;
+    margin-top:14px;
+    padding:15px;
+    border:0;
     border-radius:12px;
-    background:#0b1712;
-    border:1px solid rgba(32,232,144,.18);
-    color:#b8d2c6;
-    font-size:11px;
-    transform:translateY(20px);
-    opacity:0;
-    pointer-events:none;
-    transition:.25s
-}
-.toast.show{
-    transform:none;
-    opacity:1
-}
-.toast.error{
-    border-color:rgba(255,90,120,.3);
-    color:#ff9aac
+    background:linear-gradient(135deg,#286cf4,#1648ad);
+    color:#fff;
+    font-weight:900;
+    cursor:pointer;
 }
 
-.hidden{display:none!important}
+.console{
+    margin-top:12px;
+    padding:13px;
+    min-height:70px;
+    max-height:180px;
+    overflow:auto;
+    border-radius:11px;
+    background:#050912;
+    border:1px solid rgba(255,255,255,.06);
+    font:10px/1.7 monospace;
+    color:#8192ad;
+}
 
 .footer{
     text-align:center;
-    color:#3e5148;
+    color:#3f4b61;
     font-size:9px;
     letter-spacing:1.5px;
-    padding-top:15px
+    padding:20px 0;
+}
+
+.hidden{
+    display:none!important;
 }
 
 @media(max-width:700px){
-    .options{grid-template-columns:repeat(2,1fr)}
-    .admin-grid{grid-template-columns:1fr}
+    .nav{
+        align-items:flex-start;
+    }
+
+    .nav-right{
+        flex-wrap:wrap;
+        justify-content:flex-end;
+    }
+
+    .options{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
 }
-@media(max-width:500px){
-    .container{padding:15px 11px 40px}
-    .hero h1{letter-spacing:-2.5px}
-    .panel-body{padding:13px}
-    .options{grid-template-columns:1fr}
-    .file-card{align-items:flex-start;flex-direction:column}
-    .file-actions{width:100%}
-    .file-actions .btn{flex:1}
+
+@media(max-width:480px){
+    .container{
+        width:min(100% - 20px,1100px);
+    }
+
+    .hero h1{
+        letter-spacing:-3px;
+    }
+
+    .options{
+        grid-template-columns:1fr;
+    }
+
+    .file{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .file-actions{
+        width:100%;
+    }
+
+    .file-actions .btn{
+        flex:1;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="background">
-    <div class="grid"></div>
-    <div class="orb a"></div>
-    <div class="orb b"></div>
-</div>
+<div class="bg"></div>
+<div class="grid"></div>
 
-<!-- AUTH -->
-<section class="auth-screen" id="authScreen">
-    <div class="auth-box">
+<div class="container">
 
-        <div class="auth-logo">B</div>
+<nav class="nav">
 
-        <h2 id="authTitle">Login</h2>
-        <p id="authDesc">
-            Masuk untuk menggunakan upload dan fitur komunitas.
-        </p>
+    <div class="brand">
+        <div class="brand-icon">B</div>
 
-        <div class="field">
-            <label>Email</label>
-            <input
-                id="authEmail"
-                class="input"
-                type="email"
-                autocomplete="email"
-                placeholder="email@example.com">
+        <div class="brand-title">
+            BAIM OBFUSCATOR
+            <small>PROTECTION ENGINE</small>
         </div>
-
-        <div class="field">
-            <label>Password</label>
-            <input
-                id="authPassword"
-                class="input"
-                type="password"
-                autocomplete="current-password"
-                placeholder="••••••••">
-        </div>
-
-        <div class="field hidden" id="usernameField">
-            <label>Username</label>
-            <input
-                id="authUsername"
-                class="input"
-                type="text"
-                maxlength="30"
-                placeholder="Username">
-        </div>
-
-        <button class="action" id="authButton">LOGIN</button>
-
-        <div class="auth-error" id="authError"></div>
-
-        <div class="auth-switch">
-            <span id="switchText">Belum punya akun?</span>
-            <button id="switchAuth">Daftar</button>
-        </div>
-
     </div>
-</section>
 
-<!-- APP -->
-<main class="container hidden" id="app">
+    <div class="nav-right">
 
-    <nav class="nav">
-
-        <div class="brand">
-            <div class="logo">B</div>
-            <div class="brand-text">
-                BAIM OBFUSCATOR
-                <small>PROTECTION ENGINE</small>
-            </div>
+        <div class="online">
+            <span class="online-dot"></span>
+            <span id="onlineCount">0</span> ONLINE
         </div>
 
-        <div class="nav-right">
-
-            <div class="badge">
-                <span class="dot"></span>
-                <span id="onlineCount">0</span> online
-            </div>
-
-            <div class="badge">
-                <span id="userLabel">USER</span>
-            </div>
-
-            <button class="btn danger" id="logoutBtn">
-                Logout
-            </button>
-
-        </div>
-
-    </nav>
-
-    <section class="hero">
-        <h1>Protect your <span>source.</span></h1>
-        <p>
-            Obfuscate Lua secara lokal, upload file yang ingin dibagikan,
-            dan kelola file publik melalui Supabase.
-        </p>
-    </section>
-
-    <div class="tabs">
-
-        <button class="tab active" data-tab="obfuscator">
-            OBFUSCATOR
-        </button>
-
-        <button class="tab" data-tab="community">
-            LUA PUBLIC
-        </button>
-
-        <button class="tab hidden" id="adminTab" data-tab="admin">
+        <button class="btn" id="adminButton">
             ADMIN
         </button>
 
     </div>
 
-    <!-- OBFUSCATOR -->
-    <section id="tab-obfuscator">
+</nav>
 
-        <div class="panel">
 
-            <div class="panel-head">
-                <div>
-                    <div class="panel-title">
-                        BAIM OBFUSCATOR
-                    </div>
-                    <div class="panel-sub">
-                        Local processing — source tidak dikirim ke server
-                    </div>
-                </div>
+<section class="hero">
+
+    <h1>
+        Protect your <span>source.</span>
+    </h1>
+
+    <p>
+        BAIM OBFUSCATOR untuk proteksi source Lua.
+        User biasa dapat melihat dan mengunduh file publik,
+        sedangkan upload dan pengelolaan file hanya tersedia untuk admin.
+    </p>
+
+</section>
+
+
+<!-- PUBLIC FILES -->
+
+<section class="panel">
+
+    <div class="panel-head">
+
+        <div>
+            <div class="panel-title">
+                Public Lua Files
             </div>
 
-            <div class="panel-body">
+            <div class="panel-sub">
+                File yang tersedia untuk semua pengunjung
+            </div>
+        </div>
 
-                <label class="drop" id="obfDrop" for="obfPicker">
+        <button class="btn" id="refreshFiles">
+            REFRESH
+        </button>
 
-                    <div class="upload-icon">↑</div>
+    </div>
 
-                    <strong>
-                        Drop Lua file di sini
-                    </strong>
+    <div class="panel-body">
 
-                    <small>
-                        atau pilih file dari perangkat
-                    </small>
+        <div class="stats">
 
-                    <div class="formats">
-                        <span class="format">LUA</span>
-                        <span class="format">PWN</span>
-                        <span class="format">INC</span>
-                        <span class="format">TXT</span>
-                    </div>
+            <div class="stat">
+                <div class="stat-value" id="fileCount">0</div>
+                <div class="stat-label">PUBLIC FILES</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-value" id="onlineStat">0</div>
+                <div class="stat-label">ONLINE</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-value" id="adminStatus">
+                    USER
+                </div>
+                <div class="stat-label">ACCESS</div>
+            </div>
+
+        </div>
+
+        <br>
+
+        <div id="fileList" class="file-list">
+            <div class="empty">
+                Memuat file...
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- OBFUSCATOR -->
+
+<section class="panel">
+
+    <div class="panel-head">
+
+        <div>
+            <div class="panel-title">
+                Obfuscator
+            </div>
+
+            <div class="panel-sub">
+                Local source protection
+            </div>
+        </div>
+
+    </div>
+
+    <div class="panel-body">
+
+        <label class="drop" for="sourcePicker">
+
+            <div class="drop-icon">↑</div>
+
+            <div class="drop-title">
+                Pilih Source Lua
+            </div>
+
+            <div class="drop-sub">
+                File diproses langsung di browser
+            </div>
+
+        </label>
+
+        <input
+            id="sourcePicker"
+            type="file"
+            accept=".lua,.txt,.pwn,.inc"
+        >
+
+        <div id="selectedSource"
+             class="message">
+            Belum memilih file.
+        </div>
+
+        <div class="options">
+
+            <label class="option">
+                <input type="checkbox" id="removeComments" checked>
+                Remove comments
+            </label>
+
+            <label class="option">
+                <input type="checkbox" id="minify" checked>
+                Minify
+            </label>
+
+            <label class="option">
+                <input type="checkbox" id="rename" checked>
+                Rename locals
+            </label>
+
+            <label class="option">
+                <input type="checkbox" id="strings" checked>
+                Encode strings
+            </label>
+
+        </div>
+
+        <button class="start" id="obfuscate">
+            START PROTECTION
+        </button>
+
+        <div id="console" class="console">
+            &gt; BAIM ENGINE READY
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ADMIN -->
+
+<section class="panel admin-panel" id="adminPanel">
+
+    <div class="panel-head">
+
+        <div>
+            <div class="panel-title">
+                Admin Control
+            </div>
+
+            <div class="panel-sub">
+                Upload dan management public files
+            </div>
+        </div>
+
+        <button class="btn danger" id="logout">
+            LOGOUT
+        </button>
+
+    </div>
+
+    <div class="panel-body">
+
+        <!-- LOGIN -->
+
+        <div id="loginArea" class="admin-login">
+
+            <input
+                id="email"
+                class="input"
+                type="email"
+                placeholder="Admin email"
+                autocomplete="username"
+            >
+
+            <input
+                id="password"
+                class="input"
+                type="password"
+                placeholder="Password"
+                autocomplete="current-password"
+            >
+
+            <button class="btn primary"
+                    style="width:100%;padding:14px"
+                    id="login">
+                LOGIN ADMIN
+            </button>
+
+            <div id="loginMessage"
+                 class="message"></div>
+
+        </div>
+
+
+        <!-- ADMIN DASHBOARD -->
+
+        <div id="dashboard"
+             class="hidden">
+
+            <div class="admin-tools">
+
+                <label class="upload-label">
+
+                    + UPLOAD LUA
+
+                    <input
+                        id="adminFile"
+                        type="file"
+                        accept=".lua,.txt,.pwn,.inc"
+                    >
 
                 </label>
 
-                <input
-                    id="obfPicker"
-                    type="file"
-                    accept=".lua,.pwn,.inc,.txt">
-
-                <div class="file-selected" id="obfFile">
-                    Belum ada file.
-                </div>
-
-                <div class="options">
-
-                    <label class="option">
-                        <input id="comments" type="checkbox" checked>
-                        Remove comments
-                    </label>
-
-                    <label class="option">
-                        <input id="strings" type="checkbox" checked>
-                        Encode strings
-                    </label>
-
-                    <label class="option">
-                        <input id="names" type="checkbox" checked>
-                        Rename locals
-                    </label>
-
-                    <label class="option">
-                        <input id="numbers" type="checkbox" checked>
-                        Encode numbers
-                    </label>
-
-                    <label class="option">
-                        <input id="junk" type="checkbox" checked>
-                        Junk layer
-                    </label>
-
-                    <label class="option">
-                        <input id="minify" type="checkbox" checked>
-                        Minify
-                    </label>
-
-                </div>
-
-                <button class="action" id="obfuscateBtn">
-                    START PROTECTION
+                <button class="btn"
+                        id="reloadAdmin">
+                    RELOAD
                 </button>
 
             </div>
 
-        </div>
-
-    </section>
-
-    <!-- COMMUNITY -->
-    <section id="tab-community" class="hidden">
-
-        <div class="panel">
-
-            <div class="panel-head">
-                <div>
-                    <div class="panel-title">
-                        PUBLIC LUA FILES
-                    </div>
-                    <div class="panel-sub">
-                        File yang dibagikan komunitas
-                    </div>
-                </div>
-
-                <button class="btn" id="refreshFiles">
-                    Refresh
-                </button>
+            <div id="adminSelected"
+                 class="message">
+                Belum ada file.
             </div>
 
-            <div class="panel-body">
+            <div id="uploadMessage"
+                 class="message"></div>
 
-                <div class="field">
-                    <label>Pilih Lua File</label>
+            <hr style="
+                border:0;
+                border-top:1px solid rgba(255,255,255,.06);
+                margin:20px 0;
+            ">
 
-                    <label class="drop" id="publicDrop" for="publicPicker" style="min-height:170px">
-
-                        <div class="upload-icon">↑</div>
-
-                        <strong>
-                            Upload Lua
-                        </strong>
-
-                        <small>
-                            Maksimum 10 MB
-                        </small>
-
-                    </label>
-
-                    <input
-                        id="publicPicker"
-                        type="file"
-                        accept=".lua">
-
-                    <div class="file-selected" id="publicFile">
-                        Belum ada file.
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label>Judul</label>
-                    <input
-                        id="publicTitle"
-                        class="input"
-                        maxlength="80"
-                        placeholder="Contoh: Baim Utility">
-                </div>
-
-                <div class="field">
-                    <label>Deskripsi</label>
-                    <textarea
-                        id="publicDescription"
-                        class="textarea"
-                        maxlength="500"
-                        placeholder="Deskripsi file..."></textarea>
-                </div>
-
-                <button class="action" id="publicUpload">
-                    UPLOAD LUA PUBLIC
-                </button>
-
+            <div id="adminFiles"
+                 class="file-list">
             </div>
 
         </div>
 
-        <div class="panel">
+    </div>
 
-            <div class="panel-head">
+</section>
 
-                <div>
-                    <div class="panel-title">
-                        FILE TERBARU
-                    </div>
-                    <div class="panel-sub">
-                        File public terbaru
-                    </div>
-                </div>
 
-            </div>
+<footer class="footer">
+    BAIM OBFUSCATOR • SUPABASE • VERCEL
+</footer>
 
-            <div class="panel-body">
+</div>
 
-                <div class="files" id="fileList">
-                    <div class="empty">
-                        Memuat file...
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- ADMIN -->
-    <section id="tab-admin" class="hidden">
-
-        <div class="panel">
-
-            <div class="panel-head">
-                <div>
-                    <div class="panel-title">
-                        ADMIN DASHBOARD
-                    </div>
-                    <div class="panel-sub">
-                        Pengelolaan file dan statistik
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel-body">
-
-                <div class="admin-grid">
-
-                    <div class="stat">
-                        <small>TOTAL FILE</small>
-                        <strong id="adminFiles">0</strong>
-                    </div>
-
-                    <div class="stat">
-                        <small>ONLINE</small>
-                        <strong id="adminOnline">0</strong>
-                    </div>
-
-                    <div class="stat">
-                        <small>TOTAL DOWNLOAD</small>
-                        <strong id="adminDownloads">0</strong>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="panel">
-
-            <div class="panel-head">
-
-                <div>
-                    <div class="panel-title">
-                        MANAGE FILES
-                    </div>
-                    <div class="panel-sub">
-                        Semua file di database
-                    </div>
-                </div>
-
-                <button class="btn" id="adminRefresh">
-                    Refresh
-                </button>
-
-            </div>
-
-            <div class="panel-body">
-
-                <div style="overflow:auto">
-
-                    <table class="admin-table">
-
-                        <thead>
-                            <tr>
-                                <th>FILE</th>
-                                <th>SIZE</th>
-                                <th>DOWNLOAD</th>
-                                <th>PUBLIC</th>
-                                <th>ACTION</th>
-                            </tr>
-                        </thead>
-
-                        <tbody id="adminTable">
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <footer class="footer">
-        BAIM OBFUSCATOR • SUPABASE CONNECTED • LOCAL PROCESSING
-    </footer>
-
-</main>
-
-<div class="toast" id="toast"></div>
 
 <script>
 "use strict";
@@ -976,323 +852,385 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_4vKmaWZUeJnKaW2poJmZ0w_kZLC8iKo";
 
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-    );
+const { createClient } = supabase;
+
+const db = createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
 
 
 /* =========================================================
-   STATE
-   ========================================================= */
-
-let currentUser = null;
-let currentProfile = null;
-let publicFile = null;
-let obfuscatorFile = null;
-let authMode = "login";
-let onlineTimer = null;
-
-
-/* =========================================================
-   HELPERS
+   ELEMENTS
    ========================================================= */
 
 const $ = id => document.getElementById(id);
 
-function toast(message, error=false){
-
-    const el = $("toast");
-
-    el.textContent = message;
-    el.className = "toast show" + (error ? " error" : "");
-
-    clearTimeout(window.__toastTimer);
-
-    window.__toastTimer = setTimeout(()=>{
-        el.className = "toast";
-    },3000);
-}
-
-function escapeHTML(value){
-
-    return String(value ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-}
-
-function formatSize(bytes){
-
-    if(!bytes) return "0 B";
-
-    const units = ["B","KB","MB","GB"];
-
-    let i = 0;
-    let n = Number(bytes);
-
-    while(n >= 1024 && i < units.length-1){
-        n /= 1024;
-        i++;
-    }
-
-    return n.toFixed(i ? 1 : 0) + " " + units[i];
-}
-
-function formatDate(date){
-
-    try{
-        return new Date(date).toLocaleString("id-ID",{
-            dateStyle:"medium",
-            timeStyle:"short"
-        });
-    }catch{
-        return date;
-    }
-}
+let selectedSource = null;
+let adminSelectedFile = null;
 
 
 /* =========================================================
-   AUTH UI
-   ========================================================= */
+   ONLINE COUNTER
+   =========================================================
 
-function setAuthMode(mode){
+   Menggunakan local presence channel Supabase.
+   Tidak memakai angka random.
+   */
 
-    authMode = mode;
-
-    const register = mode === "register";
-
-    $("authTitle").textContent =
-        register ? "Buat akun" : "Login";
-
-    $("authDesc").textContent =
-        register
-        ? "Buat akun untuk upload dan berbagi Lua."
-        : "Masuk untuk menggunakan fitur komunitas.";
-
-    $("usernameField").classList.toggle(
-        "hidden",
-        !register
-    );
-
-    $("authButton").textContent =
-        register ? "DAFTAR" : "LOGIN";
-
-    $("switchText").textContent =
-        register ? "Sudah punya akun?" : "Belum punya akun?";
-
-    $("switchAuth").textContent =
-        register ? "Login" : "Daftar";
-
-    $("authError").textContent = "";
-}
-
-$("switchAuth").addEventListener("click",()=>{
-    setAuthMode(
-        authMode === "login"
-        ? "register"
-        : "login"
-    );
+const onlineChannel = db.channel("baim-online", {
+    config: {
+        presence: {
+            key: crypto.randomUUID()
+        }
+    }
 });
 
+onlineChannel
+    .on("presence", {
+        event: "sync"
+    }, () => {
 
-/* =========================================================
-   LOGIN / REGISTER
-   ========================================================= */
+        const state =
+            onlineChannel.presenceState();
 
-$("authButton").addEventListener("click", async ()=>{
+        let count = 0;
 
-    const email =
-        $("authEmail").value.trim();
+        Object.values(state).forEach(users => {
+            count += users.length;
+        });
 
-    const password =
-        $("authPassword").value;
+        $("onlineCount").textContent = count;
+        $("onlineStat").textContent = count;
+    })
+    .subscribe(async status => {
 
-    const username =
-        $("authUsername").value.trim();
+        if (status === "SUBSCRIBED") {
 
-    $("authError").textContent = "";
+            await onlineChannel.track({
+                online_at:
+                    new Date().toISOString()
+            });
 
-    if(!email || !password){
-
-        $("authError").textContent =
-            "Email dan password wajib diisi.";
-
-        return;
-    }
-
-    if(password.length < 6){
-
-        $("authError").textContent =
-            "Password minimal 6 karakter.";
-
-        return;
-    }
-
-    $("authButton").disabled = true;
-
-    try{
-
-        if(authMode === "register"){
-
-            if(username.length < 3){
-
-                throw new Error(
-                    "Username minimal 3 karakter."
-                );
-            }
-
-            const {data,error} =
-                await supabaseClient.auth.signUp({
-
-                    email,
-                    password,
-
-                    options:{
-                        data:{
-                            username
-                        }
-                    }
-
-                });
-
-            if(error) throw error;
-
-            if(!data.session){
-
-                toast(
-                    "Akun dibuat. Cek email untuk verifikasi."
-                );
-
-            }else{
-
-                toast("Registrasi berhasil.");
-            }
-
-        }else{
-
-            const {error} =
-                await supabaseClient.auth.signInWithPassword({
-
-                    email,
-                    password
-
-                });
-
-            if(error) throw error;
-
-            toast("Login berhasil.");
         }
 
-    }catch(error){
-
-        console.error(error);
-
-        $("authError").textContent =
-            error.message || "Authentication error.";
-
-    }finally{
-
-        $("authButton").disabled = false;
-    }
-});
+    });
 
 
 /* =========================================================
-   SESSION
+   PUBLIC FILES
    ========================================================= */
 
-async function loadProfile(){
+async function loadPublicFiles(){
 
-    if(!currentUser) return;
+    const list = $("fileList");
 
-    let {data,error} =
-        await supabaseClient
-            .from("profiles")
-            .select("*")
-            .eq("id",currentUser.id)
-            .maybeSingle();
+    list.innerHTML =
+        '<div class="empty">Memuat file...</div>';
+
+    const { data, error } = await db
+        .from("files")
+        .select("*")
+        .order("uploaded_at", {
+            ascending:false
+        });
 
     if(error){
 
         console.error(error);
 
-        currentProfile = {
-            role:"user"
-        };
+        list.innerHTML =
+            '<div class="empty">Gagal memuat file.</div>';
 
         return;
     }
 
-    currentProfile = data || {
-        role:"user"
-    };
+    $("fileCount").textContent =
+        data ? data.length : 0;
 
-    $("userLabel").textContent =
-        currentProfile.username ||
-        currentUser.email ||
-        "USER";
+    if(!data || !data.length){
 
-    if(currentProfile.role === "admin"){
+        list.innerHTML =
+            '<div class="empty">Belum ada file publik.</div>';
 
-        $("adminTab").classList.remove("hidden");
-
-    }else{
-
-        $("adminTab").classList.add("hidden");
+        return;
     }
-}
 
-async function enterApp(){
+    list.innerHTML = "";
 
-    $("authScreen").classList.add("hidden");
-    $("app").classList.remove("hidden");
+    data.forEach(file => {
 
-    await loadProfile();
+        const row =
+            document.createElement("div");
 
-    await updateOnline();
+        row.className = "file";
 
-    await loadPublicFiles();
+        const size =
+            formatBytes(file.size || 0);
 
-    if(currentProfile?.role === "admin"){
-        await loadAdmin();
-    }
-}
+        const date =
+            file.uploaded_at
+                ? new Date(
+                    file.uploaded_at
+                  ).toLocaleString("id-ID")
+                : "-";
 
-async function leaveApp(){
+        row.innerHTML = `
+            <div class="file-info">
+                <div class="file-name">
+                    ${escapeHTML(file.name)}
+                </div>
 
-    $("app").classList.add("hidden");
-    $("authScreen").classList.remove("hidden");
+                <div class="file-meta">
+                    LUA • ${size} • ${date}
+                </div>
+            </div>
 
-    $("adminTab").classList.add("hidden");
+            <div class="file-actions">
 
-    currentUser = null;
-    currentProfile = null;
+                <button class="btn"
+                        data-download="${escapeAttr(file.storage_path)}">
+                    DOWNLOAD
+                </button>
+
+            </div>
+        `;
+
+        const download =
+            row.querySelector("[data-download]");
+
+        download.addEventListener(
+            "click",
+            () => downloadFile(file)
+        );
+
+        list.appendChild(row);
+
+    });
+
 }
 
 
 /* =========================================================
-   AUTH STATE
+   DOWNLOAD PUBLIC FILE
    ========================================================= */
 
-supabaseClient.auth.onAuthStateChange(
-    async (event,session)=>{
+async function downloadFile(file){
 
-        if(session?.user){
+    const { data, error } =
+        db.storage
+          .from("lua-files")
+          .getPublicUrl(file.storage_path);
 
-            currentUser = session.user;
+    if(error){
 
-            setTimeout(
-                enterApp,
-                0
-            );
+        alert("Gagal membuat URL file.");
+        return;
 
-        }else{
+    }
 
-            await leaveApp();
+    const a =
+        document.createElement("a");
+
+    a.href = data.publicUrl;
+    a.target = "_blank";
+    a.rel = "noopener";
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+}
+
+
+/* =========================================================
+   ADMIN LOGIN
+   ========================================================= */
+
+$("adminButton").addEventListener(
+    "click",
+    () => {
+
+        $("adminPanel")
+            .classList.toggle("show");
+
+        $("adminPanel")
+            .scrollIntoView({
+                behavior:"smooth",
+                block:"start"
+            });
+
+    }
+);
+
+
+$("login").addEventListener(
+    "click",
+    loginAdmin
+);
+
+
+$("password").addEventListener(
+    "keydown",
+    e => {
+
+        if(e.key === "Enter"){
+            loginAdmin();
+        }
+
+    }
+);
+
+
+async function loginAdmin(){
+
+    const email =
+        $("email").value.trim();
+
+    const password =
+        $("password").value;
+
+    if(!email || !password){
+
+        showMessage(
+            $("loginMessage"),
+            "Email dan password wajib diisi.",
+            "error"
+        );
+
+        return;
+    }
+
+    showMessage(
+        $("loginMessage"),
+        "Login...",
+        ""
+    );
+
+    const { data, error } =
+        await db.auth.signInWithPassword({
+            email,
+            password
+        });
+
+    if(error){
+
+        console.error(error);
+
+        showMessage(
+            $("loginMessage"),
+            "Login gagal: " + error.message,
+            "error"
+        );
+
+        return;
+    }
+
+    const isAdmin =
+        await checkAdminRole(
+            data.user
+        );
+
+    if(!isAdmin){
+
+        await db.auth.signOut();
+
+        showMessage(
+            $("loginMessage"),
+            "Akun ini bukan admin.",
+            "error"
+        );
+
+        return;
+    }
+
+    showAdminDashboard(
+        data.user
+    );
+
+}
+
+
+/* =========================================================
+   CHECK ADMIN ROLE
+   =========================================================
+
+   Diasumsikan tabel profiles memiliki:
+
+   id uuid
+   role text
+
+   role harus bernilai "admin".
+   */
+
+async function checkAdminRole(user){
+
+    if(!user) return false;
+
+    const { data, error } =
+        await db
+            .from("profiles")
+            .select("role")
+            .eq("id", user.id)
+            .maybeSingle();
+
+    if(error){
+
+        console.error(
+            "Role check:",
+            error
+        );
+
+        return false;
+    }
+
+    return data &&
+           data.role === "admin";
+
+}
+
+
+/* =========================================================
+   SESSION CHECK
+   ========================================================= */
+
+async function checkSession(){
+
+    const { data } =
+        await db.auth.getSession();
+
+    if(!data.session){
+
+        showLogin();
+        return;
+    }
+
+    const user =
+        data.session.user;
+
+    const admin =
+        await checkAdminRole(user);
+
+    if(admin){
+
+        showAdminDashboard(user);
+
+    }else{
+
+        await db.auth.signOut();
+
+        showLogin();
+
+    }
+
+}
+
+
+db.auth.onAuthStateChange(
+    async event => {
+
+        if(event === "SIGNED_OUT"){
+            showLogin();
         }
 
     }
@@ -1300,765 +1238,418 @@ supabaseClient.auth.onAuthStateChange(
 
 
 /* =========================================================
-   INITIAL SESSION
+   SHOW / HIDE ADMIN
    ========================================================= */
 
-(async function(){
+function showLogin(){
 
-    const {
-        data
-    } = await supabaseClient.auth.getSession();
+    $("loginArea")
+        .classList.remove("hidden");
 
-    if(data?.session?.user){
+    $("dashboard")
+        .classList.add("hidden");
 
-        currentUser =
-            data.session.user;
+    $("adminStatus")
+        .textContent = "USER";
 
-        await enterApp();
+}
 
-    }
 
-})();
+function showAdminDashboard(user){
+
+    $("loginArea")
+        .classList.add("hidden");
+
+    $("dashboard")
+        .classList.remove("hidden");
+
+    $("adminStatus")
+        .textContent = "ADMIN";
+
+    loadAdminFiles();
+
+}
 
 
 /* =========================================================
    LOGOUT
    ========================================================= */
 
-$("logoutBtn").addEventListener("click",async ()=>{
+$("logout").addEventListener(
+    "click",
+    async () => {
 
-    try{
+        await db.auth.signOut();
 
-        await goOffline();
+        showLogin();
 
-        await supabaseClient.auth.signOut();
-
-        toast("Logout berhasil.");
-
-    }catch(error){
-
-        toast(error.message,true);
-    }
-});
-
-
-/* =========================================================
-   ONLINE
-   ========================================================= */
-
-async function updateOnline(){
-
-    if(!currentUser) return;
-
-    try{
-
-        const {error} =
-            await supabaseClient
-                .rpc("update_online");
-
-        if(error) throw error;
-
-        await refreshOnlineCount();
-
-    }catch(error){
-
-        console.warn(
-            "Online update:",
-            error.message
-        );
-    }
-}
-
-async function goOffline(){
-
-    if(!currentUser) return;
-
-    try{
-
-        await supabaseClient.rpc(
-            "go_offline"
-        );
-
-    }catch{}
-}
-
-async function refreshOnlineCount(){
-
-    try{
-
-        const {
-            data,
-            error
-        } = await supabaseClient.rpc(
-            "get_online_count"
-        );
-
-        if(error) throw error;
-
-        const count =
-            Number(data || 0);
-
-        $("onlineCount").textContent =
-            count;
-
-        $("adminOnline").textContent =
-            count;
-
-    }catch(error){
-
-        console.warn(
-            "Online counter:",
-            error.message
-        );
-    }
-}
-
-onlineTimer = setInterval(
-    async ()=>{
-        if(currentUser){
-            await updateOnline();
-        }
-    },
-    60000
-);
-
-window.addEventListener(
-    "beforeunload",
-    ()=>{
-        if(currentUser){
-            goOffline();
-        }
     }
 );
 
 
 /* =========================================================
-   TABS
+   ADMIN FILE SELECT
    ========================================================= */
 
-document.querySelectorAll(".tab")
-.forEach(tab=>{
+$("adminFile").addEventListener(
+    "change",
+    e => {
 
-    tab.addEventListener("click",async ()=>{
+        const file =
+            e.target.files[0];
 
-        const name =
-            tab.dataset.tab;
+        if(!file) return;
 
-        document.querySelectorAll(".tab")
-        .forEach(x=>
-            x.classList.remove("active")
-        );
+        adminSelectedFile = file;
 
-        tab.classList.add("active");
+        $("adminSelected")
+            .textContent =
+            "File dipilih: " +
+            file.name +
+            " • " +
+            formatBytes(file.size);
 
-        ["obfuscator","community","admin"]
-        .forEach(id=>{
+        uploadAdminFile();
 
-            const el =
-                $("tab-"+id);
-
-            if(el){
-
-                el.classList.toggle(
-                    "hidden",
-                    id !== name
-                );
-            }
-        });
-
-        if(name === "community"){
-            await loadPublicFiles();
-        }
-
-        if(name === "admin"){
-
-            if(currentProfile?.role !== "admin"){
-
-                toast(
-                    "Akses admin diperlukan.",
-                    true
-                );
-
-                return;
-            }
-
-            await loadAdmin();
-        }
-
-    });
-
-});
+    }
+);
 
 
 /* =========================================================
-   PUBLIC FILE PICKER
+   ADMIN UPLOAD
    ========================================================= */
 
-$("publicPicker")
-.addEventListener("change",function(){
+async function uploadAdminFile(){
 
-    if(!this.files?.length) return;
-
-    const file = this.files[0];
-
-    if(!file.name.toLowerCase().endsWith(".lua")){
-
-        toast(
-            "Hanya file .lua yang diperbolehkan.",
-            true
-        );
-
-        this.value = "";
-        publicFile = null;
+    if(!adminSelectedFile)
         return;
-    }
 
-    if(file.size > 10 * 1024 * 1024){
+    const file =
+        adminSelectedFile;
 
-        toast(
-            "Ukuran maksimum 10 MB.",
-            true
-        );
+    const ext =
+        file.name
+            .split(".")
+            .pop()
+            .toLowerCase();
 
-        this.value = "";
-        publicFile = null;
-        return;
-    }
+    if(!["lua","txt","pwn","inc"].includes(ext)){
 
-    publicFile = file;
-
-    $("publicFile").textContent =
-        file.name +
-        " • " +
-        formatSize(file.size);
-});
-
-
-/* =========================================================
-   PUBLIC UPLOAD
-   ========================================================= */
-
-$("publicUpload")
-.addEventListener("click",async ()=>{
-
-    if(!currentUser){
-
-        toast(
-            "Login terlebih dahulu.",
-            true
+        showMessage(
+            $("uploadMessage"),
+            "Format tidak didukung.",
+            "error"
         );
 
         return;
     }
 
-    if(!publicFile){
+    showMessage(
+        $("uploadMessage"),
+        "Mengupload " + file.name + "...",
+        ""
+    );
 
-        toast(
-            "Pilih file Lua terlebih dahulu.",
-            true
+
+    const { data:sessionData } =
+        await db.auth.getSession();
+
+    if(!sessionData.session){
+
+        showMessage(
+            $("uploadMessage"),
+            "Session admin tidak ditemukan.",
+            "error"
         );
 
         return;
     }
 
-    const button =
-        $("publicUpload");
 
-    button.disabled = true;
-    button.textContent =
-        "UPLOADING...";
+    /*
+      Nama storage dibuat unik agar file lama
+      tidak tertimpa.
+    */
 
-    try{
+    const safeName =
+        sanitizeFilename(file.name);
 
-        const safeName =
-            publicFile.name
-                .replace(/[^a-zA-Z0-9._-]/g,"_");
+    const path =
+        Date.now() +
+        "-" +
+        crypto.randomUUID() +
+        "-" +
+        safeName;
 
-        const path =
-            currentUser.id +
-            "/" +
-            crypto.randomUUID() +
-            "-" +
-            safeName;
 
-        const {
-            error:uploadError
-        } = await supabaseClient
-            .storage
+    /* STORAGE */
+
+    const { error:uploadError } =
+        await db.storage
             .from("lua-files")
             .upload(
                 path,
-                publicFile,
+                file,
                 {
-                    contentType:"text/plain",
-                    upsert:false
+                    cacheControl:"3600",
+                    upsert:false,
+                    contentType:
+                        file.type ||
+                        "text/plain"
                 }
             );
 
-        if(uploadError)
-            throw uploadError;
 
-        const title =
-            $("publicTitle")
-                .value
-                .trim() ||
-            publicFile.name;
+    if(uploadError){
 
-        const description =
-            $("publicDescription")
-                .value
-                .trim();
+        console.error(uploadError);
 
-        const {
-            error:dbError
-        } = await supabaseClient
-            .from("lua_files")
+        showMessage(
+            $("uploadMessage"),
+            "Upload Storage gagal: " +
+            uploadError.message,
+            "error"
+        );
+
+        return;
+    }
+
+
+    /* DATABASE */
+
+    const { error:dbError } =
+        await db
+            .from("files")
             .insert({
 
-                user_id:currentUser.id,
-
-                filename:publicFile.name,
+                name:file.name,
 
                 storage_path:path,
 
-                title,
-
-                description,
-
-                file_size:publicFile.size,
-
-                is_public:true
+                size:file.size
 
             });
 
-        if(dbError){
 
-            // Coba bersihkan file jika metadata gagal
-            await supabaseClient
-                .storage
-                .from("lua-files")
-                .remove([path]);
+    if(dbError){
 
-            throw dbError;
-        }
+        console.error(dbError);
 
-        toast(
-            "Lua berhasil diupload."
+        /*
+          Kalau insert DB gagal,
+          hapus file Storage supaya
+          tidak menjadi file yatim.
+        */
+
+        await db.storage
+            .from("lua-files")
+            .remove([path]);
+
+        showMessage(
+            $("uploadMessage"),
+            "Database gagal: " +
+            dbError.message,
+            "error"
         );
 
-        $("publicPicker").value = "";
-        $("publicFile").textContent =
-            "Belum ada file.";
-        $("publicTitle").value = "";
-        $("publicDescription").value = "";
-
-        await loadPublicFiles();
-
-        if(currentProfile?.role === "admin"){
-            await loadAdmin();
-        }
-
-    }catch(error){
-
-        console.error(error);
-
-        toast(
-            "Upload gagal: " +
-            error.message,
-            true
-        );
-
-    }finally{
-
-        button.disabled = false;
-        button.textContent =
-            "UPLOAD LUA PUBLIC";
+        return;
     }
-});
+
+
+    showMessage(
+        $("uploadMessage"),
+        "Upload berhasil!",
+        "success"
+    );
+
+    adminSelectedFile = null;
+
+    $("adminFile").value = "";
+
+    $("adminSelected")
+        .textContent =
+        "Upload selesai.";
+
+    await loadPublicFiles();
+    await loadAdminFiles();
+
+}
 
 
 /* =========================================================
-   LOAD PUBLIC FILES
+   ADMIN FILE LIST
    ========================================================= */
 
-async function loadPublicFiles(){
+async function loadAdminFiles(){
 
     const list =
-        $("fileList");
+        $("adminFiles");
 
     list.innerHTML =
-        `<div class="empty">Memuat file...</div>`;
+        '<div class="empty">Memuat...</div>';
 
-    try{
 
-        const {
-            data,
-            error
-        } = await supabaseClient
-            .from("lua_files")
+    const { data, error } =
+        await db
+            .from("files")
             .select("*")
-            .eq("is_public",true)
-            .order("created_at",{
+            .order("uploaded_at", {
                 ascending:false
             });
 
-        if(error) throw error;
 
-        if(!data?.length){
-
-            list.innerHTML =
-                `<div class="empty">
-                    Belum ada Lua public.
-                </div>`;
-
-            return;
-        }
+    if(error){
 
         list.innerHTML =
-            data.map(file=>{
+            '<div class="empty">Gagal memuat.</div>';
 
-                return `
-                <div class="file-card">
+        console.error(error);
 
-                    <div class="file-main">
+        return;
+    }
 
-                        <div class="file-name">
-                            ${escapeHTML(
-                                file.title ||
-                                file.filename
-                            )}
-                        </div>
 
-                        <div class="file-meta">
+    if(!data || !data.length){
 
-                            ${escapeHTML(
-                                file.filename
-                            )}
+        list.innerHTML =
+            '<div class="empty">Belum ada file.</div>';
 
-                            • ${formatSize(
-                                file.file_size
-                            )}
+        return;
+    }
 
-                            • ${Number(
-                                file.downloads || 0
-                            )} downloads
 
-                            • ${formatDate(
-                                file.created_at
-                            )}
+    list.innerHTML = "";
 
-                        </div>
 
-                    </div>
+    data.forEach(file => {
 
-                    <div class="file-actions">
+        const row =
+            document.createElement("div");
 
-                        <button
-                            class="btn green"
-                            onclick="downloadLua('${file.id}')">
-                            Download
-                        </button>
+        row.className = "file";
 
-                    </div>
+        row.innerHTML = `
 
+            <div class="file-info">
+
+                <div class="file-name">
+                    ${escapeHTML(file.name)}
                 </div>
-                `;
 
-            }).join("");
+                <div class="file-meta">
+                    ${formatBytes(file.size || 0)}
+                </div>
 
-    }catch(error){
+            </div>
 
-        console.error(error);
+            <div class="file-actions">
 
-        list.innerHTML =
-            `<div class="empty">
-                Gagal memuat file.
-            </div>`;
+                <button class="btn"
+                        data-open>
+                    OPEN
+                </button>
 
-        toast(
-            "Gagal memuat file: " +
-            error.message,
-            true
-        );
-    }
+                <button class="btn danger"
+                        data-delete>
+                    DELETE
+                </button>
+
+            </div>
+        `;
+
+
+        row.querySelector("[data-open]")
+            .addEventListener(
+                "click",
+                () => downloadFile(file)
+            );
+
+
+        row.querySelector("[data-delete]")
+            .addEventListener(
+                "click",
+                () => deleteFile(file)
+            );
+
+
+        list.appendChild(row);
+
+    });
+
 }
 
 
 /* =========================================================
-   DOWNLOAD
+   DELETE FILE
    ========================================================= */
 
-async function downloadLua(id){
+async function deleteFile(file){
 
-    try{
+    const ok =
+        confirm(
+            "Hapus file " +
+            file.name +
+            "?"
+        );
 
-        const {
-            data:file,
-            error
-        } = await supabaseClient
-            .from("lua_files")
-            .select("*")
-            .eq("id",id)
-            .eq("is_public",true)
-            .single();
+    if(!ok) return;
 
-        if(error) throw error;
 
-        const {
-            data
-        } = supabaseClient
-            .storage
+    const { error:storageError } =
+        await db.storage
             .from("lua-files")
-            .getPublicUrl(
+            .remove([
                 file.storage_path
-            );
-
-        if(!data?.publicUrl){
-
-            throw new Error(
-                "Public URL tidak tersedia."
-            );
-        }
-
-        // increment download
-        await supabaseClient.rpc(
-            "increment_download",
-            {
-                file_id:id
-            }
-        );
-
-        const a =
-            document.createElement("a");
-
-        a.href =
-            data.publicUrl;
-
-        a.target = "_blank";
-        a.rel = "noopener";
-
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-
-        setTimeout(
-            loadPublicFiles,
-            500
-        );
-
-    }catch(error){
-
-        console.error(error);
-
-        toast(
-            "Download gagal: " +
-            error.message,
-            true
-        );
-    }
-}
+            ]);
 
 
-/* =========================================================
-   ADMIN
-   ========================================================= */
+    if(storageError){
 
-async function loadAdmin(){
-
-    if(currentProfile?.role !== "admin")
-        return;
-
-    try{
-
-        const {
-            data,
-            error
-        } = await supabaseClient
-            .from("lua_files")
-            .select("*")
-            .order("created_at",{
-                ascending:false
-            });
-
-        if(error) throw error;
-
-        const files =
-            data || [];
-
-        $("adminFiles").textContent =
-            files.length;
-
-        $("adminDownloads").textContent =
-            files.reduce(
-                (sum,file)=>
-                    sum +
-                    Number(file.downloads || 0),
-                0
-            );
-
-        await refreshOnlineCount();
-
-        const tbody =
-            $("adminTable");
-
-        if(!files.length){
-
-            tbody.innerHTML = `
-                <tr>
-                    <td colspan="5">
-                        Belum ada file.
-                    </td>
-                </tr>
-            `;
-
-            return;
-        }
-
-        tbody.innerHTML =
-            files.map(file=>{
-
-                return `
-                <tr>
-
-                    <td>
-                        ${escapeHTML(
-                            file.filename
-                        )}
-                    </td>
-
-                    <td>
-                        ${formatSize(
-                            file.file_size
-                        )}
-                    </td>
-
-                    <td>
-                        ${Number(
-                            file.downloads || 0
-                        )}
-                    </td>
-
-                    <td>
-                        ${file.is_public
-                            ? "YES"
-                            : "NO"}
-                    </td>
-
-                    <td>
-
-                        <button
-                            class="btn danger"
-                            onclick="adminDelete('${file.id}')">
-                            Delete
-                        </button>
-
-                    </td>
-
-                </tr>
-                `;
-
-            }).join("");
-
-    }catch(error){
-
-        console.error(error);
-
-        toast(
-            "Admin error: " +
-            error.message,
-            true
-        );
-    }
-}
-
-
-/* =========================================================
-   ADMIN DELETE
-   ========================================================= */
-
-async function adminDelete(id){
-
-    if(currentProfile?.role !== "admin"){
-
-        toast(
-            "Kamu bukan admin.",
-            true
+        alert(
+            "Gagal menghapus Storage: " +
+            storageError.message
         );
 
         return;
     }
 
-    if(!confirm(
-        "Hapus file ini secara permanen?"
-    )) return;
 
-    try{
-
-        const {
-            data:file,
-            error
-        } = await supabaseClient
-            .from("lua_files")
-            .select("storage_path")
-            .eq("id",id)
-            .single();
-
-        if(error) throw error;
-
-        if(file?.storage_path){
-
-            await supabaseClient
-                .storage
-                .from("lua-files")
-                .remove([
-                    file.storage_path
-                ]);
-        }
-
-        const {
-            error:deleteError
-        } = await supabaseClient
-            .from("lua_files")
+    const { error:dbError } =
+        await db
+            .from("files")
             .delete()
-            .eq("id",id);
+            .eq("id", file.id);
 
-        if(deleteError)
-            throw deleteError;
 
-        toast(
-            "File berhasil dihapus."
+    if(dbError){
+
+        alert(
+            "Gagal menghapus database: " +
+            dbError.message
         );
 
-        await loadAdmin();
-        await loadPublicFiles();
-
-    }catch(error){
-
-        console.error(error);
-
-        toast(
-            "Delete gagal: " +
-            error.message,
-            true
-        );
+        return;
     }
+
+
+    await loadPublicFiles();
+    await loadAdminFiles();
+
 }
 
 
 /* =========================================================
-   ADMIN REFRESH
+   RELOAD
    ========================================================= */
 
-$("adminRefresh")
-.addEventListener(
-    "click",
-    loadAdmin
-);
-
-$("refreshFiles")
-.addEventListener(
+$("refreshFiles").addEventListener(
     "click",
     loadPublicFiles
+);
+
+$("reloadAdmin").addEventListener(
+    "click",
+    loadAdminFiles
 );
 
 
@@ -2066,51 +1657,164 @@ $("refreshFiles")
    OBFUSCATOR
    ========================================================= */
 
-$("obfPicker")
-.addEventListener("change",function(){
+$("sourcePicker").addEventListener(
+    "change",
+    e => {
 
-    if(!this.files?.length)
-        return;
+        selectedSource =
+            e.target.files[0] || null;
 
-    obfuscatorFile =
-        this.files[0];
+        if(selectedSource){
 
-    $("obfFile").textContent =
-        obfuscatorFile.name +
-        " • " +
-        formatSize(
-            obfuscatorFile.size
-        );
-});
+            $("selectedSource")
+                .textContent =
+                "File: " +
+                selectedSource.name +
+                " • " +
+                formatBytes(
+                    selectedSource.size
+                );
+
+        }
+
+    }
+);
+
+
+$("obfuscate").addEventListener(
+    "click",
+    async () => {
+
+        if(!selectedSource){
+
+            $("sourcePicker").click();
+
+            return;
+        }
+
+
+        const consoleBox =
+            $("console");
+
+        consoleBox.innerHTML =
+            "&gt; Reading source...";
+
+
+        try{
+
+            let source =
+                await selectedSource.text();
+
+            await sleep(100);
+
+            if($("removeComments").checked){
+
+                source =
+                    removeLuaComments(source);
+
+                log(
+                    "Comments removed."
+                );
+
+            }
+
+
+            if($("rename").checked){
+
+                source =
+                    renameSimpleLocals(source);
+
+                log(
+                    "Local identifiers processed."
+                );
+
+            }
+
+
+            if($("strings").checked){
+
+                source =
+                    encodeSimpleStrings(source);
+
+                log(
+                    "String transformation applied."
+                );
+
+            }
+
+
+            if($("minify").checked){
+
+                source =
+                    simpleMinify(source);
+
+                log(
+                    "Minification completed."
+                );
+
+            }
+
+
+            const output =
+                selectedSource.name
+                    .replace(
+                        /(\.[^.]+)$/,
+                        "_BAIM$1"
+                    );
+
+
+            const blob =
+                new Blob(
+                    [source],
+                    {type:"text/plain"}
+                );
+
+
+            const url =
+                URL.createObjectURL(blob);
+
+            const a =
+                document.createElement("a");
+
+            a.href = url;
+            a.download = output;
+
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            setTimeout(
+                () => URL.revokeObjectURL(url),
+                2000
+            );
+
+
+            log(
+                "Protection completed."
+            );
+
+        }catch(error){
+
+            console.error(error);
+
+            log(
+                "ERROR: " +
+                error.message
+            );
+
+        }
+
+    }
+);
 
 
 /* =========================================================
-   SIMPLE LUA OBFUSCATOR
+   BASIC LUA PROCESSING
    ========================================================= */
 
-function randomName(){
+function removeLuaComments(src){
 
-    const chars =
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-    let result = "_";
-
-    for(let i=0;i<12;i++){
-
-        result +=
-            chars[
-                Math.floor(
-                    Math.random()*chars.length
-                )
-            ];
-    }
-
-    return result;
-}
-
-function stripLuaComments(source){
-
-    return source
+    return src
         .replace(
             /--\[\[[\s\S]*?\]\]/g,
             ""
@@ -2119,424 +1823,252 @@ function stripLuaComments(source){
             /--[^\r\n]*/g,
             ""
         );
+
 }
 
-function encodeLuaStrings(source){
 
-    return source.replace(
-        /(["'])(?:(?!\1)[^\\]|\\.)*\1/g,
-        match=>{
+function simpleMinify(src){
 
-            const quote =
-                match[0];
+    return src
+        .replace(/\r/g,"")
+        .replace(/[ \t]+/g," ")
+        .replace(/\n\s*\n+/g,"\n")
+        .trim();
 
-            const text =
-                match.slice(
-                    1,
-                    -1
-                );
-
-            if(!text)
-                return match;
-
-            const nums =
-                [...text]
-                .map(
-                    c =>
-                        c.charCodeAt(0)
-                );
-
-            const name =
-                randomName();
-
-            return `(function()local ${name}={${nums.join(",")}};local _s="";for _i=1,#${name} do _s=_s..string.char(${name}[_i]) end;return _s end)()`;
-        }
-    );
 }
 
-function renameSimpleLocals(source){
 
-    const map =
-        new Map();
+function renameSimpleLocals(src){
 
-    source =
-        source.replace(
+    const reserved =
+        new Set([
+            "local",
+            "function",
+            "end",
+            "if",
+            "then",
+            "else",
+            "elseif",
+            "for",
+            "while",
+            "do",
+            "return",
+            "true",
+            "false",
+            "nil",
+            "and",
+            "or",
+            "not",
+            "in",
+            "repeat",
+            "until"
+        ]);
+
+    let index = 0;
+
+    const map = new Map();
+
+    src =
+        src.replace(
             /\blocal\s+([A-Za-z_][A-Za-z0-9_]*)/g,
-            (full,name)=>{
+            (full,name) => {
 
-                if(
-                    [
-                        "function",
-                        "require"
-                    ].includes(name)
-                ){
+                if(reserved.has(name))
                     return full;
+
+                if(!map.has(name)){
+
+                    index++;
+
+                    map.set(
+                        name,
+                        "_b" +
+                        index.toString(36)
+                    );
+
                 }
 
-                const newName =
-                    randomName();
-
-                map.set(
-                    name,
-                    newName
-                );
-
                 return "local " +
-                    newName;
+                    map.get(name);
+
             }
         );
 
+
     for(
-        const [
-            oldName,
-            newName
-        ] of map
+        const [oldName,newName]
+        of map
     ){
 
         const re =
             new RegExp(
                 "\\b" +
-                oldName +
+                escapeRegExp(oldName) +
                 "\\b",
                 "g"
             );
 
-        source =
-            source.replace(
+        src =
+            src.replace(
                 re,
                 newName
             );
+
     }
 
-    return source;
+    return src;
+
 }
 
-function minifyLua(source){
 
-    return source
-        .replace(/\r/g,"")
-        .replace(
-            /[ \t]+/g,
-            " "
-        )
-        .replace(
-            /\n\s*\n+/g,
-            "\n"
-        )
-        .trim();
-}
+/*
+  Transformasi string sederhana.
+  Tidak dimaksudkan sebagai proteksi kriptografi.
+*/
 
-function junkLua(){
+function encodeSimpleStrings(src){
 
-    const n =
-        randomName();
+    return src.replace(
+        /(["'])(.*?)\1/g,
+        (full,q,text) => {
 
-    return `
-do
- local ${n}=nil
-end
-`;
-}
+            if(!text.length)
+                return full;
 
-function protectLua(source){
+            const chars =
+                [...text]
+                    .map(c =>
+                        c.charCodeAt(0)
+                    );
 
-    let result =
-        source;
+            return "string.char(" +
+                chars.join(",") +
+                ")";
 
-    if($("comments").checked){
-
-        result =
-            stripLuaComments(
-                result
-            );
-    }
-
-    if($("strings").checked){
-
-        result =
-            encodeLuaStrings(
-                result
-            );
-    }
-
-    if($("names").checked){
-
-        result =
-            renameSimpleLocals(
-                result
-            );
-    }
-
-    if($("junk").checked){
-
-        let junk = "";
-
-        for(
-            let i=0;
-            i<6;
-            i++
-        ){
-            junk += junkLua();
         }
+    );
 
-        result =
-            junk +
-            result;
-    }
+}
 
-    if($("minify").checked){
 
-        result =
-            minifyLua(
-                result
-            );
-    }
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function log(text){
+
+    $("console").innerHTML +=
+        "<br>&gt; " +
+        escapeHTML(text);
+
+    $("console").scrollTop =
+        $("console").scrollHeight;
+
+}
+
+
+function sleep(ms){
+
+    return new Promise(
+        resolve => setTimeout(
+            resolve,
+            ms
+        )
+    );
+
+}
+
+
+function formatBytes(bytes){
+
+    if(!bytes)
+        return "0 B";
+
+    const units =
+        ["B","KB","MB","GB"];
+
+    const i =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
 
     return (
-        "-- BAIM OBFUSCATOR\n" +
-        "-- PROTECTED SOURCE\n" +
-        result
+        bytes /
+        Math.pow(1024,i)
+    ).toFixed(
+        i ? 1 : 0
+    ) +
+    " " +
+    units[i];
+
+}
+
+
+function sanitizeFilename(name){
+
+    return name
+        .replace(
+            /[^a-zA-Z0-9._-]/g,
+            "_"
+        );
+
+}
+
+
+function escapeRegExp(str){
+
+    return str.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&"
     );
+
+}
+
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttr(value){
+
+    return escapeHTML(value);
+
+}
+
+
+function showMessage(
+    element,
+    text,
+    type
+){
+
+    element.textContent = text;
+
+    element.className =
+        "message " +
+        (type || "");
+
 }
 
 
 /* =========================================================
-   OBFUSCATE BUTTON
+   START
    ========================================================= */
 
-$("obfuscateBtn")
-.addEventListener("click",async ()=>{
+loadPublicFiles();
 
-    if(!obfuscatorFile){
-
-        $("obfPicker").click();
-
-        return;
-    }
-
-    try{
-
-        const source =
-            await obfuscatorFile.text();
-
-        if(!source.trim()){
-
-            throw new Error(
-                "File kosong."
-            );
-        }
-
-        const ext =
-            obfuscatorFile.name
-                .split(".")
-                .pop()
-                .toLowerCase();
-
-        let result;
-
-        if(ext === "lua"){
-
-            result =
-                protectLua(
-                    source
-                );
-
-        }else{
-
-            result =
-                $("comments").checked
-                ? source.replace(
-                    /\/\*[\s\S]*?\*\//g,
-                    ""
-                  )
-                : source;
-
-            if($("minify").checked){
-
-                result =
-                    minifyLua(
-                        result
-                    );
-            }
-        }
-
-        const blob =
-            new Blob(
-                [result],
-                {
-                    type:
-                    "text/plain;charset=utf-8"
-                }
-            );
-
-        const url =
-            URL.createObjectURL(
-                blob
-            );
-
-        const a =
-            document.createElement("a");
-
-        const pos =
-            obfuscatorFile.name
-                .lastIndexOf(".");
-
-        const output =
-            pos === -1
-            ? obfuscatorFile.name +
-              "_BAIM"
-            : obfuscatorFile.name.slice(
-                0,
-                pos
-              ) +
-              "_BAIM" +
-              obfuscatorFile.name.slice(
-                pos
-              );
-
-        a.href = url;
-        a.download = output;
-
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-
-        setTimeout(
-            ()=>URL.revokeObjectURL(url),
-            1500
-        );
-
-        toast(
-            "Protection selesai."
-        );
-
-    }catch(error){
-
-        console.error(error);
-
-        toast(
-            "Obfuscation gagal: " +
-            error.message,
-            true
-        );
-    }
-});
-
-
-/* =========================================================
-   DRAG & DROP
-   ========================================================= */
-
-function setupDrop(dropId,pickerId){
-
-    const drop =
-        $(dropId);
-
-    const picker =
-        $(pickerId);
-
-    ["dragenter","dragover"]
-    .forEach(event=>{
-
-        drop.addEventListener(
-            event,
-            e=>{
-                e.preventDefault();
-                drop.classList.add("drag");
-            }
-        );
-
-    });
-
-    ["dragleave","drop"]
-    .forEach(event=>{
-
-        drop.addEventListener(
-            event,
-            e=>{
-                e.preventDefault();
-                drop.classList.remove("drag");
-            }
-        );
-
-    });
-
-    drop.addEventListener(
-        "drop",
-        e=>{
-
-            const files =
-                e.dataTransfer.files;
-
-            if(files?.length){
-
-                try{
-
-                    const dt =
-                        new DataTransfer();
-
-                    dt.items.add(
-                        files[0]
-                    );
-
-                    picker.files =
-                        dt.files;
-
-                    picker.dispatchEvent(
-                        new Event(
-                            "change"
-                        )
-                    );
-
-                }catch{
-
-                    toast(
-                        "Gunakan tombol pilih file.",
-                        true
-                    );
-                }
-            }
-
-        }
-    );
-}
-
-setupDrop(
-    "publicDrop",
-    "publicPicker"
-);
-
-setupDrop(
-    "obfDrop",
-    "obfPicker"
-);
-
-
-/* =========================================================
-   SECURITY / ERROR LOG
-   ========================================================= */
-
-window.addEventListener(
-    "error",
-    event=>{
-        console.error(
-            "Frontend error:",
-            event.error
-        );
-    }
-);
-
-window.addEventListener(
-    "unhandledrejection",
-    event=>{
-        console.error(
-            "Promise error:",
-            event.reason
-        );
-    }
-);
+checkSession();
 
 </script>
 
 </body>
-  </html>
+    </html>
