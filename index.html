@@ -2449,7 +2449,7 @@ async function loadFiles(){
     } = await db  
         .from("files")  
         .select(  
-            "id,name,path,size,created_at"  
+            "id,name,title,description,command,path,size,created_at"  
         )  
         .order(  
             "created_at",  
