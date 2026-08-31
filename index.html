@@ -1,34 +1,5693 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050711"><title>BAIM STUDIO — Lua</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
-:root{--bg:#050711;--card:#0b0f1dce;--line:#ffffff14;--muted:#8991a7;--blue:#668cff;--cyan:#49ddff;--green:#58e6a6;--red:#ff718c}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:#f8f9fc;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial;overflow-x:hidden}body:before{content:"";position:fixed;inset:-30%;z-index:-3;background:radial-gradient(circle at 50% 5%,#263b8a 0,transparent 30%),radial-gradient(circle at 5% 65%,#12285e 0,transparent 25%),radial-gradient(circle at 95% 80%,#0c4459 0,transparent 24%);filter:blur(35px);animation:a 15s ease-in-out infinite alternate}@keyframes a{to{transform:scale(1.08) translate(2%,2%)}}body:after{content:"";position:fixed;inset:0;z-index:-2;opacity:.12;background-image:linear-gradient(#7087d414 1px,transparent 1px),linear-gradient(90deg,#7087d414 1px,transparent 1px);background-size:70px 70px;mask-image:linear-gradient(#000,transparent 90%);animation:g 18s linear infinite}@keyframes g{to{background-position:70px 70px}}.wrap{width:min(1160px,calc(100% - 28px));margin:auto}.top{position:sticky;top:12px;z-index:20;margin-top:12px;display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:19px;background:#050711b8;backdrop-filter:blur(22px);box-shadow:0 25px 80px #0006}.brand{display:flex;align-items:center;gap:10px;margin-right:auto}.mark{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;font-weight:1000;background:linear-gradient(145deg,#7899ff,#3456d8,#3bd9ed);box-shadow:0 0 30px #4f7dff44}.brand b{font-size:14px}.brand small{display:block;color:#6e768c;font-size:8px;letter-spacing:2px;margin-top:2px}.nav{display:flex;gap:4px}.nav button,.ghost{border:1px solid transparent;background:transparent;color:#8d95a9;padding:10px 12px;border-radius:11px;font-size:10px;transition:.2s}.nav button:hover,.nav button.active{color:#fff;background:#ffffff0a;border-color:var(--line)}.live{font-size:9px;color:#a0a8ba;border:1px solid var(--line);padding:9px 11px;border-radius:12px}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green);margin-right:6px;animation:p 1.8s infinite}@keyframes p{50%{opacity:.3;transform:scale(.8)}}.page{display:none;animation:in .5s both}.page.active{display:block}@keyframes in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}.hero{padding:100px 0 45px}.eyebrow{display:inline-block;padding:8px 11px;border:1px solid #7192ff2b;background:#587fff0d;border-radius:99px;color:#9bb0f0;font-size:9px;letter-spacing:1.4px;text-transform:uppercase}.hero h1{font-size:clamp(48px,8vw,92px);line-height:.92;letter-spacing:-6px;margin:20px 0;font-weight:950}.hero h1 span{background:linear-gradient(100deg,#fff,#86a5ff 50%,#4de2ff);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:720px;color:#8b93a8;font-size:14px;line-height:1.8}.actions{display:flex;gap:9px;margin-top:25px;flex-wrap:wrap}.primary{border:0;border-radius:12px;padding:13px 17px;color:#fff;font-weight:800;font-size:10px;background:linear-gradient(135deg,#648bff,#3157d1);box-shadow:0 15px 38px #416ee944;transition:.2s}.primary:hover{transform:translateY(-2px);box-shadow:0 20px 50px #416ee966}.secondary{border:1px solid var(--line);border-radius:12px;padding:13px 17px;color:#bdc5d6;background:#ffffff06;font-size:10px}.grid{display:grid;grid-template-columns:1.35fr .75fr;gap:16px}.card{border:1px solid var(--line);border-radius:23px;background:linear-gradient(145deg,#101528d9,#070a13d9);box-shadow:0 30px 90px #0005,inset 0 1px #fff1;overflow:hidden}.head{padding:19px 20px;border-bottom:1px solid #ffffff0b;display:flex;justify-content:space-between;align-items:center;gap:10px}.head h2{font-size:14px;margin:0}.head p{font-size:9px;color:#737c91;margin:5px 0 0}.body{padding:19px}.drop{min-height:260px;border:1px dashed #7191ed4d;border-radius:17px;display:grid;place-items:center;text-align:center;background:radial-gradient(circle,#4b75e91c,transparent 62%);cursor:pointer;position:relative;overflow:hidden;transition:.25s}.drop:after{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#70a0ff,transparent);animation:s 4s linear infinite}@keyframes s{to{transform:translateY(260px)}}.drop:hover,.drop.drag{border-color:#7297ff;background:radial-gradient(circle,#4b75e934,transparent 65%);transform:translateY(-2px)}.ico{width:64px;height:64px;margin:auto;display:grid;place-items:center;border-radius:19px;border:1px solid #789cff35;background:#608aff16;color:#8aabff;font-size:27px}.drop h3{font-size:17px;margin:14px 0 7px}.drop p{margin:0;color:#70798f;font-size:10px}.tags{display:flex;justify-content:center;gap:6px;margin-top:14px}.tag{padding:5px 8px;border:1px solid var(--line);border-radius:7px;color:#7e879d;font-size:8px}input[type=file]{display:none}.line{margin-top:10px;padding:11px 13px;border:1px solid #ffffff0b;border-radius:11px;display:flex;justify-content:space-between;color:#aab2c4;font-size:10px}.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.check{padding:10px;border:1px solid #ffffff09;border-radius:10px;color:#8d96aa;font-size:9px;background:#ffffff03}.check input{accent-color:#6389ff;margin-right:6px}.console{margin-top:10px;max-height:140px;overflow:auto;padding:10px;border:1px solid #ffffff0a;border-radius:10px;background:#03050a;color:#8290ad;font:9px/1.7 monospace}.ok{color:var(--green)}.err{color:var(--red)}.stats{display:grid;grid-template-columns:1fr 1fr;gap:9px}.stat{padding:15px;border:1px solid #ffffff0a;border-radius:14px;background:#ffffff04}.stat strong{font-size:25px}.stat span{display:block;color:#737c91;font-size:8px;text-transform:uppercase;letter-spacing:1px}.files{display:grid;grid-template-columns:1fr 1fr;gap:10px}.file{padding:14px;border:1px solid #ffffff0b;border-radius:15px;background:#ffffff04;display:flex;justify-content:space-between;gap:10px;align-items:center;transition:.2s}.file:hover{transform:translateY(-2px);border-color:#6d90ff45}.fname{font-size:11px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{font-size:8px;color:#6f788d;margin-top:5px}.mini{border:1px solid var(--line);background:#ffffff06;color:#bdc5d6;border-radius:9px;padding:8px 10px;font-size:8px;white-space:nowrap}.danger{color:#ff839a}.login{max-width:460px;margin:85px auto}.field{margin-bottom:10px}.field label{display:block;color:#7e879b;font-size:9px;margin-bottom:5px}.field input{width:100%;padding:13px;border:1px solid var(--line);border-radius:11px;background:#050811;color:#fff;outline:0}.field input:focus{border-color:#6589ff;box-shadow:0 0 0 3px #6589ff12}.notice{font-size:9px;color:#747d92;line-height:1.7}.modal{position:fixed;inset:0;z-index:50;display:none;place-items:center;padding:18px;background:#000a;backdrop-filter:blur(12px)}.modal.show{display:grid}.modalbox{width:min(430px,100%);background:#0a0e19;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 40px 100px #000b}.close{float:right;background:none;border:0;color:#8992a7;font-size:22px}footer{padding:65px 0 30px;color:#4e566b;font-size:8px;letter-spacing:1.2px;display:flex;justify-content:space-between}@media(max-width:800px){.grid{grid-template-columns:1fr}.files{grid-template-columns:1fr}.hero{padding-top:70px}.hero h1{letter-spacing:-4px}}@media(max-width:570px){.wrap{width:calc(100% - 20px)}.live{display:none}.brand small{display:none}.nav button{padding:9px 7px;font-size:8px}.hero h1{font-size:50px}.opts{grid-template-columns:1fr}}
-</style></head><body>
-<header class="top wrap"><div class="brand"><div class="mark">B</div><div><b>BAIM STUDIO</b><small>LUA PROTECTION / SHARE</small></div></div><nav class="nav"><button class="active" data-page="home">Home</button><button data-page="obf">Obfuscator</button><button data-page="share">Share Lua</button><button data-page="admin">Admin</button></nav><div class="live"><i class="dot"></i><span id="online">—</span> online</div></header>
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050711">
+<meta name="description" content="BAIM Studio Lua Protection & Public Library">
+<title>BAIM STUDIO — Lua Protection</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+    --bg:#04060c;
+    --bg2:#080c17;
+    --card:rgba(12,17,31,.78);
+    --card2:rgba(8,12,23,.92);
+    --line:rgba(255,255,255,.085);
+    --line2:rgba(255,255,255,.045);
+    --text:#f7f9ff;
+    --muted:#858ea4;
+    --muted2:#626b80;
+    --blue:#6b8cff;
+    --blue2:#4568ef;
+    --cyan:#48ddff;
+    --green:#50e0a0;
+    --red:#ff6f8c;
+    --yellow:#ffbf63;
+    --shadow:0 30px 100px rgba(0,0,0,.48);
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 50% -10%,#1b2e72 0,transparent 32%),
+        radial-gradient(circle at -10% 55%,#102a58 0,transparent 27%),
+        radial-gradient(circle at 110% 75%,#093c4c 0,transparent 25%),
+        var(--bg);
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    overflow-x:hidden;
+}
+
+body:before{
+    content:"";
+    position:fixed;
+    inset:-30%;
+    z-index:-5;
+    pointer-events:none;
+    background:
+        radial-gradient(circle at 50% 30%,rgba(63,107,255,.14),transparent 28%),
+        radial-gradient(circle at 15% 75%,rgba(0,207,255,.08),transparent 23%),
+        radial-gradient(circle at 85% 80%,rgba(75,78,255,.08),transparent 22%);
+    filter:blur(35px);
+    animation:ambient 16s ease-in-out infinite alternate;
+}
+
+@keyframes ambient{
+    to{
+        transform:scale(1.08) translate(2%,2%);
+    }
+}
+
+.grid-bg{
+    position:fixed;
+    inset:0;
+    z-index:-4;
+    pointer-events:none;
+    opacity:.16;
+    background-image:
+        linear-gradient(rgba(110,145,255,.11) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(110,145,255,.11) 1px,transparent 1px);
+    background-size:70px 70px;
+    mask-image:linear-gradient(to bottom,#000 0%,transparent 82%);
+    animation:gridMove 22s linear infinite;
+}
+
+@keyframes gridMove{
+    to{
+        background-position:70px 70px;
+    }
+}
+
+.orb{
+    position:fixed;
+    width:360px;
+    height:360px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:-3;
+    filter:blur(100px);
+    opacity:.12;
+}
+
+.orb.a{
+    left:-190px;
+    top:80px;
+    background:#326bff;
+    animation:orbA 13s ease-in-out infinite;
+}
+
+.orb.b{
+    right:-190px;
+    bottom:40px;
+    background:#00d9ff;
+    animation:orbB 15s ease-in-out infinite;
+}
+
+@keyframes orbA{
+    50%{transform:translate(100px,80px) scale(1.15)}
+}
+
+@keyframes orbB{
+    50%{transform:translate(-100px,-70px) scale(1.12)}
+}
+
+.particles{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.particle{
+    position:absolute;
+    width:2px;
+    height:2px;
+    border-radius:50%;
+    background:#fff;
+    opacity:.2;
+    animation:particle linear infinite;
+}
+
+@keyframes particle{
+    from{
+        transform:translateY(110vh);
+        opacity:0;
+    }
+    15%{opacity:.25}
+    85%{opacity:.25}
+    to{
+        transform:translateY(-20vh);
+        opacity:0;
+    }
+}
+
+button,
+input,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.wrap{
+    width:min(1180px,calc(100% - 28px));
+    margin:auto;
+}
+
+.topbar{
+    position:sticky;
+    top:12px;
+    z-index:50;
+    margin-top:12px;
+    min-height:62px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:9px 11px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    background:rgba(4,7,15,.72);
+    backdrop-filter:blur(24px) saturate(150%);
+    box-shadow:0 20px 70px rgba(0,0,0,.34);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    margin-right:auto;
+    min-width:0;
+}
+
+.brand-mark{
+    width:41px;
+    height:41px;
+    flex:0 0 41px;
+    display:grid;
+    place-items:center;
+    border-radius:13px;
+    font-size:16px;
+    font-weight:1000;
+    background:
+        linear-gradient(145deg,#8ba7ff 0%,#4669ed 48%,#35d9ec 100%);
+    box-shadow:
+        0 0 28px rgba(77,122,255,.35),
+        inset 0 1px rgba(255,255,255,.35);
+}
+
+.brand-title{
+    font-size:13px;
+    font-weight:900;
+    letter-spacing:-.3px;
+}
+
+.brand-sub{
+    display:block;
+    margin-top:2px;
+    color:#68738b;
+    font-size:7px;
+    letter-spacing:2px;
+    white-space:nowrap;
+}
+
+.nav{
+    display:flex;
+    align-items:center;
+    gap:3px;
+}
+
+.nav-btn{
+    border:1px solid transparent;
+    background:transparent;
+    color:#818ba1;
+    padding:10px 12px;
+    border-radius:11px;
+    font-size:9px;
+    transition:.22s;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+    color:#fff;
+    border-color:var(--line);
+    background:rgba(255,255,255,.055);
+}
+
+.live{
+    display:flex;
+    align-items:center;
+    white-space:nowrap;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:9px 11px;
+    color:#8f98ab;
+    font-size:8px;
+}
+
+.live-dot{
+    width:7px;
+    height:7px;
+    margin-right:6px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 13px var(--green);
+    animation:livePulse 1.8s infinite;
+}
+
+@keyframes livePulse{
+    50%{
+        opacity:.35;
+        transform:scale(.75);
+    }
+}
+
+.page{
+    display:none;
+    animation:pageIn .5s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.page.active{
+    display:block;
+}
+
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:translateY(18px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.hero{
+    padding:100px 0 45px;
+}
+
+.eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:8px 11px;
+    border:1px solid rgba(113,146,255,.22);
+    border-radius:999px;
+    background:rgba(88,127,255,.055);
+    color:#9db1f0;
+    font-size:8px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+}
+
+.eyebrow i{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 10px var(--green);
+}
+
+.hero h1{
+    margin:20px 0 18px;
+    max-width:900px;
+    font-size:clamp(50px,8.5vw,96px);
+    line-height:.9;
+    letter-spacing:-6px;
+    font-weight:950;
+}
+
+.hero h1 span{
+    background:linear-gradient(100deg,#fff 5%,#86a5ff 48%,#48e0ff 95%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    max-width:720px;
+    margin:0;
+    color:#8992a7;
+    font-size:13px;
+    line-height:1.85;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    margin-top:25px;
+}
+
+.primary,
+.secondary{
+    border-radius:12px;
+    padding:13px 17px;
+    font-size:9px;
+    font-weight:850;
+    transition:.22s;
+}
+
+.primary{
+    color:#fff;
+    border:0;
+    background:linear-gradient(135deg,#688dff,#3859d7);
+    box-shadow:0 15px 40px rgba(57,92,219,.24);
+}
+
+.primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 22px 55px rgba(57,92,219,.36);
+}
+
+.primary:disabled{
+    opacity:.5;
+    pointer-events:none;
+}
+
+.secondary{
+    color:#bdc5d7;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.035);
+}
+
+.secondary:hover{
+    color:#fff;
+    border-color:rgba(109,142,255,.35);
+    background:rgba(100,130,255,.07);
+}
+
+.layout{
+    display:grid;
+    grid-template-columns:1.3fr .7fr;
+    gap:16px;
+}
+
+.card{
+    border:1px solid var(--line);
+    border-radius:24px;
+    background:
+        linear-gradient(145deg,rgba(15,21,38,.86),rgba(6,9,17,.9));
+    box-shadow:
+        var(--shadow),
+        inset 0 1px rgba(255,255,255,.035);
+    overflow:hidden;
+    position:relative;
+}
+
+.card:before{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    height:1px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(93,137,255,.65),
+        rgba(72,220,255,.5),
+        transparent
+    );
+}
+
+.card-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    padding:19px 20px;
+    border-bottom:1px solid var(--line2);
+}
+
+.card-head h2{
+    margin:0;
+    font-size:13px;
+}
+
+.card-head p{
+    margin:5px 0 0;
+    color:#69748b;
+    font-size:8px;
+}
+
+.card-body{
+    padding:19px;
+}
+
+.stat-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+}
+
+.stat{
+    padding:16px;
+    border:1px solid var(--line2);
+    border-radius:15px;
+    background:rgba(255,255,255,.025);
+}
+
+.stat strong{
+    display:block;
+    font-size:26px;
+    letter-spacing:-1px;
+}
+
+.stat span{
+    display:block;
+    margin-top:5px;
+    color:#6e778c;
+    font-size:7px;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+}
+
+.drop{
+    position:relative;
+    min-height:260px;
+    display:grid;
+    place-items:center;
+    text-align:center;
+    border:1px dashed rgba(105,139,239,.38);
+    border-radius:18px;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(68,111,237,.13),
+            transparent 65%
+        );
+    overflow:hidden;
+    transition:.25s;
+    cursor:pointer;
+}
+
+.drop:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(100,147,255,.04),
+            transparent
+        );
+    transform:translateX(-100%);
+    animation:scanX 5s linear infinite;
+}
+
+@keyframes scanX{
+    to{transform:translateX(100%)}
+}
+
+.drop:after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:1px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #7099ff,
+        transparent
+    );
+    animation:scanY 4s linear infinite;
+}
+
+@keyframes scanY{
+    to{transform:translateY(260px)}
+}
+
+.drop:hover,
+.drop.drag{
+    transform:translateY(-2px);
+    border-color:#7598ff;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(68,111,237,.2),
+            transparent 67%
+        );
+}
+
+.drop-inner{
+    position:relative;
+    z-index:2;
+    padding:20px;
+}
+
+.drop-icon{
+    width:65px;
+    height:65px;
+    display:grid;
+    place-items:center;
+    margin:auto;
+    border:1px solid rgba(120,156,255,.22);
+    border-radius:19px;
+    color:#89a8ff;
+    font-size:26px;
+    background:rgba(80,122,255,.08);
+    box-shadow:0 0 35px rgba(65,111,255,.1);
+}
+
+.drop h3{
+    margin:15px 0 7px;
+    font-size:17px;
+}
+
+.drop p{
+    margin:0;
+    color:#6e788e;
+    font-size:9px;
+}
+
+.tags{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:14px;
+}
+
+.tag{
+    padding:5px 8px;
+    border:1px solid var(--line);
+    border-radius:7px;
+    color:#7e899e;
+    background:rgba(255,255,255,.025);
+    font-size:7px;
+    letter-spacing:.5px;
+}
+
+input[type=file]{
+    display:none;
+}
+
+.file-line{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:10px;
+    padding:11px 13px;
+    border:1px solid var(--line2);
+    border-radius:11px;
+    background:rgba(255,255,255,.02);
+}
+
+.file-name{
+    min-width:0;
+    color:#b3bdd0;
+    font-size:9px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.file-type{
+    flex-shrink:0;
+    padding:5px 8px;
+    border-radius:6px;
+    color:#8ca8ff;
+    background:rgba(80,119,255,.1);
+    font-size:7px;
+    font-weight:900;
+}
+
+.option-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+    margin-top:10px;
+}
+
+.option{
+    min-height:44px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:9px;
+    border:1px solid var(--line2);
+    border-radius:10px;
+    color:#8993a8;
+    background:rgba(255,255,255,.018);
+    font-size:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.option:hover{
+    color:#c4ccdb;
+    border-color:rgba(100,135,255,.22);
+    background:rgba(100,135,255,.035);
+}
+
+.option input{
+    width:14px;
+    height:14px;
+    margin:0;
+    accent-color:#688cff;
+}
+
+.option b{
+    display:block;
+    font-size:8px;
+    font-weight:700;
+}
+
+.option small{
+    display:block;
+    margin-top:2px;
+    color:#5f697d;
+    font-size:6px;
+}
+
+.advanced{
+    margin-top:10px;
+    border:1px solid var(--line2);
+    border-radius:13px;
+    overflow:hidden;
+    background:rgba(255,255,255,.015);
+}
+
+.advanced summary{
+    padding:13px 14px;
+    color:#9da7bb;
+    font-size:8px;
+    font-weight:800;
+    cursor:pointer;
+    list-style:none;
+}
+
+.advanced summary::-webkit-details-marker{
+    display:none;
+}
+
+.advanced summary:after{
+    content:"+";
+    float:right;
+    color:#66728a;
+    font-size:13px;
+}
+
+.advanced[open] summary:after{
+    content:"−";
+}
+
+.advanced-body{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    padding:0 13px 13px;
+}
+
+.select-wrap label{
+    display:block;
+    margin-bottom:5px;
+    color:#69748a;
+    font-size:7px;
+}
+
+.select{
+    width:100%;
+    padding:10px;
+    border:1px solid var(--line2);
+    border-radius:9px;
+    outline:none;
+    color:#aeb7ca;
+    background:#060a13;
+    font-size:8px;
+}
+
+.select:focus{
+    border-color:#6588ff;
+}
+
+.progress-box{
+    margin-top:10px;
+    height:4px;
+    border-radius:20px;
+    overflow:hidden;
+    background:rgba(255,255,255,.05);
+}
+
+.progress-bar{
+    width:0;
+    height:100%;
+    background:linear-gradient(90deg,#587cff,#47dcff);
+    box-shadow:0 0 15px rgba(70,130,255,.7);
+    transition:width .2s;
+}
+
+.status{
+    min-height:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#68748a;
+    font-size:7px;
+    letter-spacing:1px;
+    text-align:center;
+}
+
+.status.ok{
+    color:var(--green);
+}
+
+.status.error{
+    color:var(--red);
+}
+
+.console{
+    min-height:110px;
+    max-height:190px;
+    margin-top:7px;
+    padding:11px;
+    border:1px solid var(--line2);
+    border-radius:11px;
+    overflow:auto;
+    color:#8190aa;
+    background:#03050a;
+    font:8px/1.75 monospace;
+}
+
+.console-line{
+    white-space:pre-wrap;
+    word-break:break-word;
+}
+
+.console-line.ok{
+    color:var(--green);
+}
+
+.console-line.warn{
+    color:var(--yellow);
+}
+
+.console-line.err{
+    color:var(--red);
+}
+
+.editor{
+    margin-top:10px;
+    border:1px solid var(--line2);
+    border-radius:13px;
+    overflow:hidden;
+    background:#03050a;
+}
+
+.editor-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:9px 11px;
+    border-bottom:1px solid var(--line2);
+}
+
+.editor-head span{
+    color:#707b91;
+    font-size:7px;
+    letter-spacing:1px;
+}
+
+.editor textarea{
+    display:block;
+    width:100%;
+    min-height:180px;
+    resize:vertical;
+    border:0;
+    outline:0;
+    padding:13px;
+    color:#9eafd0;
+    background:transparent;
+    font:9px/1.7 monospace;
+}
+
+.share-toolbar{
+    display:flex;
+    gap:8px;
+    margin-bottom:13px;
+}
+
+.search{
+    flex:1;
+    width:100%;
+    padding:12px 13px;
+    border:1px solid var(--line2);
+    border-radius:11px;
+    outline:0;
+    color:#fff;
+    background:rgba(255,255,255,.025);
+    font-size:9px;
+}
+
+.search:focus{
+    border-color:#678bff;
+    box-shadow:0 0 0 3px rgba(103,139,255,.08);
+}
+
+.small-btn{
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:10px 12px;
+    color:#aeb7ca;
+    background:rgba(255,255,255,.035);
+    font-size:8px;
+    transition:.2s;
+}
+
+.small-btn:hover{
+    color:#fff;
+    border-color:rgba(105,139,255,.35);
+}
+
+.file-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+}
+
+.public-file{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:14px;
+    border:1px solid var(--line2);
+    border-radius:15px;
+    background:rgba(255,255,255,.022);
+    transition:.22s;
+}
+
+.public-file:hover{
+    transform:translateY(-2px);
+    border-color:rgba(105,139,255,.28);
+    background:rgba(105,139,255,.035);
+}
+
+.file-info{
+    min-width:0;
+}
+
+.file-title{
+    color:#dbe1ed;
+    font-size:10px;
+    font-weight:750;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.file-meta{
+    margin-top:5px;
+    color:#69748a;
+    font-size:7px;
+}
+
+.file-actions{
+    display:flex;
+    flex-shrink:0;
+    gap:5px;
+}
+
+.admin-layout{
+    display:grid;
+    grid-template-columns:.8fr 1.2fr;
+    gap:16px;
+}
+
+.login-box{
+    max-width:440px;
+    margin:75px auto;
+}
+
+.form-field{
+    margin-bottom:10px;
+}
+
+.form-field label{
+    display:block;
+    margin-bottom:6px;
+    color:#7b859a;
+    font-size:8px;
+}
+
+.form-input{
+    width:100%;
+    padding:13px;
+    border:1px solid var(--line);
+    border-radius:11px;
+    outline:0;
+    color:#fff;
+    background:#050912;
+    font-size:9px;
+}
+
+.form-input:focus{
+    border-color:#678aff;
+    box-shadow:0 0 0 3px rgba(103,138,255,.08);
+}
+
+.admin-panel{
+    display:none;
+}
+
+.admin-panel.show{
+    display:block;
+    animation:pageIn .4s both;
+}
+
+.admin-upload{
+    min-height:200px;
+}
+
+.admin-info{
+    padding:12px;
+    margin-bottom:10px;
+    border:1px solid var(--line2);
+    border-radius:12px;
+    background:rgba(255,255,255,.02);
+}
+
+.admin-info strong{
+    display:block;
+    font-size:10px;
+}
+
+.admin-info span{
+    display:block;
+    margin-top:4px;
+    color:#6c768c;
+    font-size:7px;
+}
+
+.empty{
+    padding:35px 15px;
+    border:1px dashed var(--line);
+    border-radius:15px;
+    color:#667188;
+    text-align:center;
+    font-size:8px;
+}
+
+.loading{
+    padding:25px;
+    color:#69748a;
+    text-align:center;
+    font-size:8px;
+}
+
+.notice{
+    color:#737e94;
+    font-size:8px;
+    line-height:1.7;
+}
+
+.error-text{
+    color:var(--red);
+    font-size:8px;
+}
+
+footer{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    padding:70px 0 30px;
+    color:#4b556b;
+    font-size:7px;
+    letter-spacing:1.2px;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    display:none;
+    place-items:center;
+    padding:18px;
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(14px);
+}
+
+.modal.show{
+    display:grid;
+}
+
+.modal-box{
+    width:min(430px,100%);
+    padding:20px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    background:#090d18;
+    box-shadow:0 40px 120px rgba(0,0,0,.7);
+    animation:modalIn .3s both;
+}
+
+@keyframes modalIn{
+    from{
+        opacity:0;
+        transform:translateY(12px) scale(.97);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.modal-box h2{
+    margin:0 0 8px;
+    font-size:15px;
+}
+
+.modal-box p{
+    margin:0;
+    color:#818ca1;
+    font-size:9px;
+    line-height:1.7;
+}
+
+.modal-close{
+    float:right;
+    border:0;
+    background:none;
+    color:#7e899e;
+    font-size:22px;
+}
+
+.toast{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:90;
+    max-width:340px;
+    padding:13px 15px;
+    border:1px solid var(--line);
+    border-radius:13px;
+    background:rgba(9,13,24,.92);
+    backdrop-filter:blur(20px);
+    box-shadow:0 25px 80px rgba(0,0,0,.45);
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(15px);
+    transition:.25s;
+}
+
+.toast.show{
+    opacity:1;
+    pointer-events:auto;
+    transform:none;
+}
+
+.toast-title{
+    font-size:9px;
+    font-weight:800;
+}
+
+.toast-text{
+    margin-top:4px;
+    color:#798398;
+    font-size:7px;
+    line-height:1.5;
+}
+
+@media(max-width:900px){
+    .layout,
+    .admin-layout{
+        grid-template-columns:1fr;
+    }
+
+    .file-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:720px){
+    .nav-btn{
+        padding:9px 7px;
+        font-size:7px;
+    }
+
+    .brand-sub{
+        display:none;
+    }
+
+    .hero{
+        padding-top:72px;
+    }
+
+    .hero h1{
+        letter-spacing:-4px;
+    }
+
+    .option-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:520px){
+    .wrap{
+        width:calc(100% - 20px);
+    }
+
+    .topbar{
+        top:8px;
+        margin-top:8px;
+    }
+
+    .brand{
+        min-width:auto;
+    }
+
+    .brand-title{
+        display:none;
+    }
+
+    .live{
+        display:none;
+    }
+
+    .nav{
+        width:100%;
+        justify-content:flex-end;
+    }
+
+    .nav-btn{
+        padding:8px 6px;
+    }
+
+    .hero h1{
+        font-size:50px;
+        letter-spacing:-3px;
+    }
+
+    .hero p{
+        font-size:11px;
+    }
+
+    .option-grid{
+        grid-template-columns:1fr;
+    }
+
+    .advanced-body{
+        grid-template-columns:1fr;
+    }
+
+    .share-toolbar{
+        flex-direction:column;
+    }
+
+    footer{
+        flex-direction:column;
+        text-align:center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="grid-bg"></div>
+<div class="orb a"></div>
+<div class="orb b"></div>
+<div class="particles" id="particles"></div>
+
+<header class="topbar wrap">
+
+    <div class="brand">
+        <div class="brand-mark">B</div>
+        <div>
+            <div class="brand-title">BAIM STUDIO</div>
+            <span class="brand-sub">LUA PROTECTION / PUBLIC LIBRARY</span>
+        </div>
+    </div>
+
+    <nav class="nav">
+        <button class="nav-btn active" data-page="home">HOME</button>
+        <button class="nav-btn" data-page="obf">OBFUSCATOR</button>
+        <button class="nav-btn" data-page="share">SHARE LUA</button>
+        <button class="nav-btn" data-page="admin">ADMIN</button>
+    </nav>
+
+    <div class="live">
+        <span class="live-dot"></span>
+        <span id="onlineTop">—</span>&nbsp; online
+    </div>
+
+</header>
+
 <main class="wrap">
-<section id="home" class="page active"><div class="hero"><div class="eyebrow">● Live workspace</div><h1>Build. Protect.<br><span>Share Lua.</span></h1><p>Workspace premium untuk memproses source Lua di browser dan membagikan library Lua publik. Pengunjung tidak perlu login; hanya admin yang dapat mengelola file.</p><div class="actions"><button class="primary" data-go="obf">OPEN OBFUSCATOR →</button><button class="secondary" data-go="share">EXPLORE LIBRARY</button></div></div><div class="grid"><div class="card"><div class="head"><div><h2>Latest Lua</h2><p>File yang dipublikasikan admin</p></div><button class="mini" data-go="share">View all</button></div><div class="body"><div id="homeFiles" class="files"></div></div></div><div class="card"><div class="head"><div><h2>Live status</h2><p>Realtime Supabase Presence</p></div></div><div class="body"><div class="stats"><div class="stat"><strong id="fileCount">—</strong><span>Public files</span></div><div class="stat"><strong id="online2">—</strong><span>Online now</span></div></div></div></div></div></section>
-<section id="obf" class="page"><div class="hero" style="padding-bottom:30px"><div class="eyebrow">Local processing</div><h1>Protect your <span>source.</span></h1><p>Obfuscator berjalan di perangkat kamu. Source Lua tidak dikirim ke Supabase.</p></div><div class="card"><div class="head"><div><h2>BAIM Obfuscator</h2><p>Comments • strings • locals • minify</p></div></div><div class="body"><label class="drop" id="obDrop" for="obFile"><div><div class="ico">↑</div><h3>Drop Lua file here</h3><p>atau pilih file dari perangkat</p><div class="tags"><span class="tag">LUA</span><span class="tag">TXT</span></div></div></label><input id="obFile" type="file" accept=".lua,.txt"><div class="line"><span id="obName">Belum ada file</span><span id="obType">READY</span></div><div class="opts"><label class="check"><input id="comments" type="checkbox" checked>Remove comments</label><label class="check"><input id="minify" type="checkbox" checked>Minify</label><label class="check"><input id="rename" type="checkbox" checked>Rename locals</label><label class="check"><input id="strings" type="checkbox" checked>Encode strings</label></div><button id="protect" class="primary" style="width:100%;margin-top:10px">START PROTECTION</button><div id="console" class="console">&gt; BAIM ENGINE READY</div></div></div></section>
-<section id="share" class="page"><div class="hero" style="padding-bottom:30px"><div class="eyebrow">Public library</div><h1>Share <span>Lua.</span></h1><p>Library publik. Download mengambil object langsung dari Supabase Storage menggunakan path yang sama dengan database.</p></div><div class="card"><div class="head"><div><h2>Lua Library</h2><p id="libraryStatus">Loading...</p></div><button class="mini" id="refresh">Refresh</button></div><div class="body"><div id="fileList" class="files"></div></div></div></section>
-<section id="admin" class="page"><div id="loginBox" class="card login"><div class="head"><div><h2>Admin Access</h2><p>Login hanya untuk pengelola</p></div></div><div class="body"><div class="field"><label>Email</label><input id="email" type="email" autocomplete="username"></div><div class="field"><label>Password</label><input id="password" type="password" autocomplete="current-password"></div><button id="login" class="primary" style="width:100%">LOGIN ADMIN</button><p class="notice">Akun Supabase harus memiliki <b>role = admin</b> pada <b>public.profiles</b>. User biasa tidak mendapat akses upload.</p></div></div><div id="adminBox" style="display:none"><div class="hero" style="padding-bottom:30px"><div class="eyebrow">Administrator</div><h1>Manage <span>Library.</span></h1><p>Upload dan hapus file Lua publik.</p></div><div class="grid"><div class="card"><div class="head"><div><h2>Upload Lua</h2><p id="adminEmail">Admin</p></div><button class="mini" id="logout">Logout</button></div><div class="body"><label class="drop" for="adminFile"><div><div class="ico">＋</div><h3>Pilih file Lua</h3><p>File akan disimpan ke Storage</p></div></label><input id="adminFile" type="file" accept=".lua"><div class="line"><span id="adminName">Belum ada file</span><span>LUA</span></div><button id="upload" class="primary" style="width:100%;margin-top:10px">UPLOAD TO LIBRARY</button></div></div><div class="card"><div class="head"><div><h2>Library management</h2><p>Admin actions</p></div></div><div class="body"><div id="adminFiles" class="files"></div></div></div></div></div></section>
-<footer><span>BAIM STUDIO</span><span>SUPABASE • VERCEL • CLIENT-SIDE PROCESSING</span></footer></main><div id="toast" class="modal"><div class="modalbox"><button class="close" onclick="closeToast()">×</button><h2 id="toastTitle">Info</h2><p id="toastText"></p></div></div>
+
+<!-- ================= HOME ================= -->
+
+<section id="home" class="page active">
+
+    <div class="hero">
+
+        <div class="eyebrow">
+            <i></i>
+            Live workspace
+        </div>
+
+        <h1>
+            Build.<br>
+            Protect.<br>
+            <span>Share Lua.</span>
+        </h1>
+
+        <p>
+            Workspace Lua dengan obfuscator client-side dan public
+            library. Pengunjung dapat melihat serta mengunduh file,
+            sementara pengelolaan library hanya tersedia untuk admin.
+        </p>
+
+        <div class="actions">
+            <button class="primary" data-go="obf">
+                OPEN OBFUSCATOR →
+            </button>
+
+            <button class="secondary" data-go="share">
+                EXPLORE LIBRARY
+            </button>
+        </div>
+
+    </div>
+
+    <div class="layout">
+
+        <div class="card">
+
+            <div class="card-head">
+                <div>
+                    <h2>Latest Lua</h2>
+                    <p>File terbaru di public library</p>
+                </div>
+
+                <button class="small-btn" data-go="share">
+                    View all
+                </button>
+            </div>
+
+            <div class="card-body">
+                <div id="homeFiles" class="file-grid">
+                    <div class="loading">Loading library...</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-head">
+                <div>
+                    <h2>Live status</h2>
+                    <p>Realtime Supabase Presence</p>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <div class="stat-grid">
+
+                    <div class="stat">
+                        <strong id="homeFileCount">—</strong>
+                        <span>Public files</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong id="onlineHome">—</strong>
+                        <span>Online now</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong>Lua</strong>
+                        <span>Primary format</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong>Local</strong>
+                        <span>Obfuscation</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= OBFUSCATOR ================= -->
+
+<section id="obf" class="page">
+
+    <div class="hero">
+
+        <div class="eyebrow">
+            <i></i>
+            Local processing
+        </div>
+
+        <h1>
+            Protect your<br>
+            <span>source.</span>
+        </h1>
+
+        <p>
+            Source Lua diproses langsung di browser. Tidak ada proses
+            upload source ke database ketika menggunakan obfuscator.
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <div class="card-head">
+
+            <div>
+                <h2>BAIM Obfuscator Engine</h2>
+                <p>Lua transformation workspace</p>
+            </div>
+
+            <span class="tag">LOCAL</span>
+
+        </div>
+
+        <div class="card-body">
+
+            <label class="drop" id="obDrop" for="obFile">
+
+                <div class="drop-inner">
+
+                    <div class="drop-icon">↑</div>
+
+                    <h3>Drop Lua file here</h3>
+
+                    <p>
+                        atau pilih file dari perangkat
+                    </p>
+
+                    <div class="tags">
+                        <span class="tag">LUA</span>
+                        <span class="tag">TXT</span>
+                        <span class="tag">CLIENT-SIDE</span>
+                    </div>
+
+                </div>
+
+            </label>
+
+            <input
+                id="obFile"
+                type="file"
+                accept=".lua,.txt"
+            >
+
+            <div class="file-line">
+
+                <span
+                    class="file-name"
+                    id="obName"
+                >
+                    Belum ada file dipilih
+                </span>
+
+                <span
+                    class="file-type"
+                    id="obType"
+                >
+                    READY
+                </span>
+
+            </div>
+
+
+            <!-- OPTIONS -->
+
+            <div class="option-grid">
+
+                <label class="option">
+                    <input id="optComments" type="checkbox" checked>
+                    <span>
+                        <b>Remove comments</b>
+                        <small>hapus komentar</small>
+                    </span>
+                </label>
+
+                <label class="option">
+                    <input id="optMinify" type="checkbox" checked>
+                    <span>
+                        <b>Minify</b>
+                        <small>rapikan whitespace</small>
+                    </span>
+                </label>
+
+                <label class="option">
+                    <input id="optStrings" type="checkbox" checked>
+                    <span>
+                        <b>String encode</b>
+                        <small>ubah literal string</small>
+                    </span>
+                </label>
+
+                <label class="option">
+                    <input id="optNames" type="checkbox" checked>
+                    <span>
+                        <b>Rename locals</b>
+                        <small>random identifier</small>
+                    </span>
+                </label>
+
+                <label class="option">
+                    <input id="optNumbers" type="checkbox" checked>
+                    <span>
+                        <b>Number transform</b>
+                        <small>transform constant</small>
+                    </span>
+                </label>
+
+                <label class="option">
+                    <input id="optJunk" type="checkbox" checked>
+                    <span>
+                        <b>Junk layer</b>
+                        <small>dead code noise</small>
+                    </span>
+                </label>
+
+                <label class="option">
+                    <input id="optPoly" type="checkbox" checked>
+                    <span>
+                        <b>Polymorphic junk</b>
+                        <small>variasi noise</small>
+                    </span>
+                </label>
+
+                <label class="option">
+                    <input id="optFlow" type="checkbox" checked>
+                    <span>
+                        <b>Flow noise</b>
+                        <small>control noise</small>
+                    </span>
+                </label>
+
+                <label class="option">
+                    <input id="optStringTable" type="checkbox" checked>
+                    <span>
+                        <b>String table</b>
+                        <small>table-based literal</small>
+                    </span>
+                </label>
+
+                <label class="option">
+                    <input id="optHeader" type="checkbox" checked>
+                    <span>
+                        <b>Protection header</b>
+                        <small>output metadata</small>
+                    </span>
+                </label>
+
+                <label class="option">
+                    <input id="optSemicolon" type="checkbox">
+                    <span>
+                        <b>Compact output</b>
+                        <small>single-line style</small>
+                    </span>
+                </label>
+
+                <label class="option">
+                    <input id="optPreview" type="checkbox" checked>
+                    <span>
+                        <b>Show preview</b>
+                        <small>lihat hasil di browser</small>
+                    </span>
+                </label>
+
+            </div>
+
+
+            <!-- ADVANCED -->
+
+            <details class="advanced">
+
+                <summary>
+                    Advanced Protection
+                </summary>
+
+                <div class="advanced-body">
+
+                    <div class="select-wrap">
+
+                        <label>Protection preset</label>
+
+                        <select
+                            class="select"
+                            id="level"
+                        >
+                            <option value="1">
+                                Normal
+                            </option>
+
+                            <option value="2" selected>
+                                Strong
+                            </option>
+
+                            <option value="3">
+                                Extreme
+                            </option>
+                        </select>
+
+                    </div>
+
+                    <div class="select-wrap">
+
+                        <label>String mode</label>
+
+                        <select
+                            class="select"
+                            id="stringMode"
+                        >
+                            <option value="char">
+                                string.char
+                            </option>
+
+                            <option value="hex">
+                                escaped bytes
+                            </option>
+
+                            <option value="mixed" selected>
+                                mixed
+                            </option>
+                        </select>
+
+                    </div>
+
+                    <div class="select-wrap">
+
+                        <label>Junk intensity</label>
+
+                        <select
+                            class="select"
+                            id="junkLevel"
+                        >
+                            <option value="low">
+                                Low
+                            </option>
+
+                            <option value="medium" selected>
+                                Medium
+                            </option>
+
+                            <option value="high">
+                                High
+                            </option>
+                        </select>
+
+                    </div>
+
+                    <div class="select-wrap">
+
+                        <label>Output mode</label>
+
+                        <select
+                            class="select"
+                            id="outputMode"
+                        >
+                            <option value="lua">
+                                Lua source
+                            </option>
+
+                            <option value="compact" selected>
+                                Compact Lua
+                            </option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </details>
+
+
+            <div class="actions">
+
+                <button
+                    class="primary"
+                    id="protect"
+                >
+                    START PROTECTION
+                </button>
+
+                <button
+                    class="secondary"
+                    id="clearOb"
+                >
+                    CLEAR
+                </button>
+
+            </div>
+
+
+            <div class="progress-box">
+                <div
+                    class="progress-bar"
+                    id="obProgress"
+                ></div>
+            </div>
+
+            <div
+                class="status"
+                id="obStatus"
+            >
+                BAIM ENGINE READY
+            </div>
+
+
+            <div
+                class="console"
+                id="obConsole"
+            >
+            </div>
+
+
+            <div
+                class="editor"
+                id="previewBox"
+            >
+
+                <div class="editor-head">
+                    <span>OUTPUT PREVIEW</span>
+                    <button
+                        class="small-btn"
+                        id="copyPreview"
+                    >
+                        COPY
+                    </button>
+                </div>
+
+                <textarea
+                    id="preview"
+                    readonly
+                    placeholder="Hasil protection akan muncul di sini..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SHARE ================= -->
+
+<section id="share" class="page">
+
+    <div class="hero">
+
+        <div class="eyebrow">
+            <i></i>
+            Public Lua library
+        </div>
+
+        <h1>
+            Explore the<br>
+            <span>library.</span>
+        </h1>
+
+        <p>
+            Semua file yang dipublikasikan admin dapat dilihat dan
+            diunduh pengunjung tanpa perlu login.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-head">
+
+            <div>
+                <h2>Lua Library</h2>
+
+                <p id="libraryStatus">
+                    Loading...
+                </p>
+            </div>
+
+            <button
+                class="small-btn"
+                id="refreshFiles"
+            >
+                REFRESH
+            </button>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="share-toolbar">
+
+                <input
+                    class="search"
+                    id="searchFiles"
+                    type="search"
+                    placeholder="Search Lua files..."
+                >
+
+            </div>
+
+
+            <div
+                id="fileList"
+                class="file-grid"
+            >
+                <div class="loading">
+                    Loading library...
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ADMIN ================= -->
+
+<section id="admin" class="page">
+
+    <div class="hero">
+
+        <div class="eyebrow">
+            <i></i>
+            Restricted workspace
+        </div>
+
+        <h1>
+            Admin<br>
+            <span>control.</span>
+        </h1>
+
+        <p>
+            Login hanya untuk akun dengan role admin.
+            User biasa tidak mempunyai akses upload maupun delete.
+        </p>
+
+    </div>
+
+
+    <!-- LOGIN -->
+
+    <div
+        id="loginBox"
+        class="card login-box"
+    >
+
+        <div class="card-head">
+
+            <div>
+                <h2>Admin Login</h2>
+                <p>Supabase Authentication</p>
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="form-field">
+
+                <label>
+                    EMAIL
+                </label>
+
+                <input
+                    id="adminEmailInput"
+                    class="form-input"
+                    type="email"
+                    autocomplete="username"
+                    placeholder="admin@email.com"
+                >
+
+            </div>
+
+
+            <div class="form-field">
+
+                <label>
+                    PASSWORD
+                </label>
+
+                <input
+                    id="adminPassword"
+                    class="form-input"
+                    type="password"
+                    autocomplete="current-password"
+                    placeholder="••••••••"
+                >
+
+            </div>
+
+
+            <button
+                id="adminLogin"
+                class="primary"
+                style="width:100%;margin-top:5px"
+            >
+                LOGIN ADMIN
+            </button>
+
+
+            <p
+                class="notice"
+                style="margin-top:13px"
+            >
+                Login memakai Supabase Auth. Role admin
+                tetap divalidasi melalui tabel profiles.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ADMIN PANEL -->
+
+    <div
+        id="adminPanel"
+        class="admin-panel"
+    >
+
+        <div class="admin-layout">
+
+            <div>
+
+                <div class="card">
+
+                    <div class="card-head">
+
+                        <div>
+                            <h2>Upload Lua</h2>
+
+                            <p id="adminAccount">
+                                Admin
+                            </p>
+                        </div>
+
+                        <button
+                            class="small-btn"
+                            id="logout"
+                        >
+                            LOGOUT
+                        </button>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div
+                            class="admin-info"
+                        >
+                            <strong>Administrator access</strong>
+
+                            <span>
+                                Upload dan delete hanya tersedia
+                                untuk role admin.
+                            </span>
+                        </div>
+
+
+                        <label
+                            class="drop admin-upload"
+                            for="adminFile"
+                        >
+
+                            <div class="drop-inner">
+
+                                <div class="drop-icon">
+                                    +
+                                </div>
+
+                                <h3>
+                                    Select Lua file
+                                </h3>
+
+                                <p>
+                                    File akan disimpan ke Storage
+                                </p>
+
+                                <div class="tags">
+                                    <span class="tag">.LUA</span>
+                                    <span class="tag">STORAGE</span>
+                                    <span class="tag">PUBLIC</span>
+                                </div>
+
+                            </div>
+
+                        </label>
+
+                        <input
+                            id="adminFile"
+                            type="file"
+                            accept=".lua"
+                        >
+
+
+                        <div class="file-line">
+
+                            <span
+                                class="file-name"
+                                id="adminFileName"
+                            >
+                                Belum ada file
+                            </span>
+
+                            <span class="file-type">
+                                LUA
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            class="primary"
+                            id="uploadLua"
+                            style="width:100%;margin-top:10px"
+                        >
+                            UPLOAD TO LIBRARY
+                        </button>
+
+
+                        <div
+                            class="status"
+                            id="adminStatus"
+                        >
+                            ADMIN READY
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div>
+
+                <div class="card">
+
+                    <div class="card-head">
+
+                        <div>
+                            <h2>Library Management</h2>
+                            <p>Uploaded public files</p>
+                        </div>
+
+                        <span
+                            class="tag"
+                            id="adminFileCount"
+                        >
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div
+                            id="adminFiles"
+                            class="file-grid"
+                        >
+                            <div class="loading">
+                                Loading...
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <span>
+        BAIM STUDIO
+    </span>
+
+    <span>
+        SUPABASE • VERCEL • LOCAL LUA PROCESSING
+    </span>
+
+</footer>
+
+</main>
+
+
+<!-- MODAL -->
+
+<div
+    class="modal"
+    id="modal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="modal-close"
+            id="modalClose"
+        >
+            ×
+        </button>
+
+        <h2 id="modalTitle">
+            Info
+        </h2>
+
+        <p id="modalText">
+        </p>
+
+    </div>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast"
+>
+    <div
+        class="toast-title"
+        id="toastTitle"
+    >
+    </div>
+
+    <div
+        class="toast-text"
+        id="toastText"
+    >
+    </div>
+</div>
+
+
 <script>
-'use strict';
-const SUPABASE_URL='https://dgbsffzqrftrrwlncski.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY='sb_publishable_4vKmaWZUeJnKaW2poJmZ0w_kZLC8iKo';
-const BUCKET_NAME='lua-files';
-const db=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
-const $=id=>document.getElementById(id);let obFile=null,adminFile=null,presence=null;
-function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}function bytes(n){n=+n||0;if(n<1024)return n+' B';if(n<1048576)return(n/1024).toFixed(1)+' KB';return(n/1048576).toFixed(1)+' MB'}function notify(t,m){$('toastTitle').textContent=t;$('toastText').textContent=m;$('toast').classList.add('show')}function closeToast(){$('toast').classList.remove('show')}
-function go(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$(p).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===p));scrollTo({top:0,behavior:'smooth'});if(p==='share')loadFiles();if(p==='admin')checkAdmin()}document.querySelectorAll('.nav button').forEach(x=>x.onclick=()=>go(x.dataset.page));document.querySelectorAll('[data-go]').forEach(x=>x.onclick=()=>go(x.dataset.go));
-async function setupPresence(){presence=db.channel('baim-online',{config:{presence:{key:crypto.randomUUID()}}});const update=()=>{const s=presence.presenceState();let n=Object.values(s).reduce((a,v)=>a+v.length,0);$('online').textContent=n||1;$('online2').textContent=n||1};presence.on('presence',{event:'sync'},update).on('presence',{event:'join'},update).on('presence',{event:'leave'},update);await presence.subscribe(async s=>{if(s==='SUBSCRIBED'){await presence.track({at:new Date().toISOString()});update()}})}setupPresence().catch(()=>{});
-function renderFile(f,admin=false){const d=document.createElement('div');d.className='file';d.innerHTML=`<div style="min-width:0"><div class="fname">${esc(f.name)}</div><div class="meta">${bytes(f.size)} • ${new Date(f.created_at||Date.now()).toLocaleDateString('id-ID')}</div></div><div style="display:flex;gap:5px"><button class="mini dl">Download</button>${admin?'<button class="mini danger del">Delete</button>':''}</div>`;d.querySelector('.dl').onclick=()=>downloadFile(f);if(admin)d.querySelector('.del').onclick=()=>deleteFile(f);return d}
-async function loadFiles(){const {data,error}=await db.from('files').select('id,name,path,size,created_at').order('created_at',{ascending:false});if(error){$('libraryStatus').textContent='Database error';$('fileList').innerHTML='<div class="notice">'+esc(error.message)+'</div>';return}$('libraryStatus').textContent=data.length+' public file'+(data.length===1?'':'s');$('fileCount').textContent=data.length;$('fileList').innerHTML='';$('homeFiles').innerHTML='';$('adminFiles').innerHTML='';if(!data.length){$('fileList').innerHTML='<div class="notice">Belum ada file Lua.</div>';return}data.forEach((f,i)=>{$('fileList').appendChild(renderFile(f,false));if(i<4)$('homeFiles').appendChild(renderFile(f,false));if(adminBoxVisible())$('adminFiles').appendChild(renderFile(f,true))})}
-function adminBoxVisible(){return $('adminBox').style.display!=='none'}
-async function downloadFile(f){try{if(!f.path)throw Error('Path file kosong');const {data,error}=await db.storage.from(BUCKET_NAME).download(f.path);if(error)throw error;const u=URL.createObjectURL(data),a=document.createElement('a');a.href=u;a.download=f.name||f.path.split('/').pop()||'file.lua';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1200)}catch(e){notify('Download gagal',e.message+' — pastikan path database sama persis dengan object Storage.')}}
-async function isAdmin(id){const {data}=await db.from('profiles').select('role').eq('id',id).maybeSingle();return data?.role==='admin'}async function checkAdmin(){const {data:{session}}=await db.auth.getSession();if(!session){$('loginBox').style.display='block';$('adminBox').style.display='none';return}if(!(await isAdmin(session.user.id))){await db.auth.signOut();$('loginBox').style.display='block';$('adminBox').style.display='none';notify('Akses ditolak','Akun ini bukan admin.');return}$('loginBox').style.display='none';$('adminBox').style.display='block';$('adminEmail').textContent=session.user.email||'Admin';loadFiles()}
-$('login').onclick=async()=>{const email=$('email').value.trim(),password=$('password').value;if(!email||!password)return notify('Login','Isi email dan password.');$('login').disabled=true;const {data,error}=await db.auth.signInWithPassword({email,password});$('login').disabled=false;if(error)return notify('Login gagal',error.message);if(!(await isAdmin(data.user.id))){await db.auth.signOut();return notify('Akses ditolak','User bukan admin.')}notify('Berhasil','Login admin berhasil.');checkAdmin()};$('logout').onclick=async()=>{await db.auth.signOut();checkAdmin()};
-$('adminFile').onchange=e=>{adminFile=e.target.files?.[0]||null;$('adminName').textContent=adminFile?.name||'Belum ada file'};$('upload').onclick=async()=>{const {data:{session}}=await db.auth.getSession();if(!session||!(await isAdmin(session.user.id)))return notify('Akses','Login admin diperlukan.');if(!adminFile)return notify('Upload','Pilih file Lua.');if(!/\.lua$/i.test(adminFile.name))return notify('Upload','Hanya file .lua.');const safe=adminFile.name.replace(/[^a-zA-Z0-9._-]/g,'_'),path=Date.now()+'_'+crypto.randomUUID()+'_'+safe;$('upload').disabled=true;try{const up=await db.storage.from(BUCKET_NAME).upload(path,adminFile,{contentType:'text/plain',cacheControl:'3600',upsert:false});if(up.error)throw up.error;const ins=await db.from('files').insert({name:adminFile.name,path:up.data.path,size:adminFile.size}).select().single();if(ins.error){await db.storage.from(BUCKET_NAME).remove([path]);throw ins.error}adminFile=null;$('adminFile').value='';$('adminName').textContent='Belum ada file';notify('Upload berhasil','File sudah masuk ke Storage dan library.');loadFiles()}catch(e){notify('Upload gagal',e.message)}$('upload').disabled=false};
-async function deleteFile(f){if(!confirm('Hapus '+f.name+'?'))return;const a=await db.storage.from(BUCKET_NAME).remove([f.path]);if(a.error)return notify('Delete gagal',a.error.message);const d=await db.from('files').delete().eq('id',f.id);if(d.error)return notify('Database gagal',d.error.message);loadFiles()}
-$('refresh').onclick=loadFiles;
-/* Local Lua processor */
-function stripComments(s){return s.replace(/--\[\[[\s\S]*?\]\]/g,'').replace(/--[^\r\n]*/g,'')}function minify(s){return s.replace(/\r/g,'').split('\n').map(x=>x.trim()).filter(Boolean).join('\n').replace(/[ \t]+/g,' ')}function rid(){return '_'+Math.random().toString(36).slice(2,10)}function renameLocals(s){const map=new Map;const r=/\blocal\s+([A-Za-z_][A-Za-z0-9_]*)/g;let m;while((m=r.exec(s))){if(!map.has(m[1]))map.set(m[1],rid())}return s.replace(/\b[A-Za-z_][A-Za-z0-9_]*\b/g,x=>map.get(x)||x)}function encodeStrings(s){return s.replace(/(["'])(?:\\.|(?!\1)[\s\S])*?\1/g,m=>{const b=m.slice(1,-1);if(!b)return m;const a=[...b].map(c=>c.charCodeAt(0));return '(function()local t={'+a.join(',')+'};local s="";for i=1,#t do s=s..string.char(t[i]) end;return s end)()'})}
-$('obFile').onchange=e=>{obFile=e.target.files?.[0]||null;$('obName').textContent=obFile?.name||'Belum ada file';$('obType').textContent=obFile?'LUA':'READY'};const od=$('obDrop');['dragenter','dragover'].forEach(x=>od.addEventListener(x,e=>{e.preventDefault();od.classList.add('drag')}));['dragleave','drop'].forEach(x=>od.addEventListener(x,e=>{e.preventDefault();od.classList.remove('drag')}));od.addEventListener('drop',e=>{obFile=e.dataTransfer.files?.[0]||null;$('obName').textContent=obFile?.name||'Belum ada file';$('obType').textContent=obFile?'LUA':'READY'});function clog(x,c=''){const d=document.createElement('div');d.className=c;d.textContent='> '+x;$('console').appendChild(d)}$('protect').onclick=async()=>{if(!obFile)return $('obFile').click();if(!/\.(lua|txt)$/i.test(obFile.name))return clog('Format tidak didukung','err');$('protect').disabled=true;$('console').innerHTML='';try{let s=await obFile.text();if($('comments').checked){s=stripComments(s);clog('Comments removed','ok')}if($('strings').checked){s=encodeStrings(s);clog('Strings transformed','ok')}if($('rename').checked){s=renameLocals(s);clog('Local identifiers renamed','ok')}if($('minify').checked){s=minify(s);clog('Whitespace minimized','ok')}const out='-- BAIM STUDIO\n-- CLIENT-SIDE PROTECTED SOURCE\n'+s;const u=URL.createObjectURL(new Blob([out],{type:'text/plain'})),a=document.createElement('a');a.href=u;a.download=obFile.name.replace(/\.(lua|txt)$/i,'')+'_BAIM.lua';a.click();URL.revokeObjectURL(u);clog('Protection complete. Download started.','ok');notify('Selesai','File hasil protection sudah dibuat.')}catch(e){clog(e.message,'err')}$('protect').disabled=false};
-loadFiles();db.auth.onAuthStateChange(()=>{if($('admin').classList.contains('active'))checkAdmin()});
-</script></body></html>
+"use strict";
+
+/* =========================================================
+   SUPABASE CONFIG
+   ========================================================= */
+
+const SUPABASE_URL =
+    "https://dgbsffzqrftrrwlncski.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_4vKmaWZUeJnKaW2poJmZ0w_kZLC8iKo";
+
+const BUCKET_NAME =
+    "lua-files";
+
+const db =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+const $ = id =>
+    document.getElementById(id);
+
+let obFile = null;
+let adminFile = null;
+let allFiles = [];
+let presenceChannel = null;
+
+
+function escapeHtml(value){
+    return String(value ?? "")
+        .replace(/[&<>"']/g, char => ({
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#039;"
+        }[char]));
+}
+
+
+function bytes(size){
+    const n = Number(size) || 0;
+
+    if(n < 1024)
+        return n + " B";
+
+    if(n < 1024 * 1024)
+        return (n / 1024).toFixed(1) + " KB";
+
+    if(n < 1024 * 1024 * 1024)
+        return (n / 1024 / 1024).toFixed(1) + " MB";
+
+    return (n / 1024 / 1024 / 1024).toFixed(1) + " GB";
+}
+
+
+function randomInt(max){
+    return Math.floor(
+        Math.random() * max
+    );
+}
+
+
+function randomName(length = 12){
+
+    const chars =
+        "abcdefghijklmnopqrstuvwxyz" +
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    let result = "_";
+
+    for(let i = 0; i < length; i++){
+        result += chars[
+            randomInt(chars.length)
+        ];
+    }
+
+    return result;
+}
+
+
+function randomString(length = 10){
+
+    const chars =
+        "abcdefghijklmnopqrstuvwxyz" +
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+        "0123456789";
+
+    let result = "";
+
+    for(let i = 0; i < length; i++){
+        result += chars[
+            randomInt(chars.length)
+        ];
+    }
+
+    return result;
+}
+
+
+function sleep(ms){
+    return new Promise(
+        resolve => setTimeout(resolve, ms)
+    );
+}
+
+
+/* =========================================================
+   PARTICLES
+   ========================================================= */
+
+(function createParticles(){
+
+    const root =
+        $("particles");
+
+    for(let i = 0; i < 65; i++){
+
+        const p =
+            document.createElement("span");
+
+        p.className =
+            "particle";
+
+        p.style.left =
+            Math.random() * 100 + "%";
+
+        p.style.animationDuration =
+            8 + Math.random() * 18 + "s";
+
+        p.style.animationDelay =
+            -Math.random() * 20 + "s";
+
+        root.appendChild(p);
+    }
+
+})();
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+function go(page){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(el =>
+            el.classList.remove("active")
+        );
+
+    const target =
+        $(page);
+
+    if(!target)
+        return;
+
+    target.classList.add("active");
+
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(btn =>
+            btn.classList.toggle(
+                "active",
+                btn.dataset.page === page
+            )
+        );
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+    if(page === "share"){
+        loadFiles();
+    }
+
+    if(page === "admin"){
+        checkAdmin();
+    }
+}
+
+
+document
+    .querySelectorAll(".nav-btn")
+    .forEach(btn => {
+
+        btn.addEventListener(
+            "click",
+            () => go(btn.dataset.page)
+        );
+
+    });
+
+
+document
+    .querySelectorAll("[data-go]")
+    .forEach(btn => {
+
+        btn.addEventListener(
+            "click",
+            () => go(btn.dataset.go)
+        );
+
+    });
+
+
+/* =========================================================
+   MODAL / TOAST
+   ========================================================= */
+
+function notify(title,text){
+
+    $("toastTitle").textContent =
+        title;
+
+    $("toastText").textContent =
+        text;
+
+    $("toast").classList.add(
+        "show"
+    );
+
+    clearTimeout(
+        window.__toastTimer
+    );
+
+    window.__toastTimer =
+        setTimeout(() => {
+            $("toast").classList.remove(
+                "show"
+            );
+        },4000);
+}
+
+
+$("modalClose").onclick = () => {
+    $("modal").classList.remove(
+        "show"
+    );
+};
+
+
+/* =========================================================
+   ONLINE PRESENCE
+   ========================================================= */
+
+async function setupPresence(){
+
+    try{
+
+        const presenceKey =
+            crypto.randomUUID();
+
+        presenceChannel =
+            db.channel(
+                "baim-studio-online",
+                {
+                    config:{
+                        presence:{
+                            key:presenceKey
+                        }
+                    }
+                }
+            );
+
+
+        function updateOnline(){
+
+            const state =
+                presenceChannel.presenceState();
+
+            let count = 0;
+
+            Object.values(state)
+                .forEach(list => {
+                    count += list.length;
+                });
+
+            const value =
+                String(count || 1);
+
+            $("onlineTop").textContent =
+                value;
+
+            $("onlineHome").textContent =
+                value;
+
+        }
+
+
+        presenceChannel
+            .on(
+                "presence",
+                {event:"sync"},
+                updateOnline
+            )
+            .on(
+                "presence",
+                {event:"join"},
+                updateOnline
+            )
+            .on(
+                "presence",
+                {event:"leave"},
+                updateOnline
+            );
+
+
+        await presenceChannel.subscribe(
+            async status => {
+
+                if(status === "SUBSCRIBED"){
+
+                    await presenceChannel.track({
+                        page:"baim-studio",
+                        joined_at:
+                            new Date().toISOString()
+                    });
+
+                    updateOnline();
+                }
+
+            }
+        );
+
+    }catch(error){
+
+        console.warn(
+            "Presence error:",
+            error
+        );
+
+        $("onlineTop").textContent =
+            "—";
+
+        $("onlineHome").textContent =
+            "—";
+    }
+}
+
+
+setupPresence();
+
+
+/* =========================================================
+   FILE DATABASE
+   ========================================================= */
+
+async function loadFiles(){
+
+    const container =
+        $("fileList");
+
+    if(container){
+
+        container.innerHTML =
+            '<div class="loading">Loading library...</div>';
+    }
+
+
+    const {
+        data,
+        error
+    } = await db
+        .from("files")
+        .select(
+            "id,name,path,size,created_at"
+        )
+        .order(
+            "created_at",
+            {ascending:false}
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+        if(container){
+
+            container.innerHTML =
+                `<div class="error-text">
+                    Database error:
+                    ${escapeHtml(error.message)}
+                </div>`;
+        }
+
+        $("libraryStatus").textContent =
+            "Database error";
+
+        return;
+    }
+
+
+    allFiles =
+        data || [];
+
+
+    $("homeFileCount").textContent =
+        allFiles.length;
+
+    $("libraryStatus").textContent =
+        allFiles.length +
+        " public file" +
+        (allFiles.length === 1 ? "" : "s");
+
+
+    renderLibrary(
+        allFiles
+    );
+
+    renderHomeFiles(
+        allFiles.slice(0,4)
+    );
+
+
+    if(
+        $("adminPanel").classList.contains("show")
+    ){
+
+        renderAdminFiles(
+            allFiles
+        );
+
+    }
+
+}
+
+
+function renderHomeFiles(files){
+
+    const root =
+        $("homeFiles");
+
+    root.innerHTML = "";
+
+    if(!files.length){
+
+        root.innerHTML =
+            '<div class="empty">Belum ada file Lua.</div>';
+
+        return;
+    }
+
+
+    files.forEach(file => {
+
+        root.appendChild(
+            createFileCard(
+                file,
+                false
+            )
+        );
+
+    });
+
+}
+
+
+function renderLibrary(files){
+
+    const root =
+        $("fileList");
+
+    root.innerHTML = "";
+
+    if(!files.length){
+
+        root.innerHTML =
+            '<div class="empty">Belum ada file Lua di library.</div>';
+
+        return;
+    }
+
+
+    files.forEach(file => {
+
+        root.appendChild(
+            createFileCard(
+                file,
+                false
+            )
+        );
+
+    });
+
+}
+
+
+function renderAdminFiles(files){
+
+    const root =
+        $("adminFiles");
+
+    root.innerHTML = "";
+
+    $("adminFileCount").textContent =
+        files.length;
+
+
+    if(!files.length){
+
+        root.innerHTML =
+            '<div class="empty">Library kosong.</div>';
+
+        return;
+    }
+
+
+    files.forEach(file => {
+
+        root.appendChild(
+            createFileCard(
+                file,
+                true
+            )
+        );
+
+    });
+
+}
+
+
+function createFileCard(file,isAdmin){
+
+    const item =
+        document.createElement("div");
+
+    item.className =
+        "public-file";
+
+
+    const date =
+        file.created_at
+            ? new Date(
+                file.created_at
+            ).toLocaleDateString(
+                "id-ID"
+            )
+            : "—";
+
+
+    item.innerHTML = `
+        <div class="file-info">
+
+            <div class="file-title">
+                ${escapeHtml(file.name)}
+            </div>
+
+            <div class="file-meta">
+                ${bytes(file.size)} • ${date}
+            </div>
+
+        </div>
+
+        <div class="file-actions">
+
+            <button
+                class="small-btn download-btn"
+            >
+                DOWNLOAD
+            </button>
+
+            ${
+                isAdmin
+                ?
+                `<button class="small-btn delete-btn">
+                    DELETE
+                </button>`
+                :
+                ""
+            }
+
+        </div>
+    `;
+
+
+    item
+        .querySelector(".download-btn")
+        .onclick = () =>
+            downloadFile(file);
+
+
+    if(isAdmin){
+
+        item
+            .querySelector(".delete-btn")
+            .onclick = () =>
+                deleteFile(file);
+
+    }
+
+
+    return item;
+}
+
+
+/* =========================================================
+   DOWNLOAD FIX
+   ========================================================= */
+
+async function downloadFile(file){
+
+    try{
+
+        if(!file.path){
+
+            throw new Error(
+                "Path file kosong di database."
+            );
+
+        }
+
+
+        /*
+         * Path HARUS sama persis dengan object
+         * yang ada di Storage.
+         *
+         * Contoh:
+         * 175000_xxx_test.lua
+         */
+
+        let path =
+            String(file.path)
+                .replace(/^\/+/,"");
+
+
+        /*
+         * Membersihkan bucket name apabila
+         * ada data lama yang menyimpannya.
+         */
+
+        if(
+            path.startsWith(
+                BUCKET_NAME + "/"
+            )
+        ){
+
+            path =
+                path.slice(
+                    BUCKET_NAME.length + 1
+                );
+
+        }
+
+
+        const {
+            data,
+            error
+        } = await db
+            .storage
+            .from(BUCKET_NAME)
+            .download(path);
+
+
+        if(error)
+            throw error;
+
+
+        if(!data)
+            throw new Error(
+                "Object tidak ditemukan."
+            );
+
+
+        const url =
+            URL.createObjectURL(data);
+
+
+        const anchor =
+            document.createElement("a");
+
+        anchor.href =
+            url;
+
+        anchor.download =
+            file.name ||
+            path.split("/").pop() ||
+            "file.lua";
+
+
+        document.body.appendChild(
+            anchor
+        );
+
+        anchor.click();
+
+        anchor.remove();
+
+
+        setTimeout(
+            () => URL.revokeObjectURL(url),
+            1500
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Download error:",
+            error
+        );
+
+        notify(
+            "Download gagal",
+            error.message +
+            " — cek bucket dan path Storage."
+        );
+    }
+
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+$("searchFiles").addEventListener(
+    "input",
+    function(){
+
+        const query =
+            this.value
+                .trim()
+                .toLowerCase();
+
+
+        if(!query){
+
+            renderLibrary(
+                allFiles
+            );
+
+            return;
+        }
+
+
+        const filtered =
+            allFiles.filter(file =>
+                String(file.name || "")
+                    .toLowerCase()
+                    .includes(query)
+            );
+
+
+        renderLibrary(
+            filtered
+        );
+
+    }
+);
+
+
+$("refreshFiles").onclick =
+    () => loadFiles();
+
+
+/* =========================================================
+   ADMIN ROLE
+   ========================================================= */
+
+async function isAdmin(userId){
+
+    if(!userId)
+        return false;
+
+
+    const {
+        data,
+        error
+    } = await db
+        .from("profiles")
+        .select("role")
+        .eq("id",userId)
+        .maybeSingle();
+
+
+    if(error){
+
+        console.error(
+            "Role check:",
+            error
+        );
+
+        return false;
+    }
+
+
+    return data?.role === "admin";
+}
+
+
+/* =========================================================
+   ADMIN CHECK
+   ========================================================= */
+
+async function checkAdmin(){
+
+    const {
+        data
+    } = await db.auth.getSession();
+
+
+    const session =
+        data?.session;
+
+
+    if(!session){
+
+        $("loginBox").style.display =
+            "block";
+
+        $("adminPanel").classList.remove(
+            "show"
+        );
+
+        return;
+    }
+
+
+    const admin =
+        await isAdmin(
+            session.user.id
+        );
+
+
+    if(!admin){
+
+        await db.auth.signOut();
+
+        $("loginBox").style.display =
+            "block";
+
+        $("adminPanel").classList.remove(
+            "show"
+        );
+
+        notify(
+            "Akses ditolak",
+            "Akun ini bukan admin."
+        );
+
+        return;
+    }
+
+
+    $("loginBox").style.display =
+        "none";
+
+
+    $("adminPanel").classList.add(
+        "show"
+    );
+
+
+    $("adminAccount").textContent =
+        session.user.email ||
+        "Admin";
+
+
+    await loadFiles();
+
+}
+
+
+/* =========================================================
+   ADMIN LOGIN
+   ========================================================= */
+
+$("adminLogin").onclick =
+    async function(){
+
+        const email =
+            $("adminEmailInput")
+                .value
+                .trim();
+
+        const password =
+            $("adminPassword")
+                .value;
+
+
+        if(!email || !password){
+
+            notify(
+                "Login",
+                "Email dan password wajib diisi."
+            );
+
+            return;
+        }
+
+
+        this.disabled =
+            true;
+
+
+        const {
+            data,
+            error
+        } = await db.auth.signInWithPassword({
+            email,
+            password
+        });
+
+
+        this.disabled =
+            false;
+
+
+        if(error){
+
+            notify(
+                "Login gagal",
+                error.message
+            );
+
+            return;
+        }
+
+
+        const admin =
+            await isAdmin(
+                data.user.id
+            );
+
+
+        if(!admin){
+
+            await db.auth.signOut();
+
+            notify(
+                "Akses ditolak",
+                "Akun berhasil login tetapi role bukan admin."
+            );
+
+            return;
+        }
+
+
+        notify(
+            "Login berhasil",
+            "Admin workspace aktif."
+        );
+
+
+        await checkAdmin();
+
+    };
+
+
+$("logout").onclick =
+    async function(){
+
+        await db.auth.signOut();
+
+        $("adminPanel")
+            .classList
+            .remove("show");
+
+        $("loginBox").style.display =
+            "block";
+
+        $("adminPassword").value =
+            "";
+
+        notify(
+            "Logout",
+            "Sesi admin sudah ditutup."
+        );
+
+    };
+
+
+db.auth.onAuthStateChange(
+    () => {
+
+        if(
+            $("admin")
+                .classList
+                .contains("active")
+        ){
+
+            setTimeout(
+                checkAdmin,
+                0
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ADMIN FILE SELECT
+   ========================================================= */
+
+$("adminFile").onchange =
+    function(){
+
+        adminFile =
+            this.files?.[0] ||
+            null;
+
+
+        $("adminFileName").textContent =
+            adminFile
+                ? adminFile.name
+                : "Belum ada file";
+
+    };
+
+
+/* =========================================================
+   ADMIN UPLOAD
+   ========================================================= */
+
+$("uploadLua").onclick =
+    async function(){
+
+        const {
+            data
+        } = await db.auth.getSession();
+
+
+        const session =
+            data?.session;
+
+
+        if(!session){
+
+            notify(
+                "Akses",
+                "Login admin diperlukan."
+            );
+
+            return;
+        }
+
+
+        const admin =
+            await isAdmin(
+                session.user.id
+            );
+
+
+        if(!admin){
+
+            notify(
+                "Akses ditolak",
+                "Akun bukan admin."
+            );
+
+            return;
+        }
+
+
+        if(!adminFile){
+
+            notify(
+                "Upload",
+                "Pilih file Lua terlebih dahulu."
+            );
+
+            return;
+        }
+
+
+        if(
+            !/\.lua$/i.test(
+                adminFile.name
+            )
+        ){
+
+            notify(
+                "Format",
+                "Hanya file .lua yang diperbolehkan."
+            );
+
+            return;
+        }
+
+
+        if(
+            adminFile.size >
+            10 * 1024 * 1024
+        ){
+
+            notify(
+                "File terlalu besar",
+                "Maksimum 10 MB."
+            );
+
+            return;
+        }
+
+
+        this.disabled =
+            true;
+
+
+        $("adminStatus").textContent =
+            "UPLOADING...";
+
+
+        try{
+
+            const safeName =
+                adminFile.name
+                    .replace(
+                        /[^a-zA-Z0-9._-]/g,
+                        "_"
+                    );
+
+
+            /*
+             * Path Storage.
+             *
+             * Path ini juga disimpan ke
+             * public.files.path.
+             */
+
+            const path =
+                Date.now() +
+                "_" +
+                crypto.randomUUID() +
+                "_" +
+                safeName;
+
+
+            const {
+                data: uploaded,
+                error: uploadError
+            } = await db
+                .storage
+                .from(BUCKET_NAME)
+                .upload(
+                    path,
+                    adminFile,
+                    {
+                        cacheControl:"3600",
+                        contentType:
+                            "text/plain",
+                        upsert:false
+                    }
+                );
+
+
+            if(uploadError)
+                throw new Error(
+                    "Storage: " +
+                    uploadError.message
+                );
+
+
+            /*
+             * Simpan path EXACT.
+             */
+
+            const {
+                error: databaseError
+            } = await db
+                .from("files")
+                .insert({
+                    name:
+                        adminFile.name,
+
+                    path:
+                        uploaded.path,
+
+                    size:
+                        adminFile.size
+                });
+
+
+            if(databaseError){
+
+                /*
+                 * Rollback Storage jika
+                 * insert database gagal.
+                 */
+
+                await db
+                    .storage
+                    .from(BUCKET_NAME)
+                    .remove([
+                        uploaded.path
+                    ]);
+
+
+                throw new Error(
+                    "Database: " +
+                    databaseError.message
+                );
+            }
+
+
+            $("adminStatus").textContent =
+                "UPLOAD SUCCESS";
+
+            $("adminStatus")
+                .className =
+                "status ok";
+
+
+            notify(
+                "Upload berhasil",
+                "File sudah masuk ke public library."
+            );
+
+
+            adminFile =
+                null;
+
+            $("adminFile").value =
+                "";
+
+            $("adminFileName").textContent =
+                "Belum ada file";
+
+
+            await loadFiles();
+
+
+        }catch(error){
+
+            console.error(error);
+
+
+            $("adminStatus").textContent =
+                "UPLOAD ERROR";
+
+
+            $("adminStatus")
+                .className =
+                "status error";
+
+
+            notify(
+                "Upload gagal",
+                error.message
+            );
+
+        }
+
+
+        this.disabled =
+            false;
+
+    };
+
+
+/* =========================================================
+   DELETE FILE
+   ========================================================= */
+
+async function deleteFile(file){
+
+    if(!file?.id || !file?.path){
+
+        notify(
+            "Delete gagal",
+            "Data file tidak lengkap."
+        );
+
+        return;
+    }
+
+
+    const {
+        data
+    } = await db.auth.getSession();
+
+
+    const session =
+        data?.session;
+
+
+    if(!session){
+
+        notify(
+            "Akses",
+            "Login admin diperlukan."
+        );
+
+        return;
+    }
+
+
+    if(
+        !(await isAdmin(
+            session.user.id
+        ))
+    ){
+
+        notify(
+            "Akses ditolak",
+            "Role admin diperlukan."
+        );
+
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            "Hapus file " +
+            file.name +
+            "?"
+        );
+
+
+    if(!confirmed)
+        return;
+
+
+    try{
+
+        const {
+            error: storageError
+        } = await db
+            .storage
+            .from(BUCKET_NAME)
+            .remove([
+                file.path
+            ]);
+
+
+        if(storageError)
+            throw storageError;
+
+
+        const {
+            error: databaseError
+        } = await db
+            .from("files")
+            .delete()
+            .eq(
+                "id",
+                file.id
+            );
+
+
+        if(databaseError)
+            throw databaseError;
+
+
+        notify(
+            "Deleted",
+            "File berhasil dihapus."
+        );
+
+
+        await loadFiles();
+
+
+    }catch(error){
+
+        console.error(error);
+
+        notify(
+            "Delete gagal",
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   OBFUSCATOR
+   ========================================================= */
+
+const LUA_RESERVED =
+    new Set([
+        "and",
+        "break",
+        "do",
+        "else",
+        "elseif",
+        "end",
+        "false",
+        "for",
+        "function",
+        "goto",
+        "if",
+        "in",
+        "local",
+        "nil",
+        "not",
+        "or",
+        "repeat",
+        "return",
+        "then",
+        "true",
+        "until",
+        "while"
+    ]);
+
+
+const LUA_GLOBALS =
+    new Set([
+        "_G",
+        "_ENV",
+        "assert",
+        "collectgarbage",
+        "dofile",
+        "error",
+        "getmetatable",
+        "ipairs",
+        "load",
+        "loadfile",
+        "next",
+        "pairs",
+        "pcall",
+        "print",
+        "rawequal",
+        "rawget",
+        "rawlen",
+        "rawset",
+        "require",
+        "select",
+        "setmetatable",
+        "tonumber",
+        "tostring",
+        "type",
+        "xpcall",
+        "coroutine",
+        "debug",
+        "io",
+        "math",
+        "os",
+        "package",
+        "string",
+        "table",
+        "utf8"
+    ]);
+
+
+/* =========================================================
+   LUA LEXER
+   ========================================================= */
+
+function lexLua(source){
+
+    const tokens = [];
+
+    let i = 0;
+
+
+    function push(type,value){
+
+        tokens.push({
+            type,
+            value
+        });
+
+    }
+
+
+    while(i < source.length){
+
+        const c =
+            source[i];
+
+
+        /* whitespace */
+
+        if(/\s/.test(c)){
+
+            let j =
+                i + 1;
+
+            while(
+                j < source.length &&
+                /\s/.test(source[j])
+            ){
+
+                j++;
+
+            }
+
+
+            push(
+                "space",
+                source.slice(i,j)
+            );
+
+            i = j;
+
+            continue;
+        }
+
+
+        /* comments */
+
+        if(
+            c === "-" &&
+            source[i + 1] === "-"
+        ){
+
+            if(
+                source[i + 2] === "[" &&
+                source[i + 3] === "["
+            ){
+
+                const end =
+                    source.indexOf(
+                        "]]",
+                        i + 4
+                    );
+
+
+                if(end !== -1){
+
+                    push(
+                        "comment",
+                        source.slice(
+                            i,
+                            end + 2
+                        )
+                    );
+
+                    i =
+                        end + 2;
+
+                    continue;
+                }
+
+            }
+
+
+            let j =
+                source.indexOf(
+                    "\n",
+                    i + 2
+                );
+
+
+            if(j === -1)
+                j =
+                    source.length;
+
+
+            push(
+                "comment",
+                source.slice(i,j)
+            );
+
+
+            i = j;
+
+            continue;
+        }
+
+
+        /* quoted strings */
+
+        if(
+            c === "'" ||
+            c === '"'
+        ){
+
+            const quote =
+                c;
+
+            let j =
+                i + 1;
+
+
+            while(
+                j < source.length
+            ){
+
+                if(
+                    source[j] === "\\"
+                ){
+
+                    j += 2;
+
+                    continue;
+                }
+
+
+                if(
+                    source[j] === quote
+                ){
+
+                    j++;
+
+                    break;
+                }
+
+
+                j++;
+
+            }
+
+
+            push(
+                "string",
+                source.slice(i,j)
+            );
+
+            i = j;
+
+            continue;
+        }
+
+
+        /* long string */
+
+        if(
+            c === "[" &&
+            source[i + 1] === "["
+        ){
+
+            const end =
+                source.indexOf(
+                    "]]",
+                    i + 2
+                );
+
+
+            if(end !== -1){
+
+                push(
+                    "string",
+                    source.slice(
+                        i,
+                        end + 2
+                    )
+                );
+
+                i =
+                    end + 2;
+
+                continue;
+            }
+
+        }
+
+
+        /* identifiers */
+
+        if(
+            /[A-Za-z_]/.test(c)
+        ){
+
+            let j =
+                i + 1;
+
+
+            while(
+                j < source.length &&
+                /[A-Za-z0-9_]/.test(
+                    source[j]
+                )
+            ){
+
+                j++;
+
+            }
+
+
+            push(
+                "identifier",
+                source.slice(i,j)
+            );
+
+            i = j;
+
+            continue;
+        }
+
+
+        /* numbers */
+
+        if(
+            /[0-9]/.test(c)
+        ){
+
+            let j =
+                i + 1;
+
+
+            while(
+                j < source.length &&
+                /[A-Za-z0-9_.]/.test(
+                    source[j]
+                )
+            ){
+
+                j++;
+
+            }
+
+
+            push(
+                "number",
+                source.slice(i,j)
+            );
+
+            i = j;
+
+            continue;
+        }
+
+
+        const three =
+            source.slice(
+                i,
+                i + 3
+            );
+
+
+        if(
+            three === "..." ||
+            three === ">>=" ||
+            three === "<<="
+        ){
+
+            push(
+                "symbol",
+                three
+            );
+
+            i += 3;
+
+            continue;
+        }
+
+
+        const two =
+            source.slice(
+                i,
+                i + 2
+            );
+
+
+        if([
+            "==",
+            "~=",
+            "<=",
+            ">=",
+            "..",
+            "//",
+            "<<",
+            ">>",
+            "+=",
+            "-=",
+            "*=",
+            "/=",
+            "%="
+        ].includes(two)){
+
+            push(
+                "symbol",
+                two
+            );
+
+            i += 2;
+
+            continue;
+        }
+
+
+        push(
+            "symbol",
+            c
+        );
+
+        i++;
+
+    }
+
+
+    return tokens;
+}
+
+
+/* =========================================================
+   LUA STRING DECODER
+   ========================================================= */
+
+function decodeLuaString(raw){
+
+    if(
+        raw.startsWith("[[") &&
+        raw.endsWith("]]")
+    ){
+
+        return raw.slice(
+            2,
+            -2
+        );
+
+    }
+
+
+    const quote =
+        raw[0];
+
+
+    if(
+        raw[raw.length - 1] === quote
+    ){
+
+        let s =
+            raw.slice(
+                1,
+                -1
+            );
+
+
+        s =
+            s.replace(
+                /\\([\\'"nrtbfv])/g,
+                (_,char) => {
+
+                    const map = {
+                        "\\":"\\",
+                        "'":"'",
+                        '"':'"',
+                        n:"\n",
+                        r:"\r",
+                        t:"\t",
+                        b:"\b",
+                        f:"\f",
+                        v:"\v"
+                    };
+
+                    return map[char] ??
+                        char;
+
+                }
+            );
+
+
+        s =
+            s.replace(
+                /\\([0-9]{1,3})/g,
+                (_,num) =>
+                    String.fromCharCode(
+                        parseInt(
+                            num,
+                            10
+                        )
+                    )
+            );
+
+
+        return s;
+
+    }
+
+
+    return raw;
+
+}
+
+
+/* =========================================================
+   LUA STRING GENERATOR
+   ========================================================= */
+
+function luaCharExpression(text){
+
+    const codes =
+        Array.from(text)
+            .map(
+                char =>
+                    char.charCodeAt(0)
+            );
+
+
+    if(!codes.length)
+        return '""';
+
+
+    const mode =
+        $("stringMode").value;
+
+
+    const nameT =
+        randomName(8);
+
+    const nameS =
+        randomName(8);
+
+
+    if(
+        mode === "hex"
+    ){
+
+        const escaped =
+            codes
+                .map(
+                    n =>
+                        "\\"
+                        +
+                        String(n)
+                            .padStart(
+                                3,
+                                "0"
+                            )
+                )
+                .join("");
+
+
+        return (
+            '"' +
+            escaped +
+            '"'
+        );
+
+    }
+
+
+    const array =
+        codes.join(",");
+
+
+    return (
+        "(function()" +
+        "local " +
+        nameT +
+        "={" +
+        array +
+        "};" +
+        "local " +
+        nameS +
+        '="";' +
+        "for " +
+        nameT +
+        "i=1,#" +
+        nameT +
+        " do " +
+        nameS +
+        "=" +
+        nameS +
+        "..string.char(" +
+        nameT +
+        "[" +
+        nameT +
+        "i]) " +
+        "end;" +
+        "return " +
+        nameS +
+        " end)()"
+    );
+
+}
+
+
+/* =========================================================
+   STRING TABLE ENCODER
+   ========================================================= */
+
+function encodeStrings(source){
+
+    const tokens =
+        lexLua(source);
+
+
+    const tableName =
+        randomName(10);
+
+
+    const values = [];
+
+
+    for(
+        const token of tokens
+    ){
+
+        if(
+            token.type === "string"
+        ){
+
+            const value =
+                decodeLuaString(
+                    token.value
+                );
+
+
+            if(
+                value.length === 0
+            ){
+
+                token.value =
+                    '""';
+
+                continue;
+
+            }
+
+
+            values.push(
+                value
+            );
+
+
+            const index =
+                values.length;
+
+
+            token.value =
+                tableName +
+                "[" +
+                index +
+                "]";
+
+
+            token.type =
+                "generated";
+
+        }
+
+    }
+
+
+    if(!values.length)
+        return source;
+
+
+    const encoded =
+        values.map(
+            value =>
+                luaCharExpression(
+                    value
+                )
+        );
+
+
+    const declaration =
+        "local " +
+        tableName +
+        "={" +
+        encoded.join(",") +
+        "};";
+
+
+    return (
+        declaration +
+        tokens
+            .map(
+                token =>
+                    token.value
+            )
+            .join("")
+    );
+
+}
+
+
+/* =========================================================
+   LOCAL RENAMER
+   ========================================================= */
+
+function renameLocals(source){
+
+    const tokens =
+        lexLua(source);
+
+
+    const map =
+        new Map();
+
+
+    const used =
+        new Set();
+
+
+    function fresh(){
+
+        let value;
+
+
+        do{
+
+            value =
+                randomName(
+                    10 +
+                    randomInt(10)
+                );
+
+        }while(
+            used.has(value)
+        );
+
+
+        used.add(value);
+
+        return value;
+
+    }
+
+
+    function register(name){
+
+        if(
+            LUA_RESERVED.has(name) ||
+            LUA_GLOBALS.has(name)
+        ){
+
+            return name;
+
+        }
+
+
+        if(
+            !map.has(name)
+        ){
+
+            map.set(
+                name,
+                fresh()
+            );
+
+        }
+
+
+        return map.get(name);
+
+    }
+
+
+    /*
+     * First pass:
+     * cari deklarasi local.
+     */
+
+    for(
+        let i = 0;
+        i < tokens.length;
+        i++
+    ){
+
+        const token =
+            tokens[i];
+
+
+        if(
+            token.type === "identifier" &&
+            token.value === "local"
+        ){
+
+            let j =
+                i + 1;
+
+
+            if(
+                tokens[j]?.value ===
+                "function"
+            ){
+
+                j++;
+
+
+                if(
+                    tokens[j]?.type ===
+                    "identifier"
+                ){
+
+                    tokens[j].value =
+                        register(
+                            tokens[j].value
+                        );
+
+                }
+
+
+                continue;
+            }
+
+
+            while(
+                j < tokens.length
+            ){
+
+                const current =
+                    tokens[j];
+
+
+                if(
+                    current.type ===
+                    "identifier"
+                ){
+
+                    current.value =
+                        register(
+                            current.value
+                        );
+
+                    j++;
+
+                    continue;
+                }
+
+
+                if(
+                    current.value === ","
+                ){
+
+                    j++;
+
+                    continue;
+                }
+
+
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    /*
+     * Second pass:
+     * replace references.
+     */
+
+    for(
+        let i = 0;
+        i < tokens.length;
+        i++
+    ){
+
+        const token =
+            tokens[i];
+
+
+        if(
+            token.type !==
+            "identifier"
+        )
+            continue;
+
+
+        if(
+            LUA_RESERVED.has(
+                token.value
+            ) ||
+            LUA_GLOBALS.has(
+                token.value
+            )
+        )
+            continue;
+
+
+        const previous =
+            tokens[i - 1];
+
+
+        /*
+         * Jangan ubah table field:
+         * obj.field
+         * obj:method
+         */
+
+        if(
+            previous &&
+            (
+                previous.value === "." ||
+                previous.value === ":"
+            )
+        ){
+
+            continue;
+
+        }
+
+
+        const replacement =
+            map.get(
+                token.value
+            );
+
+
+        if(replacement){
+
+            token.value =
+                replacement;
+
+        }
+
+    }
+
+
+    return tokens
+        .map(
+            token =>
+                token.value
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   NUMBER TRANSFORM
+   ========================================================= */
+
+function transformNumber(value){
+
+    const n =
+        Number(value);
+
+
+    if(
+        !Number.isFinite(n) ||
+        !Number.isInteger(n)
+    ){
+
+        return value;
+
+    }
+
+
+    if(
+        n < 2 ||
+        n > 999999
+    ){
+
+        return value;
+
+    }
+
+
+    const a =
+        randomInt(
+            Math.max(
+                1,
+                Math.min(
+                    100,
+                    n
+                )
+            )
+        );
+
+
+    const b =
+        n - a;
+
+
+    const choices = [
+
+        "(" + n + "+0)",
+
+        "(" + (n + 7) + "-7)",
+
+        "(" + (n * 3) + "/3)",
+
+        "(" + (n + 11) + "-11)",
+
+        "(" + a + "+" + b + ")",
+
+        "(" + n + "+1-1)",
+
+        "((" + n + "*2)/2)"
+
+    ];
+
+
+    return choices[
+        randomInt(
+            choices.length
+        )
+    ];
+
+}
+
+
+function transformNumbers(source){
+
+    const tokens =
+        lexLua(source);
+
+
+    for(
+        const token of tokens
+    ){
+
+        if(
+            token.type ===
+            "number"
+        ){
+
+            token.value =
+                transformNumber(
+                    token.value
+                );
+
+            token.type =
+                "generated";
+
+        }
+
+    }
+
+
+    return tokens
+        .map(
+            token =>
+                token.value
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   COMMENTS
+   ========================================================= */
+
+function removeComments(source){
+
+    const tokens =
+        lexLua(source);
+
+
+    return tokens
+        .filter(
+            token =>
+                token.type !==
+                "comment"
+        )
+        .map(
+            token =>
+                token.value
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   MINIFIER
+   ========================================================= */
+
+function minifyLua(source){
+
+    const tokens =
+        lexLua(source);
+
+
+    let result = "";
+
+
+    for(
+        let i = 0;
+        i < tokens.length;
+        i++
+    ){
+
+        const token =
+            tokens[i];
+
+
+        if(
+            token.type ===
+            "comment"
+        )
+            continue;
+
+
+        if(
+            token.type ===
+            "space"
+        ){
+
+            const previous =
+                tokens[i - 1];
+
+            const next =
+                tokens[i + 1];
+
+
+            if(
+                previous &&
+                next &&
+                (
+                    (
+                        previous.type ===
+                        "identifier"
+                        ||
+                        previous.type ===
+                        "number"
+                    )
+                    &&
+                    (
+                        next.type ===
+                        "identifier"
+                        ||
+                        next.type ===
+                        "number"
+                    )
+                )
+            ){
+
+                result += " ";
+
+            }
+
+
+            continue;
+
+        }
+
+
+        result +=
+            token.value;
+
+    }
+
+
+    return result.trim();
+
+}
+
+
+/* =========================================================
+   JUNK GENERATOR
+   ========================================================= */
+
+function generateJunk(){
+
+    const name =
+        randomName(8);
+
+
+    const pool = [
+
+        "do local " +
+        name +
+        "=nil end;",
+
+        "do local " +
+        name +
+        "=false end;",
+
+        "do local " +
+        name +
+        "=0 end;",
+
+        "do local " +
+        name +
+        "=1+1-2 end;",
+
+        "do local " +
+        name +
+        "={} end;",
+
+        "if false then local " +
+        name +
+        "=1 end;",
+
+        "while false do break end;",
+
+        "for " +
+        name +
+        "=1,0 do end;"
+
+    ];
+
+
+    if(
+        $("optPoly").checked
+    ){
+
+        pool.push(
+            "do local " +
+            name +
+            "=function() return nil end;" +
+            name +
+            "() end;"
+        );
+
+
+        pool.push(
+            "do local " +
+            name +
+            "=string.rep('x',0) end;"
+        );
+
+
+        pool.push(
+            "do local " +
+            name +
+            "=tonumber('0') end;"
+        );
+
+    }
+
+
+    return pool[
+        randomInt(
+            pool.length
+        )
+    ];
+
+}
+
+
+function junkBlock(count){
+
+    let result = "";
+
+
+    for(
+        let i = 0;
+        i < count;
+        i++
+    ){
+
+        result +=
+            generateJunk();
+
+    }
+
+
+    return result;
+
+}
+
+
+/* =========================================================
+   FLOW NOISE
+   ========================================================= */
+
+function flowNoise(){
+
+    const a =
+        randomName(8);
+
+    const b =
+        randomName(8);
+
+    const c =
+        randomName(8);
+
+
+    return (
+        "do " +
+        "local " +
+        a +
+        "=1;" +
+
+        "local " +
+        b +
+        "=2;" +
+
+        "local " +
+        c +
+        "=false;" +
+
+        "if " +
+        a +
+        "+" +
+        b +
+        "==3 then " +
+
+        c +
+        "=true;" +
+
+        "end;" +
+
+        "end;"
+    );
+
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+function protectionHeader(){
+
+    return [
+        "-- BAIM STUDIO",
+        "-- LUA PROTECTION ENGINE",
+        "-- CLIENT-SIDE TRANSFORMATION",
+        "-- GENERATED: " +
+            new Date().toISOString(),
+        ""
+    ].join("\n");
+
+}
+
+
+/* =========================================================
+   PROTECTION ENGINE
+   ========================================================= */
+
+async function protectLua(source){
+
+    const level =
+        Number(
+            $("level").value
+        );
+
+
+    const logs = [];
+
+
+    function log(
+        message,
+        type = ""
+    ){
+
+        logs.push({
+            message,
+            type
+        });
+
+    }
+
+
+    let result =
+        source;
+
+
+    log(
+        "Source loaded."
+    );
+
+
+    await sleep(40);
+
+
+    if(
+        $("optComments").checked
+    ){
+
+        result =
+            removeComments(
+                result
+            );
+
+        log(
+            "Comments removed.",
+            "ok"
+        );
+
+    }
+
+
+    await sleep(50);
+
+
+    if(
+        $("optStrings").checked
+    ){
+
+        if(
+            $("optStringTable").checked
+        ){
+
+            result =
+                encodeStrings(
+                    result
+                );
+
+            log(
+                "String table generated.",
+                "ok"
+            );
+
+        }else{
+
+            const tokens =
+                lexLua(result);
+
+
+            for(
+                const token of tokens
+            ){
+
+                if(
+                    token.type ===
+                    "string"
+                ){
+
+                    const text =
+                        decodeLuaString(
+                            token.value
+                        );
+
+
+                    token.value =
+                        luaCharExpression(
+                            text
+                        );
+
+                }
+
+            }
+
+
+            result =
+                tokens
+                    .map(
+                        token =>
+                            token.value
+                    )
+                    .join("");
+
+
+            log(
+                "String literals transformed.",
+                "ok"
+            );
+
+        }
+
+    }
+
+
+    await sleep(50);
+
+
+    if(
+        $("optNames").checked
+    ){
+
+        result =
+            renameLocals(
+                result
+            );
+
+        log(
+            "Local identifiers randomized.",
+            "ok"
+        );
+
+    }
+
+
+    await sleep(45);
+
+
+    if(
+        $("optNumbers").checked
+    ){
+
+        result =
+            transformNumbers(
+                result
+            );
+
+        log(
+            "Numeric constants transformed.",
+            "ok"
+        );
+
+    }
+
+
+    await sleep(45);
+
+
+    if(
+        $("optMinify").checked
+    ){
+
+        result =
+            minifyLua(
+                result
+            );
+
+        log(
+            "Whitespace minimized.",
+            "ok"
+        );
+
+    }
+
+
+    let junkCount =
+        0;
+
+
+    if(
+        level === 1
+    ){
+
+        junkCount = 3;
+
+    }else if(
+        level === 2
+    ){
+
+        junkCount = 8;
+
+    }else{
+
+        junkCount = 15;
+
+    }
+
+
+    const junkMode =
+        $("junkLevel").value;
+
+
+    if(
+        junkMode === "low"
+    ){
+
+        junkCount =
+            Math.max(
+                2,
+                Math.floor(
+                    junkCount / 2
+                )
+            );
+
+    }
+
+
+    if(
+        junkMode === "high"
+    ){
+
+        junkCount *= 2;
+
+    }
+
+
+    if(
+        $("optJunk").checked
+    ){
+
+        result =
+            junkBlock(
+                junkCount
+            ) +
+            result;
+
+        log(
+            "Junk layer inserted: " +
+            junkCount +
+            " blocks.",
+            "warn"
+        );
+
+    }
+
+
+    if(
+        $("optFlow").checked
+    ){
+
+        result =
+            flowNoise() +
+            result;
+
+        log(
+            "Control-flow noise inserted.",
+            "ok"
+        );
+
+    }
+
+
+    if(
+        $("optSemicolon").checked ||
+        $("outputMode").value ===
+        "compact"
+    ){
+
+        result =
+            minifyLua(
+                result
+            );
+
+        result =
+            result
+                .replace(
+                    /\n+/g,
+                    ""
+                );
+
+        log(
+            "Compact output enabled.",
+            "ok"
+        );
+
+    }
+
+
+    if(
+        $("optHeader").checked
+    ){
+
+        result =
+            protectionHeader() +
+            result;
+
+        log(
+            "Protection header added."
+        );
+
+    }
+
+
+    return {
+        result,
+        logs
+    };
+
+}
+
+
+/* =========================================================
+   OBFUSCATOR UI
+   ========================================================= */
+
+function obLog(
+    message,
+    type = ""
+){
+
+    const root =
+        $("obConsole");
+
+
+    const line =
+        document.createElement(
+            "div"
+        );
+
+
+    line.className =
+        "console-line " +
+        type;
+
+
+    line.textContent =
+        "> " +
+        message;
+
+
+    root.appendChild(
+        line
+    );
+
+
+    root.scrollTop =
+        root.scrollHeight;
+
+}
+
+
+function setProgress(value){
+
+    $("obProgress")
+        .style
+        .width =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                value
+            )
+        ) + "%";
+
+}
+
+
+$("obFile").onchange =
+    function(){
+
+        obFile =
+            this.files?.[0] ||
+            null;
+
+
+        updateObFile();
+
+    };
+
+
+function updateObFile(){
+
+    if(!obFile){
+
+        $("obName").textContent =
+            "Belum ada file dipilih";
+
+        $("obType").textContent =
+            "READY";
+
+        return;
+
+    }
+
+
+    $("obName").textContent =
+        obFile.name;
+
+
+    $("obType").textContent =
+        "LUA";
+
+}
+
+
+/* =========================================================
+   DRAG DROP
+   ========================================================= */
+
+const obDrop =
+    $("obDrop");
+
+
+[
+    "dragenter",
+    "dragover"
+].forEach(eventName => {
+
+    obDrop.addEventListener(
+        eventName,
+        event => {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+            obDrop.classList.add(
+                "drag"
+            );
+
+        }
+    );
+
+});
+
+
+[
+    "dragleave",
+    "drop"
+].forEach(eventName => {
+
+    obDrop.addEventListener(
+        eventName,
+        event => {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+            obDrop.classList.remove(
+                "drag"
+            );
+
+        }
+    );
+
+});
+
+
+obDrop.addEventListener(
+    "drop",
+    event => {
+
+        const files =
+            event.dataTransfer.files;
+
+
+        if(
+            files &&
+            files.length
+        ){
+
+            obFile =
+                files[0];
+
+            updateObFile();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLEAR
+   ========================================================= */
+
+$("clearOb").onclick =
+    function(){
+
+        obFile =
+            null;
+
+        $("obFile").value =
+            "";
+
+        $("obName").textContent =
+            "Belum ada file dipilih";
+
+        $("obType").textContent =
+            "READY";
+
+        $("preview").value =
+            "";
+
+        $("obConsole").innerHTML =
+            "";
+
+        $("obStatus").textContent =
+            "BAIM ENGINE READY";
+
+        $("obStatus")
+            .className =
+            "status";
+
+        setProgress(0);
+
+    };
+
+
+/* =========================================================
+   COPY
+   ========================================================= */
+
+$("copyPreview").onclick =
+    async function(){
+
+        const value =
+            $("preview").value;
+
+
+        if(!value){
+
+            notify(
+                "Preview kosong",
+                "Belum ada hasil protection."
+            );
+
+            return;
+        }
+
+
+        try{
+
+            await navigator.clipboard.writeText(
+                value
+            );
+
+
+            notify(
+                "Copied",
+                "Output berhasil disalin."
+            );
+
+        }catch(error){
+
+            notify(
+                "Copy gagal",
+                "Browser tidak memberikan akses clipboard."
+            );
+
+        }
+
+    };
+
+
+/* =========================================================
+   MAIN PROTECTION
+   ========================================================= */
+
+$("protect").onclick =
+    async function(){
+
+        if(!obFile){
+
+            $("obFile").click();
+
+            return;
+        }
+
+
+        if(
+            !/\.lua$/i.test(
+                obFile.name
+            ) &&
+            !/\.txt$/i.test(
+                obFile.name
+            )
+        ){
+
+            notify(
+                "Format tidak didukung",
+                "Gunakan file .lua atau .txt."
+            );
+
+            return;
+        }
+
+
+        this.disabled =
+            true;
+
+
+        $("obConsole").innerHTML =
+            "";
+
+
+        $("preview").value =
+            "";
+
+
+        $("obStatus")
+            .className =
+            "status";
+
+
+        $("obStatus").textContent =
+            "ANALYZING SOURCE...";
+
+
+        setProgress(5);
+
+
+        try{
+
+            obLog(
+                "BAIM OBFUSCATOR ENGINE"
+            );
+
+            obLog(
+                "Reading local source..."
+            );
+
+
+            const source =
+                await obFile.text();
+
+
+            if(
+                !source.trim()
+            ){
+
+                throw new Error(
+                    "File kosong."
+                );
+
+            }
+
+
+            setProgress(18);
+
+            await sleep(100);
+
+
+            obLog(
+                "Source size: " +
+                bytes(
+                    new Blob(
+                        [source]
+                    ).size
+                )
+            );
+
+
+            setProgress(28);
+
+
+            const result =
+                await protectLua(
+                    source
+                );
+
+
+            setProgress(75);
+
+
+            result.logs.forEach(
+                item =>
+                    obLog(
+                        item.message,
+                        item.type
+                    )
+            );
+
+
+            await sleep(100);
+
+
+            $("preview").value =
+                result.result;
+
+
+            setProgress(92);
+
+
+            const blob =
+                new Blob(
+                    [result.result],
+                    {
+                        type:
+                            "text/plain;charset=utf-8"
+                    }
+                );
+
+
+            const url =
+                URL.createObjectURL(
+                    blob
+                );
+
+
+            const anchor =
+                document.createElement(
+                    "a"
+                );
+
+
+            anchor.href =
+                url;
+
+
+            const outputName =
+                obFile.name
+                    .replace(
+                        /\.(lua|txt)$/i,
+                        ""
+                    ) +
+                "_BAIM.lua";
+
+
+            anchor.download =
+                outputName;
+
+
+            document.body.appendChild(
+                anchor
+            );
+
+
+            anchor.click();
+
+            anchor.remove();
+
+
+            setTimeout(
+                () =>
+                    URL.revokeObjectURL(
+                        url
+                    ),
+                2000
+            );
+
+
+            setProgress(100);
+
+
+            $("obStatus")
+                .className =
+                "status ok";
+
+
+            $("obStatus").textContent =
+                "PROTECTION COMPLETE";
+
+
+            obLog(
+                "Output generated: " +
+                outputName,
+                "ok"
+            );
+
+
+            obLog(
+                "Download started.",
+                "ok"
+            );
+
+
+            if(
+                !$("optPreview").checked
+            ){
+
+                $("preview").value =
+                    "";
+
+            }
+
+
+            notify(
+                "Protection complete",
+                "File hasil berhasil dibuat."
+            );
+
+
+            setTimeout(
+                () => setProgress(0),
+                1200
+            );
+
+
+        }catch(error){
+
+            console.error(error);
+
+
+            setProgress(0);
+
+
+            $("obStatus")
+                .className =
+                "status error";
+
+
+            $("obStatus").textContent =
+                "PROTECTION ERROR";
+
+
+            obLog(
+                error.message,
+                "err"
+            );
+
+
+            notify(
+                "Protection gagal",
+                error.message
+            );
+
+        }
+
+
+        this.disabled =
+            false;
+
+    };
+
+
+/* =========================================================
+   INITIAL LOAD
+   ========================================================= */
+
+loadFiles();
+
+
+/*
+ * Cek admin ketika halaman pertama kali
+ * dibuka.
+ */
+
+checkAdmin();
+
+</script>
+
+</body>
+                          </html>
