@@ -590,6 +590,7 @@ footer{display:flex;justify-content:space-between;gap:15px;padding:70px 0 30px;c
 </div>
 <div class="modal" id="userModal">
   <div class="modal-box"><button class="modal-close" id="userModalClose">×</button><h2 id="userModalTitle">Login User</h2>
+    <div class="form-field" id="usernameField" style="display:none"><label>USERNAME</label><input id="userUsername" class="form-input" type="text" maxlength="30" placeholder="Username (a-z, 0-9, _)"></div>
     <div class="form-field"><label>EMAIL</label><input id="userEmail" class="form-input" type="email" placeholder="email@kamu.com"></div>
     <div class="form-field"><label>PASSWORD</label><input id="userPassword" class="form-input" type="password" placeholder="••••••••"></div>
     <button class="primary" id="userLoginBtn" style="width:100%">MASUK</button>
@@ -622,7 +623,7 @@ const db = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
 // ================= STATE =================
 let obFile = null, adminFile = null, allFiles = [], presenceChannel = null;
-let currentUser = null, userFavorites = new Set(), previewFileId = null;
+let currentUser = null, currentUsername = null, userFavorites = new Set(), previewFileId = null;
 let currentPage = 1, pageSize = 10, filteredFiles = [], showFavoritesOnly = false;
 let editFileId = null, isAdminUser = false, isRegistering = false;
 let selectedForDelete = new Set();
@@ -718,13 +719,21 @@ setupPresence();
 async function getUser(){
   const { data } = await db.auth.getSession();
   currentUser = data?.session?.user || null;
+  currentUsername = null;
+  if(currentUser){
+    const { data: profile } = await db.from("profiles").select("username,role").eq("id",currentUser.id).maybeSingle();
+    currentUsername = profile?.username || currentUser.user_metadata?.user_name || currentUser.user_metadata?.preferred_username || currentUser.email?.split("@")[0] || "User";
+    isAdminUser = profile?.role === "admin";
+    loadFavorites();
+  } else {
+    isAdminUser = false;
+  }
   updateUserUI();
-  if(currentUser) loadFavorites();
 }
 function updateUserUI(){
   const btn = $("userBtn");
   if(currentUser){
-    btn.textContent = currentUser.email?.split("@")[0] || "User";
+    btn.textContent = currentUsername || currentUser.email?.split("@")[0] || "User";
     btn.title = "Logout";
     btn.onclick = async()=>{
       await db.auth.signOut();
@@ -747,15 +756,19 @@ function openUserModal(){
   $("userLoginBtn").textContent = "MASUK";
   $("userModalError").textContent = "";
   isRegistering = false;
+  $("usernameField").style.display = "none";
+  $("userUsername").value = "";
 }
 $("toggleRegister").onclick = (e)=>{
   e.preventDefault();
   isRegistering = !isRegistering;
   if(isRegistering){
+    $("usernameField").style.display = "block";
     $("userModalTitle").textContent = "Daftar User";
     $("toggleRegister").textContent = "Sudah punya akun? Login";
     $("userLoginBtn").textContent = "DAFTAR";
   } else {
+    $("usernameField").style.display = "none";
     $("userModalTitle").textContent = "Login User";
     $("toggleRegister").textContent = "Daftar di sini";
     $("userLoginBtn").textContent = "MASUK";
@@ -765,9 +778,11 @@ $("toggleRegister").onclick = (e)=>{
 $("userLoginBtn").onclick = async()=>{
   const email = $("userEmail").value.trim();
   const password = $("userPassword").value;
+  const username = $("userUsername").value.trim();
   if(!email || !password){ $("userModalError").textContent = "Email dan password wajib diisi."; return; }
   if(isRegistering){
-    const result = await db.auth.signUp({ email, password });
+    if(!/^[a-zA-Z0-9_]{3,30}$/.test(username)){ $("userModalError").textContent = "Username 3-30 karakter: huruf, angka, underscore."; return; }
+    const result = await db.auth.signUp({ email, password, options:{ data:{ username } } });
     if(result.error){ $("userModalError").textContent = result.error.message; return; }
     notify("Registrasi","Silakan cek email untuk konfirmasi."); $("userModal").classList.remove("show");
   } else {
@@ -782,7 +797,7 @@ $("oauthGithub").onclick = async()=>{ await db.auth.signInWithOAuth({ provider:"
 $("oauthDiscord").onclick = async()=>{ await db.auth.signInWithOAuth({ provider:"discord" }); };
 $("userModalClose").onclick=()=>$("userModal").classList.remove("show");
 db.auth.onAuthStateChange((event, session)=>{
-  if(event === "SIGNED_IN"){ currentUser = session.user; updateUserUI(); loadFavorites(); loadFiles(); }
+  if(event === "SIGNED_IN"){ currentUser = session.user; getUser(); loadFiles(); }
   if(event === "SIGNED_OUT"){ currentUser = null; updateUserUI(); userFavorites.clear(); loadFiles(); $("showFavorites").style.display = "none"; }
   if($("admin").classList.contains("active")) setTimeout(checkAdmin,0);
 });
@@ -994,11 +1009,17 @@ async function loadComments(fileId){
   list.innerHTML = "Memuat komentar...";
   const { data, error } = await db.from("comments").select("id,content,created_at,user_id").eq("file_id",fileId).order("created_at",{ascending:true});
   if(error){ list.innerHTML = "Gagal memuat komentar."; return; }
-  if(!data.length){ list.innerHTML = "Belum ada komentar."; return; }
+  if(!data?.length){ list.innerHTML = "Belum ada komentar."; return; }
+  const ids=[...new Set(data.map(c=>c.user_id).filter(Boolean))];
+  let profiles=[];
+  if(ids.length){ const r=await db.from("profiles").select("id,username,role").in("id",ids); profiles=r.data||[]; }
+  const map=new Map(profiles.map(p=>[p.id,p]));
   list.innerHTML = data.map(c=>{
+    const profile=map.get(c.user_id);
+    const username=profile?.username || "User";
     const canDelete = currentUser && (c.user_id===currentUser.id || isAdminUser);
-    return `<div style="border-bottom:1px solid var(--line2);padding:5px 0">
-      <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600">${escapeHtml(c.user_id?.slice(0,8) || "Anonim")}</span><span style="font-size:6px;color:#69748a">${new Date(c.created_at).toLocaleString("id-ID")}</span></div>
+    return `<div style="border-bottom:1px solid var(--line2);padding:7px 0">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font-weight:600">${escapeHtml(username)}${profile?.role==="admin"?' <span class="tag">ADMIN</span>':''}</span><span style="font-size:6px;color:#69748a">${new Date(c.created_at).toLocaleString("id-ID")}</span></div>
       <div style="margin-top:3px">${escapeHtml(c.content)}</div>
       ${canDelete?`<button class="small-btn delete-comment-btn" data-id="${c.id}" style="font-size:6px;padding:3px 6px;margin-top:4px">Hapus</button>`:''}
     </div>`;
@@ -1185,23 +1206,29 @@ async function loadStats(){
 let chatChannel = null;
 async function setupChat(){
   try{
-    const { data } = await db.from("messages").select("id,user_id,content,created_at").order("created_at",{ascending:true}).limit(50);
+    const { data, error } = await db.from("messages").select("id,user_id,content,created_at").order("created_at",{ascending:true}).limit(50);
+    if(error) throw error;
     const chatBody=$("chatBody");
     chatBody.innerHTML="";
-    if(data) data.forEach(msg=>appendChatMessage(msg));
+    if(data) for(const msg of data) await appendChatMessage(msg);
     chatChannel = db.channel("public-chat")
-      .on("postgres_changes",{event:"INSERT",schema:"public",table:"messages"},(payload)=>{
-        appendChatMessage(payload.new);
+      .on("postgres_changes",{event:"INSERT",schema:"public",table:"messages"},async(payload)=>{
+        await appendChatMessage(payload.new);
       })
       .subscribe();
   }catch(e){ console.warn("Chat setup failed",e); }
 }
-function appendChatMessage(msg){
+async function appendChatMessage(msg){
   const chatBody=$("chatBody");
   const div=document.createElement("div");
   div.className="chat-msg"+(currentUser && msg.user_id===currentUser.id?" own":"");
   const date=new Date(msg.created_at).toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
-  div.innerHTML=`<div class="meta">${escapeHtml(msg.user_id?.slice(0,8)||"Anonim")} • ${date}</div><div>${escapeHtml(msg.content)}</div>`;
+  let username="User", role="user";
+  if(msg.user_id){
+    const {data:p}=await db.from("profiles").select("username,role").eq("id",msg.user_id).maybeSingle();
+    username=p?.username || "User"; role=p?.role || "user";
+  }
+  div.innerHTML=`<div class="meta"><strong>${escapeHtml(username)}</strong>${role==="admin"?' <span class="tag">ADMIN</span>':''} • ${date}</div><div>${escapeHtml(msg.content)}</div>`;
   chatBody.appendChild(div);
   chatBody.scrollTop=chatBody.scrollHeight;
 }
@@ -1258,4 +1285,4 @@ checkAdmin();
 setupChat();
 </script>
 </body>
-</html>
+    </html>
